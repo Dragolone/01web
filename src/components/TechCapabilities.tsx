@@ -1,0 +1,57 @@
+"use client";
+
+import { motion } from "framer-motion";
+import type { Dictionary } from "@/app/[lang]/dictionaries";
+
+type Props = { dict: Dictionary };
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
+
+export function TechCapabilities({ dict }: Props) {
+  return (
+    <section className="py-24 md:py-32 bg-foreground text-white relative overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-0 opacity-40"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 80% 20%, rgba(24,73,220,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 10% 80%, rgba(24,73,220,0.18) 0%, transparent 60%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: easeOut }}
+          className="max-w-2xl"
+        >
+          <p className="text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            Technology
+          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
+            {dict.tech.title}
+          </h2>
+          <p className="mt-4 text-lg text-white/60">{dict.tech.subtitle}</p>
+        </motion.div>
+
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
+          {dict.tech.items.map((item, idx) => (
+            <motion.div
+              key={item.label}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.06 }}
+              className="group p-8 rounded-3xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+            >
+              <p className="text-xs tracking-widest uppercase text-brand">{`0${idx + 1}`}</p>
+              <p className="mt-3 text-xl font-medium">{item.label}</p>
+              <p className="mt-3 text-white/65 leading-relaxed">{item.value}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

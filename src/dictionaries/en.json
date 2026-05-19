@@ -1,0 +1,95 @@
+{
+  "brand": {
+    "name": "ZERO-ONE",
+    "nameEn": "ZERO-ONE INNOVATION",
+    "tagline": "Forward · Innovate",
+    "tagline2": "Push the Boundary",
+    "lead": "Zero-One Innovation builds mobile energy and autonomous aerial systems — powering the next generation of robots and aircraft.",
+    "vision": "Reliable energy for every robot — propelling the future of intelligent manufacturing and automation."
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "technology": "Solutions",
+    "about": "About",
+    "contact": "Contact",
+    "cta": "Contact us"
+  },
+  "hero": {
+    "cta": "Learn more",
+    "secondaryCta": "Our products",
+    "features": ["In-house IoT platform", "Millisecond telemetry", "Cross-platform remote ops", "Multi-domain product line"]
+  },
+  "products": {
+    "title": "Product Matrix",
+    "subtitle": "From ground to sky — covering the full mobile-robot stack.",
+    "items": [
+      {
+        "key": "robot",
+        "name": "Mobile Robots",
+        "summary": "Autonomous · Connected · Versatile",
+        "desc": "Smart mobile platforms for delivery, inspection and service — backed by our IoT platform with real-time telemetry and remote control.",
+        "tag": "Shipping"
+      },
+      {
+        "key": "station",
+        "name": "Smart Charging Stations",
+        "summary": "Energize Anywhere",
+        "desc": "Efficient, intelligent charging management for mobile robots — auto-docking, visualized status, remote ops.",
+        "tag": "Flagship"
+      },
+      {
+        "key": "vtol",
+        "name": "VTOL Aircraft",
+        "summary": "Vertical takeoff · Long endurance · Multi-payload",
+        "desc": "A new generation of VTOL aircraft fused with our mobile-energy tech, extending intelligent operations into low-altitude airspace.",
+        "tag": "Coming soon"
+      }
+    ]
+  },
+  "tech": {
+    "title": "In-house Technology",
+    "subtitle": "Hardware, energy, cloud — owned end to end.",
+    "items": [
+      { "label": "Real-time telemetry", "value": "MQTT + WebSocket millisecond push" },
+      { "label": "Remote control", "value": "Authenticated command channel across platforms" },
+      { "label": "Energy management", "value": "Smart charging algorithms · Multi-robot scheduling" },
+      { "label": "IoT platform", "value": "Cloud + edge gateway, integrated architecture" }
+    ]
+  },
+  "cta": {
+    "title": "Curious about our products or solutions?",
+    "subtitle": "We're happy to share detailed datasheets and tailored proposals.",
+    "button": "Get in touch"
+  },
+  "footer": {
+    "copy": "© 2024–2026 Zero-One Innovation. All rights reserved.",
+    "icp": "ICP filing in progress",
+    "links": {
+      "products": "Products",
+      "technology": "Solutions",
+      "about": "About",
+      "contact": "Contact"
+    }
+  },
+  "pages": {
+    "products": {
+      "title": "Products",
+      "lead": "A mobile-robot product matrix from ground to low-altitude airspace."
+    },
+    "technology": {
+      "title": "Solutions",
+      "lead": "Our in-house IoT platform, smart energy management and remote ops stack."
+    },
+    "about": {
+      "title": "About Zero-One Innovation",
+      "lead": "A technology company focused on intelligent robotics and IoT.",
+      "body": "Zero-One Innovation is a technology company dedicated to intelligent robotics and the internet of things. We deliver efficient, intelligent charging solutions for robots, and we build the remote monitoring platform that helps operators run their fleets in real time. Our vision is to provide reliable energy to every robot — propelling intelligent manufacturing and automation forward."
+    },
+    "contact": {
+      "title": "Contact us",
+      "lead": "For product inquiries, solutions or partnerships — we'd love to hear from you.",
+      "emailLabel": "Technical support email"
+    }
+  }
+}
