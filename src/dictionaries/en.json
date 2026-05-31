@@ -4,7 +4,7 @@
     "nameEn": "ZERO-ONE INNOVATION",
     "tagline": "Forward · Innovate",
     "tagline2": "Push the Boundary",
-    "lead": "Zero-One Innovation builds mobile energy and autonomous aerial systems — powering the next generation of robots and aircraft.",
+    "lead": "An innovation-driven company focused on intelligent robotics and IoT — delivering integrated hardware-and-software solutions across mobile charging robots and low-altitude VTOL aircraft.",
     "vision": "Reliable energy for every robot — propelling the future of intelligent manufacturing and automation."
   },
   "nav": {
@@ -18,32 +18,33 @@
   "hero": {
     "cta": "Learn more",
     "secondaryCta": "Our products",
-    "features": ["In-house IoT platform", "Millisecond telemetry", "Cross-platform remote ops", "Multi-domain product line"]
+    "statusBadges": ["IoT Platform", "Remote Control", "Robot Charging", "VTOL Preview"],
+    "features": [
+      { "title": "In-house IoT platform", "desc": "Cloud + edge gateway architecture" },
+      { "title": "Millisecond telemetry", "desc": "MQTT + WebSocket real-time channel" },
+      { "title": "Cross-platform remote ops", "desc": "Authenticated commands, any device" },
+      { "title": "Multi-domain product line", "desc": "Ground robots to low-altitude systems" }
+    ]
   },
   "products": {
     "title": "Product Matrix",
-    "subtitle": "From ground to sky — covering the full mobile-robot stack.",
+    "subtitle": "From ground to low-altitude — core mobile-energy and intelligent platforms.",
     "items": [
       {
         "key": "robot",
-        "name": "Mobile Robots",
-        "summary": "Autonomous · Connected · Versatile",
-        "desc": "Smart mobile platforms for delivery, inspection and service — backed by our IoT platform with real-time telemetry and remote control.",
-        "tag": "Shipping"
-      },
-      {
-        "key": "station",
-        "name": "Smart Charging Stations",
-        "summary": "Energize Anywhere",
-        "desc": "Efficient, intelligent charging management for mobile robots — auto-docking, visualized status, remote ops.",
-        "tag": "Flagship"
+        "name": "Mobile Charging Robot",
+        "summary": "Autonomous · Self-charging · Remote ops",
+        "desc": "A self-driving mobile charging platform — onboard battery moves to target locations and delivers efficient, intelligent charging to robots and equipment, with multi-fleet scheduling, visualized status and remote operations.",
+        "tag": "Flagship",
+        "tags": ["Autonomous", "Auto-dock", "Remote ops"]
       },
       {
         "key": "vtol",
         "name": "VTOL Aircraft",
         "summary": "Vertical takeoff · Long endurance · Multi-payload",
         "desc": "A new generation of VTOL aircraft fused with our mobile-energy tech, extending intelligent operations into low-altitude airspace.",
-        "tag": "Coming soon"
+        "tag": "Coming soon",
+        "tags": ["VTOL", "Long endurance", "Multi-payload"]
       }
     ]
   },
@@ -57,6 +58,75 @@
       { "label": "IoT platform", "value": "Cloud + edge gateway, integrated architecture" }
     ]
   },
+  "homeCapabilities": {
+    "title": "Technical capabilities",
+    "subtitle": "Core technology for robotics and IoT — keeping every device truly connected.",
+    "items": [
+      { "key": "monitor", "title": "Remote device monitoring", "desc": "Real-time visibility into every device's status and location via our IoT platform." },
+      { "key": "charge", "title": "Smart charging dispatch", "desc": "Allocates charging resources across multi-robot fleets to maximize uptime." },
+      { "key": "dashboard", "title": "Multi-surface dashboards", "desc": "PC, mobile and large-screen views with all the metrics that matter." },
+      { "key": "coordinate", "title": "Ground + low-altitude sync", "desc": "Unified scheduling and data links between mobile robots and aerial devices." }
+    ]
+  },
+  "solutions": {
+    "title": "Applications",
+    "subtitle": "Intelligent solutions across delivery, inspection, security and low-altitude logistics — built on our in-house IoT stack.",
+    "comingSoon": "Coming soon",
+    "scenarios": [
+      {
+        "key": "delivery",
+        "name": "Last-mile Delivery",
+        "headline": "Unattended ground delivery",
+        "desc": "Mobile robots paired with auto-docking charging stations enable 7×24 unattended operations across offices, campuses, hotels and hospitals.",
+        "highlights": ["Autonomous routing", "Multi-stop dispatch", "Elevator & gate integration"]
+      },
+      {
+        "key": "inspection",
+        "name": "Industrial Inspection",
+        "headline": "Autonomous patrol",
+        "desc": "Robots inspect production lines, server rooms and substations on schedule — streaming video and sensor data with real-time anomaly alerts.",
+        "highlights": ["Scheduled patrol routes", "Multi-sensor fusion", "Visualized telemetry"]
+      },
+      {
+        "key": "security",
+        "name": "Campus Security",
+        "headline": "Around-the-clock guard",
+        "desc": "24/7 security robots combine computer vision with remote operations to expand surveillance coverage across campuses and industrial sites.",
+        "highlights": ["Anomaly detection", "Remote takeover", "CCTV & access-control integration"]
+      },
+      {
+        "key": "low-altitude",
+        "name": "Low-altitude Logistics",
+        "headline": "VTOL applications",
+        "desc": "Built on our in-house VTOL platform — exploring short-range aerial logistics, emergency dispatch and urban low-altitude use cases.",
+        "highlights": ["Vertical takeoff & landing", "Long endurance", "Multi-payload adaptability"],
+        "comingSoon": true
+      }
+    ]
+  },
+  "productDetail": {
+    "backToProducts": "Back to products",
+    "featuresTitle": "Key features",
+    "specsTitle": "Technical specifications",
+    "specsTBD": "Detailed specifications coming soon — please get in touch for the latest datasheet.",
+    "ctaText": "Request datasheet",
+    "items": {
+      "robot": {
+        "features": [
+          { "title": "Autonomous navigation", "desc": "Fused LiDAR + vision localization, drives itself to target locations across indoor and outdoor environments." },
+          { "title": "Auto-docking charge", "desc": "Approaches target devices and docks autonomously — zero manual intervention." },
+          { "title": "Fleet ops & remote control", "desc": "Multi-robot coordination, visualized status and remote management via our IoT platform." }
+        ]
+      },
+      "vtol": {
+        "features": [
+          { "title": "Vertical takeoff & landing", "desc": "No runway needed — operates from tight launch and landing zones." },
+          { "title": "Long endurance", "desc": "Efficient energy management and aerodynamics extend flight time." },
+          { "title": "Multi-payload", "desc": "Flexible adaptation for camera, sensor and logistics payloads." }
+        ]
+      }
+    }
+  },
   "cta": {
     "title": "Curious about our products or solutions?",
     "subtitle": "We're happy to share detailed datasheets and tailored proposals.",
@@ -64,7 +134,7 @@
   },
   "footer": {
     "copy": "© 2024–2026 Zero-One Innovation. All rights reserved.",
-    "icp": "ICP filing in progress",
+    "icp": "Entity registration & ICP filing in progress",
     "links": {
       "products": "Products",
       "technology": "Solutions",
@@ -75,21 +145,36 @@
   "pages": {
     "products": {
       "title": "Products",
-      "lead": "A mobile-robot product matrix from ground to low-altitude airspace."
+      "lead": "A mobile-robot product matrix from ground to low-altitude airspace.",
+      "eyebrow": "Products",
+      "meta": ["2 product lines", "4 core capabilities", "Patents pending"]
     },
     "technology": {
-      "title": "Solutions",
-      "lead": "Our in-house IoT platform, smart energy management and remote ops stack."
+      "title": "Applications & Technology",
+      "lead": "Solutions spanning delivery, inspection, security and low-altitude logistics — built on our in-house IoT platform.",
+      "eyebrow": "Solutions",
+      "meta": ["4 application scenarios", "In-house IoT platform", "End-to-end stack"]
     },
     "about": {
       "title": "About Zero-One Innovation",
       "lead": "A technology company focused on intelligent robotics and IoT.",
-      "body": "Zero-One Innovation is a technology company dedicated to intelligent robotics and the internet of things. We deliver efficient, intelligent charging solutions for robots, and we build the remote monitoring platform that helps operators run their fleets in real time. Our vision is to provide reliable energy to every robot — propelling intelligent manufacturing and automation forward."
+      "body": "Zero-One Innovation is a technology company dedicated to intelligent robotics and the Internet of Things. We deliver efficient, intelligent charging solutions for robots, and our in-house remote-monitoring platform lets operators track fleet status in real time and run operations more efficiently.\n\nAcross our two product lines — Mobile Charging Robots and VTOL Aircraft — backed by our in-house IoT and remote-monitoring platform, we invest deeply in energy management, autonomous navigation and multi-fleet coordination, advancing intelligent manufacturing and automation.",
+      "techTitle": "Technology investment",
+      "techDesc": "Ongoing R&D in energy management, autonomous navigation, our IoT platform and VTOL systems.",
+      "patents": "Multiple invention patents pending",
+      "eyebrow": "About",
+      "meta": ["Two product lines", "Patents pending", "Entity registration in progress"]
     },
     "contact": {
       "title": "Contact us",
       "lead": "For product inquiries, solutions or partnerships — we'd love to hear from you.",
-      "emailLabel": "Technical support email"
+      "emailLabel": "Technical support email",
+      "businessLabel": "Business inquiries",
+      "businessDesc": "Product, procurement, channel and project partnerships",
+      "techLabel": "Technical support",
+      "techDesc": "Product usage, solutions and technical questions",
+      "eyebrow": "Contact",
+      "meta": ["Business inquiries", "Technical support", "Email-based response"]
     }
   }
 }

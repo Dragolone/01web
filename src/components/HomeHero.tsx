@@ -9,10 +9,24 @@ type Props = { lang: Locale; dict: Dictionary };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
+// Badge layout — 4 positions around the central product image.
+// `kind: "lg"` = glass card with status dot; `kind: "sm"` = simple pill.
+const badgeLayout: Array<{
+  pos: string;
+  kind: "lg" | "sm";
+  align: "left" | "right";
+  float: { from: number; to: number; dur: number; delay: number };
+}> = [
+  { pos: "top-5 left-5",    kind: "lg", align: "left",  float: { from: 0, to: -6, dur: 5.0, delay: 0   } },
+  { pos: "bottom-5 right-5", kind: "lg", align: "right", float: { from: 0, to:  6, dur: 6.0, delay: 0.4 } },
+  { pos: "bottom-5 left-5",  kind: "sm", align: "left",  float: { from: 0, to: -4, dur: 7.0, delay: 0.2 } },
+  { pos: "top-5 right-5",    kind: "sm", align: "right", float: { from: 0, to:  5, dur: 5.5, delay: 0.6 } },
+];
+
 export function HomeHero({ lang, dict }: Props) {
   return (
-    <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-16">
-      {/* Background gradient */}
+    <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-20">
+      {/* Outer background gradient */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
@@ -24,6 +38,7 @@ export function HomeHero({ lang, dict }: Props) {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* Left — copy */}
           <div className="lg:col-span-6">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -79,61 +94,96 @@ export function HomeHero({ lang, dict }: Props) {
             </motion.div>
           </div>
 
+          {/* Right — product stage with floating status cards */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: easeOut, delay: 0.15 }}
             className="lg:col-span-6 relative"
           >
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-surface">
+            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-border/60 shadow-[0_30px_60px_-30px_rgba(24,73,220,0.25)]">
+              {/* Stage background — soft brand-tinted gradient */}
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(70% 50% at 50% 0%, rgba(24,73,220,0.16) 0%, transparent 65%), linear-gradient(180deg, #eef3ff 0%, #ffffff 55%, #f5f7fc 100%)",
+                }}
+              />
+              {/* Faint dot grid inside the stage for depth */}
+              <div
+                aria-hidden
+                className="absolute inset-0 opacity-60"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 1px 1px, rgba(24,73,220,0.10) 1px, transparent 0)",
+                  backgroundSize: "22px 22px",
+                }}
+              />
+
+              {/* Central product image — slow float */}
               <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[6%] right-[2%] w-[68%]"
-              >
-                <Image
-                  src="/products/drone-hero.jpg"
-                  alt="VTOL"
-                  width={900}
-                  height={420}
-                  priority
-                  className="w-full h-auto rounded-2xl shadow-xl shadow-black/10"
-                />
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-[6%] left-[4%] w-[60%]"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 flex items-center justify-center"
               >
                 <Image
                   src="/products/robot-hero.jpg"
-                  alt="Mobile Robot"
-                  width={800}
-                  height={400}
+                  alt="Mobile Charging Robot"
+                  width={900}
+                  height={560}
                   priority
-                  className="w-full h-auto rounded-2xl shadow-xl shadow-black/15"
+                  className="w-[78%] h-auto rounded-2xl shadow-2xl shadow-black/15"
                 />
               </motion.div>
+
+              {/* Floating status badges */}
+              {dict.hero.statusBadges.map((label, i) => {
+                const layout = badgeLayout[i];
+                if (!layout) return null;
+                return (
+                  <motion.div
+                    key={label}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{
+                      opacity: 1,
+                      y: [layout.float.from, layout.float.to, layout.float.from],
+                    }}
+                    transition={{
+                      opacity: { duration: 0.6, ease: easeOut, delay: 0.4 + i * 0.12 },
+                      y: {
+                        duration: layout.float.dur,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: layout.float.delay,
+                      },
+                    }}
+                    className={`absolute ${layout.pos}`}
+                  >
+                    {layout.kind === "lg" ? (
+                      <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/75 backdrop-blur-md border border-white/80 shadow-lg shadow-brand/10">
+                        <span className="relative flex w-2 h-2">
+                          <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-60 animate-ping" />
+                          <span className="relative w-2 h-2 rounded-full bg-emerald-500" />
+                        </span>
+                        <span className="text-xs font-medium text-foreground/85 whitespace-nowrap">
+                          {label}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="px-3 py-1.5 rounded-full bg-brand-soft border border-brand/15 backdrop-blur-sm">
+                        <span className="text-[11px] font-medium text-brand whitespace-nowrap tracking-wide">
+                          {label}
+                        </span>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
-
-        {/* Feature strip — minimal capabilities row to anchor the hero bottom */}
-        <motion.ul
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: easeOut, delay: 0.5 }}
-          className="mt-14 md:mt-20 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-foreground/65"
-        >
-          {dict.hero.features.map((f, i) => (
-            <li key={f} className="flex items-center gap-3">
-              {i > 0 && (
-                <span aria-hidden className="hidden sm:inline-block w-1 h-1 rounded-full bg-foreground/25" />
-              )}
-              <span>{f}</span>
-            </li>
-          ))}
-        </motion.ul>
       </div>
     </section>
   );

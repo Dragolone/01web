@@ -15,5 +15,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  // Skip Next internals, API routes, files with extensions, and root-level
+  // metadata routes (sitemap, robots, og image) that must not be locale-prefixed.
+  matcher: ["/((?!_next|api|opengraph-image|twitter-image|sitemap.xml|robots.txt|.*\\..*).*)"],
 };
