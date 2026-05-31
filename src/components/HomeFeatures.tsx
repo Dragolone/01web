@@ -50,7 +50,7 @@ const featureIcons = [
 export function HomeFeatures({ dict }: Props) {
   return (
     <section className="py-12 md:py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
           {dict.hero.features.map((f, idx) => (
             <motion.div

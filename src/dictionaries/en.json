@@ -4,8 +4,8 @@
     "nameEn": "ZERO-ONE INNOVATION",
     "tagline": "Forward · Innovate",
     "tagline2": "Push the Boundary",
-    "lead": "An innovation-driven company focused on intelligent robotics and IoT — delivering integrated hardware-and-software solutions across mobile charging robots and low-altitude VTOL aircraft.",
-    "vision": "Reliable energy for every robot — propelling the future of intelligent manufacturing and automation."
+    "lead": "Focused on China's two national-strategy tracks — low-altitude economy and clean-mobility infrastructure. Full-stack in-house R&D across mechanics, embedded systems, AI algorithms and cloud — delivering two product lines: LingYI-Charge mobile EV-charging robot and LingYI-1 VTOL fixed-wing aircraft.",
+    "vision": "Bringing intelligent robots and aircraft into real industry use, with measurable commercial value for every customer."
   },
   "nav": {
     "home": "Home",
@@ -18,89 +18,116 @@
   "hero": {
     "cta": "Learn more",
     "secondaryCta": "Our products",
-    "statusBadges": ["IoT Platform", "Remote Control", "Robot Charging", "VTOL Preview"],
+    "statusBadges": ["LingYI-Charge", "LingYI-1", "4-week prototyping", "40% lower BOM"],
     "features": [
-      { "title": "In-house IoT platform", "desc": "Cloud + edge gateway architecture" },
-      { "title": "Millisecond telemetry", "desc": "MQTT + WebSocket real-time channel" },
-      { "title": "Cross-platform remote ops", "desc": "Authenticated commands, any device" },
-      { "title": "Multi-domain product line", "desc": "Ground robots to low-altitude systems" }
+      { "title": "Full-stack in-house R&D", "desc": "Mechanics, embedded systems, AI algorithms and cloud — owned end to end" },
+      { "title": "Rapid prototyping", "desc": "3D printing + composites + CNC, sample cycles down to 4 weeks" },
+      { "title": "Cost-engineered BOM", "desc": "Domestic sensors + in-house control algorithms — 40% lower BOM than peers" },
+      { "title": "Industry-academia link", "desc": "Powered by Shenzhen Technology University AI Lab resources" }
     ]
   },
   "products": {
     "title": "Product Matrix",
-    "subtitle": "From ground to low-altitude — core mobile-energy and intelligent platforms.",
+    "subtitle": "Two strategic tracks — low-altitude systems and clean-mobility infrastructure",
     "items": [
       {
-        "key": "robot",
-        "name": "Mobile Charging Robot",
-        "summary": "Autonomous · Self-charging · Remote ops",
-        "desc": "A self-driving mobile charging platform — onboard battery moves to target locations and delivers efficient, intelligent charging to robots and equipment, with multi-fleet scheduling, visualized status and remote operations.",
+        "key": "charge",
+        "name": "LingYI-Charge Mobile EV Charging Robot",
+        "summary": "Charger-comes-to-car · App booking · Auto-docking",
+        "desc": "Autonomous mobile EV-charging robot for smart parks, commercial complexes and large parking lots. 100 kWh onboard storage, one-tap app booking, LiDAR SLAM navigation and computer-vision plug-in — upgrading fixed chargers into a 'charger-comes-to-car' service.",
         "tag": "Flagship",
-        "tags": ["Autonomous", "Auto-dock", "Remote ops"]
+        "tags": ["100 kWh", "±15 cm precision", "IP54"]
       },
       {
         "key": "vtol",
-        "name": "VTOL Aircraft",
-        "summary": "Vertical takeoff · Long endurance · Multi-payload",
-        "desc": "A new generation of VTOL aircraft fused with our mobile-energy tech, extending intelligent operations into low-altitude airspace.",
-        "tag": "Coming soon",
-        "tags": ["VTOL", "Long endurance", "Multi-payload"]
+        "name": "LingYI-1 VTOL Fixed-Wing UAV",
+        "summary": "Vertical takeoff · 2,000 km range · 40 kg payload",
+        "desc": "A large VTOL fixed-wing UAV built for industrial inspection, security reconnaissance and emergency response. 3 m wingspan, fuel-electric hybrid power breaks battery limits, 2,000 km single-sortie coverage at 180 km/h cruise — operating from urban streets to remote terrain with no runway.",
+        "tag": "Shipping",
+        "tags": ["2,000 km range", "40 kg payload", "180 km/h"]
       }
     ]
   },
   "tech": {
-    "title": "In-house Technology",
-    "subtitle": "Hardware, energy, cloud — owned end to end.",
+    "title": "Measurable Commercial Value",
+    "subtitle": "Pipeline inspection example — a single LingYI-1 replaces a 3-5 person crew. Real numbers below.",
     "items": [
-      { "label": "Real-time telemetry", "value": "MQTT + WebSocket millisecond push" },
-      { "label": "Remote control", "value": "Authenticated command channel across platforms" },
-      { "label": "Energy management", "value": "Smart charging algorithms · Multi-robot scheduling" },
-      { "label": "IoT platform", "value": "Cloud + edge gateway, integrated architecture" }
+      { "label": "Cost per sortie", "value": "5,000 CNY (helicopter) → 200 CNY (LingYI-1), 95% reduction" },
+      { "label": "Single-sortie coverage", "value": "3-5 km/day (manual) → 100+ km (LingYI-1)" },
+      { "label": "Deployment response", "value": "Hours (traditional) → Instant vertical takeoff (LingYI-1)" },
+      { "label": "ROI", "value": "500-800k CNY annual savings, payback in 8-16 months" }
     ]
   },
   "homeCapabilities": {
-    "title": "Technical capabilities",
-    "subtitle": "Core technology for robotics and IoT — keeping every device truly connected.",
+    "title": "Full-stack Capabilities",
+    "subtitle": "Mechanics, firmware, algorithms, cloud — end-to-end autonomy.",
     "items": [
-      { "key": "monitor", "title": "Remote device monitoring", "desc": "Real-time visibility into every device's status and location via our IoT platform." },
-      { "key": "charge", "title": "Smart charging dispatch", "desc": "Allocates charging resources across multi-robot fleets to maximize uptime." },
-      { "key": "dashboard", "title": "Multi-surface dashboards", "desc": "PC, mobile and large-screen views with all the metrics that matter." },
-      { "key": "coordinate", "title": "Ground + low-altitude sync", "desc": "Unified scheduling and data links between mobile robots and aerial devices." }
+      { "key": "fullstack", "title": "End-to-end in-house R&D", "desc": "Mechanics, embedded, AI algorithms and cloud platform all built in-house — tight hardware-software co-iteration." },
+      { "key": "rapid", "title": "Rapid prototyping", "desc": "3D printing + composites + CNC keeps prototype cycles as short as 4 weeks." },
+      { "key": "cost", "title": "Cost-engineered BOM", "desc": "Domestic sensors with in-house control algorithms reduce BOM by 40%+ vs peers." },
+      { "key": "research", "title": "Industry-academia link", "desc": "Joint lab with the AI School of Shenzhen Technology University — shared research platform." }
     ]
   },
   "solutions": {
     "title": "Applications",
-    "subtitle": "Intelligent solutions across delivery, inspection, security and low-altitude logistics — built on our in-house IoT stack.",
+    "subtitle": "Eight real business scenarios — straight from our product handbook, spanning low-altitude operations and clean-mobility infrastructure.",
     "comingSoon": "Coming soon",
     "scenarios": [
       {
-        "key": "delivery",
-        "name": "Last-mile Delivery",
-        "headline": "Unattended ground delivery",
-        "desc": "Mobile robots paired with auto-docking charging stations enable 7×24 unattended operations across offices, campuses, hotels and hospitals.",
-        "highlights": ["Autonomous routing", "Multi-stop dispatch", "Elevator & gate integration"]
+        "key": "pipeline",
+        "name": "Pipeline & Grid Inspection",
+        "headline": "VTOL · Pipeline Inspection",
+        "desc": "For oil pipelines, power transmission lines and PV plant inspections. 180 km/h cruise + 2,000 km range covers 100+ km of corridor per sortie. Onboard vision automatically flags construction encroachment, overgrowth and equipment anomalies. A 40 kg payload carries optical and thermal cameras simultaneously — multi-spectrum inspection in a single flight.",
+        "highlights": ["180 km/h cruise · 2,000 km range", "100+ km corridor per sortie", "Optical + thermal in one flight"]
       },
       {
-        "key": "inspection",
-        "name": "Industrial Inspection",
-        "headline": "Autonomous patrol",
-        "desc": "Robots inspect production lines, server rooms and substations on schedule — streaming video and sensor data with real-time anomaly alerts.",
-        "highlights": ["Scheduled patrol routes", "Multi-sensor fusion", "Visualized telemetry"]
+        "key": "rescue",
+        "name": "Emergency Response & Damage Assessment",
+        "headline": "VTOL · Emergency Response",
+        "desc": "After earthquakes, floods or wildfires, takes off vertically with no runway and reaches the disaster site fast — streaming live footage for command decisions. Thermal imaging finds trapped people and assesses structural damage; onboard loudspeaker broadcasts evacuation instructions; 2,000 km range sustains long deployments.",
+        "highlights": ["Instant vertical launch", "Thermal search + damage assessment", "Loudspeaker evacuation broadcast"]
       },
       {
         "key": "security",
-        "name": "Campus Security",
-        "headline": "Around-the-clock guard",
-        "desc": "24/7 security robots combine computer vision with remote operations to expand surveillance coverage across campuses and industrial sites.",
-        "highlights": ["Anomaly detection", "Remote takeover", "CCTV & access-control integration"]
+        "name": "Tactical & Public Security",
+        "headline": "VTOL · Tactical & Public Security",
+        "desc": "3 m wingspan flying-wing layout, 200 km/h top speed — built for rapid close-in surveillance and area patrols. Optical-electronic pods enable 24/7 reconnaissance; loudspeakers support crowd management and dispersal. Ground station coordinates multi-UAV networks into a regional aerial awareness system.",
+        "highlights": ["3 m flying-wing airframe", "EO pod day/night recon", "Multi-UAV networking"]
       },
       {
-        "key": "low-altitude",
-        "name": "Low-altitude Logistics",
-        "headline": "VTOL applications",
-        "desc": "Built on our in-house VTOL platform — exploring short-range aerial logistics, emergency dispatch and urban low-altitude use cases.",
-        "highlights": ["Vertical takeoff & landing", "Long endurance", "Multi-payload adaptability"],
-        "comingSoon": true
+        "key": "remote-sensing",
+        "name": "Agro-forestry Remote Sensing",
+        "headline": "VTOL · Agro-forestry Sensing",
+        "desc": "Multispectral cameras map farmland and forest at scale, generating NDVI vegetation-index maps for precision fertilization, pest detection and timber-volume estimation. At 180 km/h cruise, a single sortie covers thousands of mu (hundreds of hectares).",
+        "highlights": ["Multispectral NDVI mapping", "Precision fertilization & pest detection", "Thousands of mu per sortie"]
+      },
+      {
+        "key": "commercial",
+        "name": "Commercial Complex & Office",
+        "headline": "Charge · Commercial Complex",
+        "desc": "Malls and office parks typically have under-provisioned EV charging — drivers queue and wait. With LingYI-Charge, drivers park anywhere and book via app, lifting parking-lot service quality and customer satisfaction; property operators earn ongoing revenue via service-fee sharing.",
+        "highlights": ["Any-stall app booking", "No retrofit required", "Service-fee revenue sharing"]
+      },
+      {
+        "key": "residential",
+        "name": "Residential Communities",
+        "headline": "Charge · Residential",
+        "desc": "Older residential complexes have limited electrical capacity and high retrofit costs — fixed chargers are hard to install at scale. The mobile charging robot stores energy at off-peak night rates and serves residents by day — no grid-capacity upgrade needed.",
+        "highlights": ["No grid-capacity upgrade", "Off-peak night charging", "On-demand daytime service"]
+      },
+      {
+        "key": "campus",
+        "name": "Industrial & Tech Parks",
+        "headline": "Charge · Industrial Park",
+        "desc": "Industrial parks have scattered buildings and low fixed-charger coverage. Mobile charging robots patrol the park 24/7 on standby; employees book on demand, lifting overall park amenities.",
+        "highlights": ["24/7 standby patrol", "On-demand employee booking", "Lifts park amenities"]
+      },
+      {
+        "key": "event",
+        "name": "Events & Exhibitions",
+        "headline": "Charge · Events",
+        "desc": "Auto shows, motorsport and music festivals lack permanent charging infrastructure. LingYI-Charge deploys on demand and leaves after the event — zero capital investment in fixed equipment.",
+        "highlights": ["On-demand deployment", "Zero capex", "Removable after event"]
       }
     ]
   },
@@ -108,33 +135,35 @@
     "backToProducts": "Back to products",
     "featuresTitle": "Key features",
     "specsTitle": "Technical specifications",
-    "specsTBD": "Detailed specifications coming soon — please get in touch for the latest datasheet.",
+    "specsTBD": "Full datasheet available on request — we typically reply within 1-2 business days.",
     "ctaText": "Request datasheet",
     "items": {
-      "robot": {
+      "charge": {
         "features": [
-          { "title": "Autonomous navigation", "desc": "Fused LiDAR + vision localization, drives itself to target locations across indoor and outdoor environments." },
-          { "title": "Auto-docking charge", "desc": "Approaches target devices and docks autonomously — zero manual intervention." },
-          { "title": "Fleet ops & remote control", "desc": "Multi-robot coordination, visualized status and remote management via our IoT platform." }
+          { "title": "App booking + autonomous navigation", "desc": "Users book via QR or app; the robot plans its route to the target stall and copes with weak-GPS underground garages." },
+          { "title": "Vision-guided auto plug-in", "desc": "RGB-D depth camera locates the charging port; the robotic arm docks autonomously — no human assistance needed." },
+          { "title": "Cloud fleet scheduling", "desc": "Multi-robot coordination by battery, location and booking queue — maximizing uptime and service efficiency." }
         ]
       },
       "vtol": {
         "features": [
-          { "title": "Vertical takeoff & landing", "desc": "No runway needed — operates from tight launch and landing zones." },
-          { "title": "Long endurance", "desc": "Efficient energy management and aerodynamics extend flight time." },
-          { "title": "Multi-payload", "desc": "Flexible adaptation for camera, sensor and logistics payloads." }
+          { "title": "VTOL + cruise dual-mode", "desc": "Takes off and lands in place with no runway; switches to fixed-wing for 180 km/h economy cruise — flexible deployment and long-range work in one airframe." },
+          { "title": "2,000 km extended range", "desc": "Fuel engine + onboard battery hybrid breaks battery-only limits — a single sortie covers 100+ km of linear infrastructure." },
+          { "title": "Large payload, multi-mission", "desc": "40 kg payload simultaneously carries optical/thermal cameras, loudspeakers and release mechanisms for multi-task missions." }
         ]
       }
     }
   },
   "cta": {
-    "title": "Curious about our products or solutions?",
-    "subtitle": "We're happy to share detailed datasheets and tailored proposals.",
+    "title": "Want a deeper look at the products or scenarios?",
+    "subtitle": "We can share full datasheets, tailored deployment plans and trial arrangements.",
     "button": "Get in touch"
   },
   "footer": {
-    "copy": "© 2024–2026 Zero-One Innovation. All rights reserved.",
-    "icp": "Entity registration & ICP filing in progress",
+    "copy": "© 2026 Shenzhen Zero-One Innovation Technology Co., Ltd. All rights reserved.",
+    "icp": "ICP filing in progress",
+    "sitemapLabel": "Sitemap",
+    "contactLabel": "Contact",
     "links": {
       "products": "Products",
       "technology": "Solutions",
@@ -145,36 +174,36 @@
   "pages": {
     "products": {
       "title": "Products",
-      "lead": "A mobile-robot product matrix from ground to low-altitude airspace.",
+      "lead": "Two strategic tracks — low-altitude systems (LingYI-1) and clean-mobility infrastructure (LingYI-Charge).",
       "eyebrow": "Products",
-      "meta": ["2 product lines", "4 core capabilities", "Patents pending"]
+      "meta": ["2 product lines", "Full-stack in-house", "Shipping"]
     },
     "technology": {
-      "title": "Applications & Technology",
-      "lead": "Solutions spanning delivery, inspection, security and low-altitude logistics — built on our in-house IoT platform.",
+      "title": "Applications & Value",
+      "lead": "Real business scenarios across energy, emergency, security and EV mobility — backed by measurable deployment data.",
       "eyebrow": "Solutions",
-      "meta": ["4 application scenarios", "In-house IoT platform", "End-to-end stack"]
+      "meta": ["6 real scenarios", "95% cost reduction vs helicopter", "8-16 month payback"]
     },
     "about": {
       "title": "About Zero-One Innovation",
-      "lead": "A technology company focused on intelligent robotics and IoT.",
-      "body": "Zero-One Innovation is a technology company dedicated to intelligent robotics and the Internet of Things. We deliver efficient, intelligent charging solutions for robots, and our in-house remote-monitoring platform lets operators track fleet status in real time and run operations more efficiently.\n\nAcross our two product lines — Mobile Charging Robots and VTOL Aircraft — backed by our in-house IoT and remote-monitoring platform, we invest deeply in energy management, autonomous navigation and multi-fleet coordination, advancing intelligent manufacturing and automation.",
-      "techTitle": "Technology investment",
-      "techDesc": "Ongoing R&D in energy management, autonomous navigation, our IoT platform and VTOL systems.",
+      "lead": "Shenzhen Zero-One Innovation Technology Co., Ltd. — focused on China's low-altitude economy and clean-mobility tracks.",
+      "body": "Shenzhen Zero-One Innovation Technology Co., Ltd. was founded in 2026, co-established by graduates from the AI School of Shenzhen Technology University and the University of Hong Kong. We're a technology company focused on the R&D, manufacturing and sale of intelligent robots and specialty UAVs.\n\nWe focus on two core tracks:\n· Clean-mobility infrastructure — LingYI-Charge mobile EV-charging robot, solving the 'last mile' of EV charging\n· Low-altitude economy systems — LingYI-1 VTOL fixed-wing UAV, serving industrial inspection, security reconnaissance and emergency response\n\nOur core team brings together expertise in robot motion control, UAV aerodynamics, AI vision, and embedded systems — capable of delivering end-to-end from product definition through prototyping to low-volume production.\n\nWe operate by the principle of 'fearless and meticulous' — bringing intelligent robotics into real industry use to create measurable commercial value for our customers.",
+      "techTitle": "Core R&D capabilities",
+      "techDesc": "Full-stack in-house: mechanics, embedded firmware, AI algorithms and cloud all owned end-to-end. 3D printing + composites + CNC compress prototype cycles to 4 weeks. Domestic-sourced sensors + in-house control algorithms lower BOM by 40%+ versus peers.",
       "patents": "Multiple invention patents pending",
       "eyebrow": "About",
-      "meta": ["Two product lines", "Patents pending", "Entity registration in progress"]
+      "meta": ["Founded 2026, Shenzhen", "SZTU + HKU heritage", "Patents pending"]
     },
     "contact": {
       "title": "Contact us",
-      "lead": "For product inquiries, solutions or partnerships — we'd love to hear from you.",
+      "lead": "Shenzhen Zero-One Innovation Technology Co., Ltd. — reach out for product information, partnerships or trial arrangements.",
       "emailLabel": "Technical support email",
       "businessLabel": "Business inquiries",
       "businessDesc": "Product, procurement, channel and project partnerships",
       "techLabel": "Technical support",
       "techDesc": "Product usage, solutions and technical questions",
       "eyebrow": "Contact",
-      "meta": ["Business inquiries", "Technical support", "Email-based response"]
+      "meta": ["Shenzhen", "Business inquiries", "Technical support"]
     }
   }
 }

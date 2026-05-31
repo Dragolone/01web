@@ -16,38 +16,40 @@ const stroke = {
 };
 
 const capabilityIcons: Record<string, React.ReactNode> = {
-  // Remote device monitoring — display with live waveform
-  monitor: (
+  // Full-stack in-house R&D — stacked layers (mech / firmware / AI / cloud)
+  fullstack: (
     <svg viewBox="0 0 32 32" {...stroke}>
-      <rect x="4" y="6" width="24" height="16" rx="2" />
-      <path d="M11 26h10M16 22v4" />
-      <path d="M8 14l3-3 3 5 4-7 3 4 3-2" />
+      <rect x="5" y="5" width="22" height="5" rx="1" />
+      <rect x="5" y="13.5" width="22" height="5" rx="1" />
+      <rect x="5" y="22" width="22" height="5" rx="1" />
+      <circle cx="9" cy="7.5" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="16" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="24.5" r="0.9" fill="currentColor" stroke="none" />
     </svg>
   ),
-  // Smart charging — battery + bolt
-  charge: (
+  // Rapid prototyping — 3D-print head + lightning
+  rapid: (
     <svg viewBox="0 0 32 32" {...stroke}>
-      <rect x="5" y="9" width="20" height="14" rx="2" />
-      <path d="M25 13v6" />
-      <path d="M16 12l-3 5h3l-1 4 4-5h-3l0-4z" />
+      <path d="M6 8h20l-3 6H9z" />
+      <path d="M11 14v3a5 5 0 0010 0v-3" />
+      <path d="M17 22l-3 5h3l-1 3 4-5h-3l0-3z" />
     </svg>
   ),
-  // Dashboard — chart bars + arc
-  dashboard: (
+  // Cost reduction — down arrow + RMB / dollar sign
+  cost: (
     <svg viewBox="0 0 32 32" {...stroke}>
-      <path d="M5 24a11 11 0 0122 0" />
-      <path d="M16 24l5-6" />
-      <circle cx="16" cy="24" r="1.4" fill="currentColor" stroke="none" />
-      <path d="M10 24v-3M22 24v-3" opacity="0.4" />
+      <circle cx="16" cy="16" r="11" />
+      <path d="M11 12h10M11 16h10" />
+      <path d="M13 8l3 14 3-14" />
     </svg>
   ),
-  // Ground + low-altitude coordination — node link
-  coordinate: (
+  // Industry-academia link — graduation cap + connected nodes
+  research: (
     <svg viewBox="0 0 32 32" {...stroke}>
-      <circle cx="7" cy="22" r="3" />
-      <circle cx="25" cy="10" r="3" />
-      <circle cx="16" cy="16" r="2" />
-      <path d="M9.5 20.2l5-3M18 14l4.6-2.6" />
+      <path d="M3 12l13-6 13 6-13 6z" />
+      <path d="M8 14v6c0 2 4 4 8 4s8-2 8-4v-6" />
+      <path d="M26 12v6" />
+      <circle cx="26" cy="20" r="1.2" fill="currentColor" stroke="none" />
     </svg>
   ),
 };
@@ -55,7 +57,7 @@ const capabilityIcons: Record<string, React.ReactNode> = {
 export function HomeCapabilities({ dict }: Props) {
   return (
     <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

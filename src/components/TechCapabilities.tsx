@@ -9,16 +9,17 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function TechCapabilities({ dict }: Props) {
   return (
-    <section className="py-24 md:py-32 bg-foreground text-white relative overflow-hidden">
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 80% 20%, rgba(24,73,220,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 10% 80%, rgba(24,73,220,0.18) 0%, transparent 60%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+    <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-10">
+      <div className="relative rounded-[2rem] bg-[#0a0d14] text-white py-24 md:py-32 overflow-hidden shadow-[0_30px_80px_-40px_rgba(10,13,30,0.5)]">
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-40"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 80% 20%, rgba(24,73,220,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 10% 80%, rgba(24,73,220,0.18) 0%, transparent 60%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,6 +51,7 @@ export function TechCapabilities({ dict }: Props) {
               <p className="mt-3 text-white/65 leading-relaxed">{item.value}</p>
             </motion.div>
           ))}
+        </div>
         </div>
       </div>
     </section>

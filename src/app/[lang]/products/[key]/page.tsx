@@ -4,12 +4,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, locales, type Locale } from "../../dictionaries";
 
-const PRODUCT_KEYS = ["robot", "vtol"] as const;
+const PRODUCT_KEYS = ["charge", "vtol"] as const;
 type ProductKey = (typeof PRODUCT_KEYS)[number];
 
 const productImages: Record<ProductKey, { img: string; alt: string }> = {
-  robot: { img: "/products/robot-hero.jpg", alt: "Mobile Charging Robot" },
-  vtol: { img: "/products/drone-hero.jpg", alt: "VTOL Aircraft" },
+  charge: { img: "/products/robot-hero.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
+  vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
 function isProductKey(k: string): k is ProductKey {
@@ -52,7 +52,7 @@ export default async function ProductDetailPage({
     <>
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface/40">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
           <Link
             href={`/${lang}/products`}
             className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors mb-8"
@@ -111,7 +111,7 @@ export default async function ProductDetailPage({
 
       {/* Features */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
             {dict.productDetail.featuresTitle}
           </h2>
@@ -132,7 +132,7 @@ export default async function ProductDetailPage({
 
       {/* Specs (placeholder) */}
       <section className="pb-24 md:pb-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
           <div className="rounded-3xl border border-dashed border-border p-10 md:p-14 text-center">
             <p className="text-xs tracking-widest uppercase text-muted">
               {dict.productDetail.specsTitle}

@@ -34,15 +34,18 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Site-wide subtle dot grid — removes the "flat white board" feel.
-   Dark sections (bg-foreground, etc.) cover this automatically since their bg is opaque. */
+/* Site-wide ambient tech background — 3 layers (front to back):
+   1. SVG tile pattern: corner node + center crosshair, 48px tile — "blueprint" feel
+   2. Left brand-blue radial wash (fills left negative space)
+   3. Right brand-blue radial wash (fills right negative space)
+   Dark sections (bg-[#0a0d14], etc.) cover all 3 layers automatically since their bg is opaque. */
 body {
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    rgba(10, 10, 10, 0.055) 1px,
-    transparent 0
-  );
-  background-size: 26px 26px;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><g stroke='rgba(24,73,220,0.11)' stroke-width='0.6' fill='none'><path d='M24 21 V27 M21 24 H27'/></g><g fill='rgba(24,73,220,0.13)' stroke='none'><circle cx='0' cy='0' r='1'/><circle cx='48' cy='0' r='1'/><circle cx='0' cy='48' r='1'/><circle cx='48' cy='48' r='1'/></g></svg>"),
+    radial-gradient(45% 70% at 0% 45%, rgba(24, 73, 220, 0.05) 0%, transparent 60%),
+    radial-gradient(45% 70% at 100% 55%, rgba(24, 73, 220, 0.04) 0%, transparent 60%);
+  background-size: 48px 48px, 100% 100%, 100% 100%;
+  background-repeat: repeat, no-repeat, no-repeat;
   background-attachment: fixed;
 }
 

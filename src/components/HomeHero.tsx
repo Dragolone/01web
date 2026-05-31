@@ -36,7 +36,7 @@ export function HomeHero({ lang, dict }: Props) {
         }}
       />
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left — copy */}
           <div className="lg:col-span-6">

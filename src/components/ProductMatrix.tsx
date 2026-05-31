@@ -9,17 +9,18 @@ type Props = { dict: Dictionary; lang: Locale };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-// `robot` here is the mobile-charging-robot — same hardware as the
-// white-wheeled unit in robot-hero.jpg ("ENERGIZE ANYWHERE").
+// Visual mapping — image file names are legacy and don't reflect contents:
+//   robot-hero.jpg  → LingYI-Charge mobile EV charging robot
+//   drone-hero.jpg  → LingYI-1 VTOL fixed-wing UAV
 const visuals: Record<string, { img: string; alt: string }> = {
-  robot: { img: "/products/robot-hero.jpg", alt: "Mobile Charging Robot" },
-  vtol: { img: "/products/drone-hero.jpg", alt: "VTOL" },
+  charge: { img: "/products/robot-hero.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
+  vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
 export function ProductMatrix({ dict, lang }: Props) {
   return (
     <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

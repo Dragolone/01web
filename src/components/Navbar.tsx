@@ -51,7 +51,7 @@ export function Navbar({ lang, dict }: Props) {
           : "bg-transparent"
       )}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between">
+      <div className="mx-auto max-w-[88rem] px-6 lg:px-10 h-16 flex items-center justify-between">
         <Link href={`/${lang}`} className="flex items-center gap-2 group">
           <Image
             src="/brand/logo-512.png"

@@ -37,7 +37,7 @@ export function PageHero({ title, lead, eyebrow, meta }: Props) {
         <path d="M0 260 Q 150 160, 280 190 T 420 120" stroke="currentColor" strokeWidth="1" opacity="0.3" />
       </svg>
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
         {eyebrow && (
           <motion.p
             initial={{ opacity: 0, y: 10 }}
