@@ -11,8 +11,10 @@
 - **公司全称**：深圳零一唯创科技有限公司 / Shenzhen Zero-One Innovation Technology Co., Ltd.
 - **业务**：**双赛道战略** —— ① 新能源智慧出行（LingYI-Charge 移动 EV 充电机器人）② 低空经济装备（LingYI-1 垂起固定翼无人机）
 - **Slogan**：向前·创新，持续突破边界（主）／ 生而无畏，精益求精（辅，PDF 用）
-- **官方简介**（在所有页面都对得上 —— 来自 PDF 公司手册）：
-  > 深圳零一唯创科技有限公司成立于 2026 年，由深圳技术大学人工智能学院与香港大学毕业生联合创办，是一家专注于智能机器人与特种无人机研发、制造和销售的科技型企业。
+- **官方简介**（在所有页面都对得上 —— 基于 PDF 公司手册，**创办方表述已脱敏**）：
+  > 深圳零一唯创科技有限公司成立于 2026 年，由深圳技术大学人工智能学院与香港高校青年团队联合创办，是一家专注于智能机器人与特种无人机研发、制造和销售的科技型企业。
+  >
+  > ⚠️ PDF 原文写的是「与香港大学毕业生联合创办」，用户 2026-06-01 要求**全站不点名香港大学**，统一改为「香港高校青年团队」（meta 里「港大背景」→「港校背景」，en 用 `Hong Kong universities`）。改产品/公司文案做「按 PDF 还原」时**不要**把这句改回去。
 - **联系邮箱**：810170966qq@gmail.com
 - **完整 VI 资料**：`static_style/` 目录（mood board + VI 规范图，已 commit 进仓库以备重裁）
 - **官方设计稿参考**：`public/products/_design-reference.jpg`（公司 mood board 里截出来的目标 layout，不要上线）
@@ -28,9 +30,11 @@
 | 企业邮箱 | 未启用 | 全站用 gmail。联系页用「商务合作 / 技术支持」两栏分流卡片伪装专业感 |
 | 产品成熟度 | **两条产品线都已落地** | LingYI-Charge 和 LingYI-1 都有完整参数和应用场景（见下方「真实产品信息」节），**不要**再写成「敬请期待」或「概念产品」 |
 
-## 真实产品信息（来自 PDF 产品手册，`docs/` 目录）
+## 真实产品信息（来自 PDF 产品手册）
 
-> 所有产品名、规格、场景**只能从这里取**，不要凭印象编造。每次涉及产品的文案改动前都看这一节。源文件：`docs/零一唯创-产品手册(3).pdf` + `docs/零一唯创（1）.pdf`。
+> 所有产品名、规格、场景**只能从这里取**，不要凭印象编造。每次涉及产品的文案改动前都看这一节。源文件在**仓库根目录**（不是 `docs/`，CLAUDE.md 旧版写错过）：`零一唯创-产品手册(3).pdf`（17MB，主手册）+ `零一唯创（1）.pdf`（PPT 版）。**这两个 PDF 是 untracked**（未 commit）。读 PDF：`Read` 工具原生支持（`pages` 参数）；抽图用 `pdfimages`/`pdftoppm`（poppler，已装）。
+>
+> **手册里还没全搬上网站的真实内容**（需要时再用）：合作模式（设备买断/服务分成/租赁/SaaS）、目标客户画像表、竞争优势长文、飞行器组件交付清单、更多核心功能（地面站监控/自主航线/AI 识别）。属 B 端招商细节，用户偏极简没硬塞。
 
 ### LingYI-Charge 移动充电机器人（产品 key: `charge`）
 
@@ -69,8 +73,10 @@
 
 - `products.items[].key`: `charge` | `vtol`（只有 2 个，曾经有 `robot` 和 `station` 但都已被合并 → 重命名）
 - `solutions.scenarios[].key`: `pipeline` | `rescue` | `security` | `remote-sensing`（VTOL 4 个）+ `commercial` | `residential` | `campus` | `event`（Charge 4 个）= 共 **8 个真实场景**。**每个 desc 必须贴 PDF 原文不简化**（用户曾因 desc 偏 AI 化抱怨过）
-- `productDetail.items.{charge,vtol}`: 详情页用
-- 历史路由 `/products/robot` 和 `/products/station` 已通过 `next.config.ts` redirects 永久 308 重定向到 `/products/charge`，防外链 404
+- `productDetail.items.{charge,vtol}`: 详情页用。每个含 `features`（3 条核心特性）+ **`specs`**（PDF 真实参数表，分组 `{group, rows:[{k,v}]}`）+ **`value`**（商业价值对比 `{rows:[{k,old,neo}], note}`，两款都有 —— Charge 是痛点对比 + ROI，VTOL 是 vs 直升机降本）。`productDetail` 顶层还有 `valueTitle/valueColOld/valueColNew`。
+- `pages.about.market`: 关于页市场规模表 `{title, subtitle, cols:{segment,domestic,global,growth}, rows:[]}`（PDF 真实测算：工业无人机 450 亿 / 移动充电 120 亿 / 低空经济 5000 亿 + CAGR）。
+- **路由 `/technology` 已改名 `/solutions`**（2026-06-01，nav 标签本就是「解决方案」，URL 名实相符）。**但 nav/footer/dict 内部 key 仍叫 `technology`**（稳定标识符，别去改；`pages.technology` 内容就是解决方案页用的）。旧 `/technology` → `/solutions` 走 `next.config.ts` 308 redirect。
+- 历史路由 `/products/robot` 和 `/products/station` 也通过 `next.config.ts` redirects 永久 308 → `/products/charge`，防外链 404
 
 ## 用户偏好（本项目特定）
 
@@ -111,55 +117,50 @@
 ```
 src/
 ├── app/
-│   ├── [lang]/                    ← 所有页面都在这里
-│   │   ├── layout.tsx             ← 根布局（async params + 完整 generateMetadata：OG/twitter/alternates/icons）
-│   │   ├── page.tsx               ← 首页（4 个 section 组合）
+│   ├── [lang]/                    ← 所有页面都在这里（⚠️ 根布局就在这层，**没有 app/layout.tsx** —— 见「路由 / 404 架构」）
+│   │   ├── layout.tsx             ← 根布局（async params + generateMetadata + Organization JSON-LD + MotionProvider 包裹 + TechBackdrop）
+│   │   ├── page.tsx               ← 首页（HomeHero/Features/ProductMatrix/HomeCapabilities/TechCapabilities/HomeCTA）
 │   │   ├── dictionaries.ts        ← i18n 字典加载器 + locale 常量
+│   │   │                            （⚠️ 这层**不要**建 not-found.tsx —— 动态根布局下不组合，404 走根 app/not-found.tsx）
 │   │   ├── products/page.tsx
-│   │   ├── products/[key]/page.tsx ← 产品详情动态路由（key: **charge|vtol**）
-│   │   ├── technology/page.tsx
-│   │   ├── about/page.tsx
-│   │   └── contact/page.tsx
+│   │   ├── products/[key]/page.tsx ← 产品详情（key: **charge|vtol**；非法 key → `redirect('/products')` 不是 notFound，见 404 架构）。含 features+specs 表+value 对比+Product JSON-LD
+│   │   ├── solutions/page.tsx     ← 解决方案页（旧 /technology 改名，dict 仍用 pages.technology）。SolutionScenarios + TechCapabilities
+│   │   ├── about/page.tsx         ← 公司简介 + 双产品图 + 研发/专利 + 市场规模表
+│   │   └── contact/page.tsx       ← 商务/技术两卡（带图标 + 悬停 ↗）
+│   ├── not-found.tsx              ← ✅ 真正生效的 404：自带完整 `<html>`（无根 layout 可借），client 用 usePathname 取 locale 出三语
 │   ├── site.ts                    ← SITE_URL 常量（读 NEXT_PUBLIC_SITE_URL）
-│   ├── sitemap.ts                 ← 15 URL × hreflang 互链
-│   ├── robots.ts                  ← User-agent * / Sitemap
-│   ├── opengraph-image.tsx        ← ImageResponse 1200×630（全英文，跨 locale 共享）
-│   ├── icon.png                   ← 公司「0+1」logo 裁出的 512×512 favicon
-│   ├── apple-icon.png             ← 180×180 白底 iOS 桌面图标
-│   └── globals.css                ← Tailwind + 品牌 CSS 变量 + 全站 SVG tile 背景（48px 蓝图风 + 左右 brand 蓝径向晕）
+│   ├── sitemap.ts                 ← SITE_PATHS × 3 locale × hreflang 互链（SITE_PATHS 里已是 /solutions）
+│   ├── robots.ts / opengraph-image.tsx / icon.png / apple-icon.png
+│   └── globals.css                ← Tailwind + 品牌 token + 全页基底「科技图标矩阵」+ focus-visible 环 + reduced-motion media query（见「背景」「a11y」）
 ├── components/
-│   ├── Navbar.tsx (client)        ← 含 3 段语言切换 + 移动端汉堡 + 滚动毛玻璃
-│   ├── Footer.tsx (server)
-│   ├── HomeHero.tsx (client)      ← Hero 浅蓝舞台 + 主产品图 + 4 浮动玻璃状态卡
-│   ├── HomeFeatures.tsx (client)  ← Hero 下方 4 卡能力条
-│   ├── HomeCTA.tsx (client)
-│   ├── HomeCapabilities.tsx (client) ← 4 卡技术能力（首页 + /products 页复用）
-│   ├── ProductMatrix.tsx (client) ← 产品卡片（动态 cols：>=3 时 3 列，<3 时 2 列）
-│   ├── SolutionScenarios.tsx (client) ← 8 场景（pipeline/rescue/security/remote-sensing + commercial/residential/campus/event）
-│   ├── TechCapabilities.tsx (client) ← 「可量化商业价值」rounded-2rem 浮起卡片（外层白底 + 内层深蓝灰 #0a0d14 圆角，shadow 微浮）
-│   └── PageHero.tsx (client)      ← 内页通用 hero（含 eyebrow + meta + 装饰流线）
-├── dictionaries/
-│   ├── zh.json                    ← 简体（默认，最权威，新增 key 先加这里）
-│   ├── zh-Hant.json               ← 繁体（路由是 /tw，台湾倾向：智慧/即時/聯絡/信箱/硬體/使用者）
-│   └── en.json                    ← 英文
-└── proxy.ts                       ← 根路径 → /zh 强制重定向（matcher 已排除根级 metadata 路由）
+│   ├── Navbar.tsx (client)        ← 3 段语言切换 + 移动端汉堡（aria-expanded/ESC/锁滚动）+ 滚动毛玻璃
+│   ├── Footer.tsx (server)        ← 链接悬停滑入 ↗ 箭头
+│   ├── MotionProvider.tsx (client)← `<MotionConfig reducedMotion="user">` 包裹全站（动效降级）
+│   ├── TechBackdrop.tsx (server)  ← 全局 fixed 背景层（角落辉光 + 左右 blueprint 网格/电路带，mask 横向渐隐）
+│   ├── HomeHero.tsx (client)      ← Hero 舞台 + 主产品图 + 4 浮动卡 + **VTOL 双赛道迷你卡**（舞台下方）
+│   ├── HomeFeatures / HomeCTA / HomeCapabilities (client)
+│   ├── ProductMatrix.tsx (client) ← 产品卡片（fallback 用 visuals.charge，别用已删的 visuals.robot）
+│   ├── SolutionScenarios.tsx (client) ← 8 场景；其中 4 个（pipeline/security/commercial/event）用真实实景图，其余示意卡（scenarioImages map）
+│   ├── TechCapabilities.tsx (client) ← 「可量化商业价值」深色浮起卡片（VTOL 用，dict.tech）
+│   └── PageHero.tsx (client)      ← 内页通用 hero（eyebrow 圆点 + meta + 装饰流线）
+├── dictionaries/                  ← zh.json（默认/最权威）/ zh-Hant.json（/tw 台湾用词）/ en.json。新增 key 三个同步
+└── proxy.ts                       ← 非 locale 路径 → 加 /zh 前缀重定向（matcher 已排除根级 metadata 路由）
 
-docs/                              ← ⚠️ 产品手册 PDF（公司真实信息源头，文案改动前必看）
-├── 零一唯创-产品手册(3).pdf      ← 17MB，完整产品手册（公司简介 + 两产品规格 + 应用场景）
-└── 零一唯创（1）.pdf            ← 5MB，PPT 版战略与产品介绍
+# PDF 手册在仓库根目录（不是 docs/）：零一唯创-产品手册(3).pdf + 零一唯创（1）.pdf（均 untracked）
 
-next.config.ts                     ← redirects: /products/robot|station → /products/charge (308 永久)
+next.config.ts                     ← redirects 308: /products/robot|station → /products/charge；/technology → /solutions
 
 public/
-├── brand/
-│   ├── logo.png                   ← 透明背景（万能用，1710×439）
-│   ├── logo-white.png             ← 白底
-│   └── logo-512.png               ← header/favicon 用（512×131）
-└── products/
-    ├── robot-hero.jpg             ← ⚠️ 文件名误导 —— 实际是 LingYI-Charge 充电桩白色机型（"ENERGIZE ANYWHERE"）。`products[].key='charge'` 用它
-    ├── drone-hero.jpg             ← LingYI-1 VTOL 无人机（飞行视角）。`products[].key='vtol'` 用它
-    ├── delivery-robot-office.jpg  ← ⚠️ 高个子配送机器人，**非公司产品**。当前仅 about 页用作场景图，未来应替换或删除
-    └── _design-reference.jpg      ← ⚠️ 公司目标设计参考，不要上线
+├── brand/                         ← logo.png（透明 1710×439）/ logo-white.png / logo-512.png（header/favicon 512×131）
+└── products/                      ← ⚠️ 文件名易误导，认这里：
+    ├── robot-hero.jpg             ← LingYI-Charge 白色机型（ProductMatrix 卡 + HomeHero 主图）
+    ├── drone-hero.jpg             ← LingYI-1 飞行视角（HomeHero VTOL 迷你卡）
+    ├── charge-station.jpg         ← 【PDF 抽出】充电机器人给特斯拉充电（charge 详情 hero + commercial 场景）
+    ├── charge-event.jpg           ← 【PDF 抽出】音乐节应急供电（event 场景）
+    ├── drone-cruise.jpg           ← 【PDF 抽出】无人机跨湖巡航（vtol 详情 hero + pipeline 场景）
+    ├── drone-alley.jpg            ← 【PDF 抽出】无人机巷战垂起（security 场景）
+    ├── delivery-robot-office.jpg  ← ⚠️ 非公司产品（高个子配送机器人），**已无引用**，可删
+    └── _design-reference.jpg      ← ⚠️ 设计参考，不要上线
 
 static_style/                       ← 原始 VI 素材，重裁图时回这里找
 ```
@@ -206,7 +207,7 @@ Tailwind class 直接用：`bg-brand` / `text-brand` / `bg-brand-soft` / `text-m
 当前方案（苹果 / Vercel 风的浮起卡片）：
 
 ```tsx
-<section className="py-12 md:py-16 px-4 sm:px-6 lg:px-10">           {/* 外层白底，给卡片外 margin */}
+<section className="py-20 md:py-28 px-4 sm:px-6 lg:px-10">          {/* 外层白底，给卡片外 margin */}
   <div className="relative rounded-[2rem] bg-[#0a0d14] text-white
                   py-24 md:py-32 overflow-hidden
                   shadow-[0_30px_80px_-40px_rgba(10,13,30,0.5)]">    {/* 浮起卡片 */}
@@ -217,19 +218,56 @@ Tailwind class 直接用：`bg-brand` / `text-brand` / `bg-brand-soft` / `text-m
 
 下次任何"明暗节奏切换"都用这个套路，**不要再加 fade overlay**。
 
+### 全站统一竖向节奏：`py-20 md:py-28`
+
+2026-06-01 把杂乱的 section padding（曾经 12/16/20/24/28/32 六种混用）收敛成**一个标准值 `py-20 md:py-28`**，整体呼吸一致、显高级。新 section 一律用它。例外：page hero / HomeHero 保留 `pt-32 md:pt-40` 顶部间距（给固定导航栏让位）；HomeFeatures 用 `pt-4 pb-20 md:pt-6 md:pb-28`（贴住 Hero）。
+
+### eyebrow 小标统一样式
+
+所有区块小标（Product Matrix / Applications / Technology / About …）统一为「**brand 圆点 + 大写字距标签**」，**不要药丸底色**：
+```tsx
+<p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+  <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />Label
+</p>
+```
+PageHero 的 eyebrow 也是这个（曾用 `bg-brand-soft` 药丸，已去掉）。
+
+### 悬停 ↗ 箭头（Footer / Contact / specs 脚注链接）
+
+文字链接悬停时从左下滑入一个 ↗ 小箭头（`viewBox 0 0 12 12` path `M3 9 9 3M9 3H4.5M9 3v4.5`，初始 `-translate-x-1 -translate-y-0.5 opacity-0`，`group-hover` 归位显现）。新文字链接沿用这个。
+
 ### 全站 max-w 用 `max-w-[88rem]`（1408px）
 
 不要用 `max-w-7xl`（1280px）。已经全局 sed 批量替换。新组件容器模板：`mx-auto max-w-[88rem] px-6 lg:px-10`。
 
 ### 全站 ambient 背景在 `globals.css` body（fixed background）
 
-3 层叠加，用户偏好"科技图案 + 不抢戏 + 让人感觉不空"：
+底色是 **off-white 蓝白**（`--background: #fafbfe`，不是纯白 —— 纯白曾被反馈「页面太空/死白」，2026-06-01 改 off-white 让白卡片边界更清晰）。背景分两处：
 
-1. **SVG tile pattern**（48×48px）—— 蓝图/电路板风：4 角圆点（tile 重复后形成网格交点）+ tile 中心十字坐标。alpha 0.11-0.13。
-2. **左侧 brand 蓝径向晕** `radial-gradient(45% 70% at 0% 45%, rgba(24,73,220,0.05), transparent)`
-3. **右侧 brand 蓝径向晕** `radial-gradient(45% 70% at 100% 55%, rgba(24,73,220,0.04), transparent)`
+**A. `globals.css` body —— 全页基底「科技图标矩阵」**（一张 360px 大 tile 的内联 SVG，散布 ~17 个小科技符号：六边形/靶环/芯片/电路走线/菱形/波形/十字准星…，brand 蓝 ~15%）。大 tile = 重复周期大，看起来是「随机科技图案场」而非网格。`background-attachment: fixed` 不随滚动。
+> 历史演进（**不要往回退**）：48px 蓝图十字 tile → 6% 点阵（用户嫌「几乎看不见、太弱」）→ 10% 点阵（用户嫌「还是像纯白」）→ **当前：用户要求「把一个个点换成一个个小图案」「图案要随机分布、要科技元素」**。再调强弱改 SVG 里的 alpha；别改回纯点阵。
 
-`background-attachment: fixed` 让背景不随滚动移动（沉浸感）。Dark sections (`bg-[#0a0d14]`, `bg-foreground` 等不透明 bg) 自动盖住全部 3 层。**新增 dark section 不需要处理背景。**
+**B. `components/TechBackdrop.tsx` —— 全局 fixed 背景层**（挂在 `[lang]/layout.tsx` body 第一个子元素，`pointer-events-none fixed inset-0 -z-10`）。负责方向性 / 科技图案 / 辉光，专打宽屏左右留白：
+1. **角落辉光**：右上 + 左下 brand 蓝 radial（~10%）+ 顶部中央 Hero 抬光（6%）
+2. **左右 blueprint 带**：`36% max-w-560px` 宽，叠加「44px 网格线 + 200px PCB 电路 tile（走线 + 节点圆点）」，用 `mask-image` 横向渐隐——**最强在屏幕最边缘（空白处），向中间淡出到全透明**，所以正文/卡片区干净。左右镜像。
+
+`-z-10` 让 TechBackdrop 在 body 基底之上、正文之下；Dark sections (`bg-[#0a0d14]` 等不透明 bg) 自动盖住 A+B。**新增 dark section 不需要处理背景；新增浅色 section 不要加自己的 bg-white，让背景层透出即可。** 调强弱：改 TechBackdrop 里 circuit/gridLines 的 rgba alpha + body 点阵 alpha；改左右带覆盖范围改 `w-[36%]`/`max-w-[560px]` 和 mask 的渐隐百分比。
+
+### ⚠️ 路由 / 404 架构（动态根布局的坑）
+
+**没有 `app/layout.tsx`** —— 根布局在动态段 `app/[lang]/layout.tsx` 里（为了 `<html lang>` 随 locale 变 + i18n metadata）。这是 Next 文档明确点名的「难以组合 404」情形（`not-found.md` 第 53-56 行）。带来两条**必须遵守**的规则：
+
+1. **未匹配 URL 的 404 走根 `app/not-found.tsx`** —— 它自带完整 `<html><body>`（没有根 layout 可借），client 组件用 `usePathname` 取 locale 出三语品牌页。`app/[lang]/not-found.tsx` **不起作用**（动态根布局下不组合），别指望它。
+2. **`[lang]` 内部页面里的 `notFound()` 会渲染空白页**（根 not-found 的 `<html>` 跟 `[lang]/layout` 的 `<html>` 冲突）。所以**产品详情非法 key 用 `redirect('/products')` 而不是 `notFound()`**。`hasLocale()` 那些 `notFound()` 分支实际永不触发（proxy 保证 lang 总是 zh/tw/en），是防御性的。**新增会对用户暴露的 notFound() 前先想清楚：未匹配 URL 用根 not-found，已匹配页的非法参数用 redirect。**
+
+proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 变成 `/zh/<unknown>` 未匹配 → 根 not-found。所以打错域名后任何路径都能落到品牌 404。
+
+### a11y / SEO（2026-06-01 硬化，别回退）
+
+- **焦点环**：`globals.css` 有 `:where(a,button,input,select,textarea,[tabindex]):focus-visible { outline: 2px solid var(--brand); outline-offset:2px }`。别删。
+- **动效降级**：`globals.css` 的 `@media (prefers-reduced-motion: reduce)` 把动画/过渡压到瞬时；framer-motion 由 `MotionProvider`（`reducedMotion="user"`）统一降级。新动画不用额外处理，已被这两层覆盖。
+- **JSON-LD**：`[lang]/layout.tsx` 注 Organization（公司真实信息，**无假地址**）；产品详情页注 Product。改公司信息时同步。
+- **图片**：所有 `<Image>` 带 `sizes`（响应式省流量）。新图照做。
 
 ### 内容来源
 
@@ -251,13 +289,15 @@ Tailwind class 直接用：`bg-brand` / `text-brand` / `bg-brand-soft` / `text-m
 - ✅ 已推 GitHub（首个 commit: `feat: 零一唯创官网首版`）
 - ✅ P0 升级完成（SEO 全套 + OG image + sitemap + robots + 产品详情动态路由 + 解决方案页场景化 + 关于页专利占位 + 联系页商务/技术分流）
 - ✅ **基于 PDF 真实信息大重写完成**（2026-06-01）：字典三同步用 PDF 真实产品名/规格/场景；产品 key 重命名 robot→charge；产品矩阵从首版的"3 个模糊产品"对齐到"2 个真实产品"；TechCapabilities 改成商业价值对比（vs 直升机降本 95% 等实数据）
-- ✅ **视觉细化轮**（2026-06-01 后续）：HomeCapabilities 图标修复（4 个新 key 加 SVG）/ TechCapabilities 改 rounded card 浮起卡片（取代难看的 fade overlay）/ 应用场景从 6 扩到 8 全部贴 PDF 原文 / Footer i18n（加 sitemapLabel + contactLabel）/ 全局 max-w-7xl → max-w-[88rem] sed 批量 / 全站背景升级为 SVG tile pattern + brand 蓝径向晕
+- ✅ **视觉细化轮**（2026-06-01）：HomeCapabilities 图标 / TechCapabilities 浮起卡片 / 场景 6→8 贴 PDF / Footer i18n / max-w-7xl→max-w-[88rem]
+- ✅ **2026-06-01 大轮**（详见上面各「关键设计决策」）：创办方脱敏 / 背景→科技图标矩阵 + TechBackdrop / `/technology`→`/solutions`(+redirect) / 产品详情真实规格表 + Charge&VTOL 商业价值 / 关于页市场规模表 / 从 PDF 抽 4 张实景图填解决方案场景卡 + 升级产品详情 hero / 统一节奏 py-20 md:py-28 / eyebrow 圆点 / Hero VTOL 双赛道迷你卡 / 联系页图标卡 / a11y(focus-visible + reduced-motion + 汉堡 aria) / JSON-LD / 三语品牌化 404 / 「查看技术规格」锚点滚动
 - ⏸ **域名 + 备案**：未启动。用户决定先开发。备案需要 2-3 周，越早启动越好（但不是 Claude 该推动的事，提醒用户即可）
 - ⏸ Vercel 预览部署：未启动
 - ⏸ 国内服务器 + Cloudflare CDN：备案后做
 - ⏸ **上线前必做**：设 `NEXT_PUBLIC_SITE_URL=https://<真实域名>`，否则 OG 图 / sitemap / canonical 全部用占位 `https://www.zeroone-innovation.com`
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
-- ⏸ 视觉素材升级：当前 `public/products/` 只有 3 张图（充电桩/无人机/办公机器人），PDF 里有更多场景图（音乐节供电、巷战起降、固定翼巡航），需要从 PDF 抽出来用
+- ⏸ 视觉素材：已从 PDF 抽 4 张实景图（充电特斯拉/音乐节/巡航/巷战）。剩 4 个场景（rescue/remote-sensing/residential/campus）手册无图，仍用示意卡；有图后按 SolutionScenarios 的 `scenarioImages` map 补即可
+- ⏸ 手册里未上网的 B 端内容（合作模式 / 客户画像 / 竞争优势 / 组件清单）—— 用户偏极简没硬塞，需要时再加
 
 ## 反模式 / 禁止
 
@@ -277,6 +317,11 @@ Tailwind class 直接用：`bg-brand` / `text-brand` / `bg-brand-soft` / `text-m
 | **不要再用旧场景词**（配送/巡检/安防/低空物流） | 当前 **8 场景** key 是 pipeline/rescue/security/remote-sensing + commercial/residential/campus/event。**每个 desc 必须用 PDF 原文，不简化、不漏 PDF 提到的细节**（比如"喊话器疏导"、"评估建筑物损毁程度"、"40kg 载荷可同时挂载可见光+热成像"等）。SolutionScenarios.tsx 的 `scenarioIcons` map 必须同步 8 个 key |
 | **不要在白→黑 section 过渡处加 fade overlay** | 曾用 `from-white to-transparent` 做过，呈现"白雾啃边"非常难看。当前 TechCapabilities 用「外层白底 + 内层 `rounded-[2rem]` 深色卡片 + 微 shadow」浮起卡片方案，新增类似明暗节奏块也用这个套路 |
 | **不要用 `max-w-7xl`** | 全站已统一改 `max-w-[88rem]`（1408px）。新组件用 `max-w-[88rem] mx-auto px-6 lg:px-10` 模板 |
+| **`[lang]` 内已匹配页别用 `notFound()`** | 动态根布局下会出空白页。非法参数用 `redirect()`；未匹配 URL 才靠根 `app/not-found.tsx`（见「路由 / 404 架构」） |
+| **别找 `/technology` 路由** | 已改名 `/solutions`（dict/nav 内部 key 仍叫 technology）。旧 URL 有 308 redirect 兜底 |
+| **别删 a11y 硬化** | `focus-visible` 焦点环 / `prefers-reduced-motion` / `MotionProvider` / 汉堡 `aria-expanded` 都要留 |
+| **背景别退回纯点阵** | 用户明确要「一个个小图案、随机分布、科技元素」。当前 globals.css body 是 360px 科技图标矩阵，调强弱改 alpha 即可 |
+| **新增 section 节奏用 `py-20 md:py-28`** | 全站已统一，别再引入 py-12/16/24/32 |
 
 ## 本地开发
 

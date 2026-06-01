@@ -65,7 +65,8 @@ export function HomeCapabilities({ dict }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="text-xs tracking-[0.18em] uppercase text-brand mb-3">
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
             Capabilities
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">

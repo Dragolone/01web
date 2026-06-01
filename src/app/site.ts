@@ -5,4 +5,4 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.zeroone-innovation.com"
 ).replace(/\/$/, "");
 
-export const SITE_PATHS = ["", "/products", "/technology", "/about", "/contact"] as const;
+export const SITE_PATHS = ["", "/products", "/solutions", "/about", "/contact"] as const;

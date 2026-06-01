@@ -18,12 +18,29 @@
   "hero": {
     "cta": "Learn more",
     "secondaryCta": "Our products",
-    "statusBadges": ["LingYI-Charge", "LingYI-1", "4-week prototyping", "40% lower BOM"],
+    "statusBadges": [
+      "LingYI-Charge",
+      "LingYI-1",
+      "4-week prototyping",
+      "40% lower BOM"
+    ],
     "features": [
-      { "title": "Full-stack in-house R&D", "desc": "Mechanics, embedded systems, AI algorithms and cloud — owned end to end" },
-      { "title": "Rapid prototyping", "desc": "3D printing + composites + CNC, sample cycles down to 4 weeks" },
-      { "title": "Cost-engineered BOM", "desc": "Domestic sensors + in-house control algorithms — 40% lower BOM than peers" },
-      { "title": "Industry-academia link", "desc": "Powered by Shenzhen Technology University AI Lab resources" }
+      {
+        "title": "Full-stack in-house R&D",
+        "desc": "Mechanics, embedded systems, AI algorithms and cloud — owned end to end"
+      },
+      {
+        "title": "Rapid prototyping",
+        "desc": "3D printing + composites + CNC, sample cycles down to 4 weeks"
+      },
+      {
+        "title": "Cost-engineered BOM",
+        "desc": "Domestic sensors + in-house control algorithms — 40% lower BOM than peers"
+      },
+      {
+        "title": "Industry-academia link",
+        "desc": "Powered by Shenzhen Technology University AI Lab resources"
+      }
     ]
   },
   "products": {
@@ -36,7 +53,11 @@
         "summary": "Charger-comes-to-car · App booking · Auto-docking",
         "desc": "Autonomous mobile EV-charging robot for smart parks, commercial complexes and large parking lots. 100 kWh onboard storage, one-tap app booking, LiDAR SLAM navigation and computer-vision plug-in — upgrading fixed chargers into a 'charger-comes-to-car' service.",
         "tag": "Flagship",
-        "tags": ["100 kWh", "±15 cm precision", "IP54"]
+        "tags": [
+          "100 kWh",
+          "±15 cm precision",
+          "IP54"
+        ]
       },
       {
         "key": "vtol",
@@ -44,7 +65,11 @@
         "summary": "Vertical takeoff · 2,000 km range · 40 kg payload",
         "desc": "A large VTOL fixed-wing UAV built for industrial inspection, security reconnaissance and emergency response. 3 m wingspan, fuel-electric hybrid power breaks battery limits, 2,000 km single-sortie coverage at 180 km/h cruise — operating from urban streets to remote terrain with no runway.",
         "tag": "Shipping",
-        "tags": ["2,000 km range", "40 kg payload", "180 km/h"]
+        "tags": [
+          "2,000 km range",
+          "40 kg payload",
+          "180 km/h"
+        ]
       }
     ]
   },
@@ -52,20 +77,48 @@
     "title": "Measurable Commercial Value",
     "subtitle": "Pipeline inspection example — a single LingYI-1 replaces a 3-5 person crew. Real numbers below.",
     "items": [
-      { "label": "Cost per sortie", "value": "5,000 CNY (helicopter) → 200 CNY (LingYI-1), 95% reduction" },
-      { "label": "Single-sortie coverage", "value": "3-5 km/day (manual) → 100+ km (LingYI-1)" },
-      { "label": "Deployment response", "value": "Hours (traditional) → Instant vertical takeoff (LingYI-1)" },
-      { "label": "ROI", "value": "500-800k CNY annual savings, payback in 8-16 months" }
+      {
+        "label": "Cost per sortie",
+        "value": "5,000 CNY (helicopter) → 200 CNY (LingYI-1), 95% reduction"
+      },
+      {
+        "label": "Single-sortie coverage",
+        "value": "3-5 km/day (manual) → 100+ km (LingYI-1)"
+      },
+      {
+        "label": "Deployment response",
+        "value": "Hours (traditional) → Instant vertical takeoff (LingYI-1)"
+      },
+      {
+        "label": "ROI",
+        "value": "500-800k CNY annual savings, payback in 8-16 months"
+      }
     ]
   },
   "homeCapabilities": {
     "title": "Full-stack Capabilities",
     "subtitle": "Mechanics, firmware, algorithms, cloud — end-to-end autonomy.",
     "items": [
-      { "key": "fullstack", "title": "End-to-end in-house R&D", "desc": "Mechanics, embedded, AI algorithms and cloud platform all built in-house — tight hardware-software co-iteration." },
-      { "key": "rapid", "title": "Rapid prototyping", "desc": "3D printing + composites + CNC keeps prototype cycles as short as 4 weeks." },
-      { "key": "cost", "title": "Cost-engineered BOM", "desc": "Domestic sensors with in-house control algorithms reduce BOM by 40%+ vs peers." },
-      { "key": "research", "title": "Industry-academia link", "desc": "Joint lab with the AI School of Shenzhen Technology University — shared research platform." }
+      {
+        "key": "fullstack",
+        "title": "End-to-end in-house R&D",
+        "desc": "Mechanics, embedded, AI algorithms and cloud platform all built in-house — tight hardware-software co-iteration."
+      },
+      {
+        "key": "rapid",
+        "title": "Rapid prototyping",
+        "desc": "3D printing + composites + CNC keeps prototype cycles as short as 4 weeks."
+      },
+      {
+        "key": "cost",
+        "title": "Cost-engineered BOM",
+        "desc": "Domestic sensors with in-house control algorithms reduce BOM by 40%+ vs peers."
+      },
+      {
+        "key": "research",
+        "title": "Industry-academia link",
+        "desc": "Joint lab with the AI School of Shenzhen Technology University — shared research platform."
+      }
     ]
   },
   "solutions": {
@@ -78,56 +131,88 @@
         "name": "Pipeline & Grid Inspection",
         "headline": "VTOL · Pipeline Inspection",
         "desc": "For oil pipelines, power transmission lines and PV plant inspections. 180 km/h cruise + 2,000 km range covers 100+ km of corridor per sortie. Onboard vision automatically flags construction encroachment, overgrowth and equipment anomalies. A 40 kg payload carries optical and thermal cameras simultaneously — multi-spectrum inspection in a single flight.",
-        "highlights": ["180 km/h cruise · 2,000 km range", "100+ km corridor per sortie", "Optical + thermal in one flight"]
+        "highlights": [
+          "180 km/h cruise · 2,000 km range",
+          "100+ km corridor per sortie",
+          "Optical + thermal in one flight"
+        ]
       },
       {
         "key": "rescue",
         "name": "Emergency Response & Damage Assessment",
         "headline": "VTOL · Emergency Response",
         "desc": "After earthquakes, floods or wildfires, takes off vertically with no runway and reaches the disaster site fast — streaming live footage for command decisions. Thermal imaging finds trapped people and assesses structural damage; onboard loudspeaker broadcasts evacuation instructions; 2,000 km range sustains long deployments.",
-        "highlights": ["Instant vertical launch", "Thermal search + damage assessment", "Loudspeaker evacuation broadcast"]
+        "highlights": [
+          "Instant vertical launch",
+          "Thermal search + damage assessment",
+          "Loudspeaker evacuation broadcast"
+        ]
       },
       {
         "key": "security",
         "name": "Tactical & Public Security",
         "headline": "VTOL · Tactical & Public Security",
         "desc": "3 m wingspan flying-wing layout, 200 km/h top speed — built for rapid close-in surveillance and area patrols. Optical-electronic pods enable 24/7 reconnaissance; loudspeakers support crowd management and dispersal. Ground station coordinates multi-UAV networks into a regional aerial awareness system.",
-        "highlights": ["3 m flying-wing airframe", "EO pod day/night recon", "Multi-UAV networking"]
+        "highlights": [
+          "3 m flying-wing airframe",
+          "EO pod day/night recon",
+          "Multi-UAV networking"
+        ]
       },
       {
         "key": "remote-sensing",
         "name": "Agro-forestry Remote Sensing",
         "headline": "VTOL · Agro-forestry Sensing",
         "desc": "Multispectral cameras map farmland and forest at scale, generating NDVI vegetation-index maps for precision fertilization, pest detection and timber-volume estimation. At 180 km/h cruise, a single sortie covers thousands of mu (hundreds of hectares).",
-        "highlights": ["Multispectral NDVI mapping", "Precision fertilization & pest detection", "Thousands of mu per sortie"]
+        "highlights": [
+          "Multispectral NDVI mapping",
+          "Precision fertilization & pest detection",
+          "Thousands of mu per sortie"
+        ]
       },
       {
         "key": "commercial",
         "name": "Commercial Complex & Office",
         "headline": "Charge · Commercial Complex",
         "desc": "Malls and office parks typically have under-provisioned EV charging — drivers queue and wait. With LingYI-Charge, drivers park anywhere and book via app, lifting parking-lot service quality and customer satisfaction; property operators earn ongoing revenue via service-fee sharing.",
-        "highlights": ["Any-stall app booking", "No retrofit required", "Service-fee revenue sharing"]
+        "highlights": [
+          "Any-stall app booking",
+          "No retrofit required",
+          "Service-fee revenue sharing"
+        ]
       },
       {
         "key": "residential",
         "name": "Residential Communities",
         "headline": "Charge · Residential",
         "desc": "Older residential complexes have limited electrical capacity and high retrofit costs — fixed chargers are hard to install at scale. The mobile charging robot stores energy at off-peak night rates and serves residents by day — no grid-capacity upgrade needed.",
-        "highlights": ["No grid-capacity upgrade", "Off-peak night charging", "On-demand daytime service"]
+        "highlights": [
+          "No grid-capacity upgrade",
+          "Off-peak night charging",
+          "On-demand daytime service"
+        ]
       },
       {
         "key": "campus",
         "name": "Industrial & Tech Parks",
         "headline": "Charge · Industrial Park",
         "desc": "Industrial parks have scattered buildings and low fixed-charger coverage. Mobile charging robots patrol the park 24/7 on standby; employees book on demand, lifting overall park amenities.",
-        "highlights": ["24/7 standby patrol", "On-demand employee booking", "Lifts park amenities"]
+        "highlights": [
+          "24/7 standby patrol",
+          "On-demand employee booking",
+          "Lifts park amenities"
+        ]
       },
       {
         "key": "event",
         "name": "Events & Exhibitions",
         "headline": "Charge · Events",
         "desc": "Auto shows, motorsport and music festivals lack permanent charging infrastructure. LingYI-Charge deploys on demand and leaves after the event — zero capital investment in fixed equipment.",
-        "highlights": ["On-demand deployment", "Zero capex", "Removable after event"]
+        "highlights": [
+          "On-demand deployment",
+          "Zero capex",
+          "Removable after event"
+        ]
       }
     ]
   },
@@ -136,23 +221,288 @@
     "featuresTitle": "Key features",
     "specsTitle": "Technical specifications",
     "specsTBD": "Full datasheet available on request — we typically reply within 1-2 business days.",
-    "ctaText": "Request datasheet",
+    "ctaText": "View specifications",
     "items": {
       "charge": {
         "features": [
-          { "title": "App booking + autonomous navigation", "desc": "Users book via QR or app; the robot plans its route to the target stall and copes with weak-GPS underground garages." },
-          { "title": "Vision-guided auto plug-in", "desc": "RGB-D depth camera locates the charging port; the robotic arm docks autonomously — no human assistance needed." },
-          { "title": "Cloud fleet scheduling", "desc": "Multi-robot coordination by battery, location and booking queue — maximizing uptime and service efficiency." }
-        ]
+          {
+            "title": "App booking + autonomous navigation",
+            "desc": "Users book via QR or app; the robot plans its route to the target stall and copes with weak-GPS underground garages."
+          },
+          {
+            "title": "Vision-guided auto plug-in",
+            "desc": "RGB-D depth camera locates the charging port; the robotic arm docks autonomously — no human assistance needed."
+          },
+          {
+            "title": "Cloud fleet scheduling",
+            "desc": "Multi-robot coordination by battery, location and booking queue — maximizing uptime and service efficiency."
+          }
+        ],
+        "specs": [
+          {
+            "group": "Chassis",
+            "rows": [
+              {
+                "k": "Dimensions",
+                "v": "1200 × 800 × 650 mm"
+              },
+              {
+                "k": "Curb weight",
+                "v": "180 kg"
+              },
+              {
+                "k": "Rated load",
+                "v": "2 t"
+              }
+            ]
+          },
+          {
+            "group": "Energy & charging",
+            "rows": [
+              {
+                "k": "Battery capacity",
+                "v": "100 kWh"
+              },
+              {
+                "k": "Power input",
+                "v": "220V AC inverter"
+              },
+              {
+                "k": "Fast-charge input",
+                "v": "750 W"
+              },
+              {
+                "k": "Charging efficiency",
+                "v": "≥ 94%"
+              }
+            ]
+          },
+          {
+            "group": "Navigation & sensing",
+            "rows": [
+              {
+                "k": "Positioning",
+                "v": "Laser SLAM + vision fusion"
+              },
+              {
+                "k": "Accuracy",
+                "v": "± 15 cm"
+              },
+              {
+                "k": "Obstacle avoidance",
+                "v": "360° multi-sensor (ultrasonic + depth camera)"
+              }
+            ]
+          },
+          {
+            "group": "Mobility",
+            "rows": [
+              {
+                "k": "Top speed",
+                "v": "1.5 m/s"
+              },
+              {
+                "k": "Max gradient",
+                "v": "≤ 10°"
+              }
+            ]
+          },
+          {
+            "group": "Protection & comms",
+            "rows": [
+              {
+                "k": "Ingress rating",
+                "v": "IP54"
+              },
+              {
+                "k": "Connectivity",
+                "v": "4G / 5G + Wi-Fi"
+              }
+            ]
+          },
+          {
+            "group": "Safety",
+            "rows": [
+              {
+                "k": "Battery protection",
+                "v": "Multi-level BMS"
+              },
+              {
+                "k": "Emergency stop",
+                "v": "Hardware E-stop + software safety edge"
+              }
+            ]
+          }
+        ],
+        "value": {
+          "rows": [
+            {
+              "k": "Charger shortage",
+              "old": "Queues, poor experience",
+              "neo": "Park anywhere, robot comes to you"
+            },
+            {
+              "k": "Grid upgrade cost",
+              "old": "¥0.5–1M+ retrofit",
+              "neo": "No grid upgrade; reused storage"
+            },
+            {
+              "k": "Low charger utilization",
+              "old": "Packed by day, idle at night",
+              "neo": "All-day patrol, ≥70% utilization"
+            },
+            {
+              "k": "Bays blocked",
+              "old": "Fixed chargers can't move",
+              "neo": "Robot relocates to free bays"
+            },
+            {
+              "k": "Long build cycle",
+              "old": "3–6 months",
+              "neo": "Deploy same day"
+            }
+          ],
+          "note": "Reference ROI: two units at a 200-bay complex serve 12–16 cars/day at ¥60 avg — ¥22k–29k/month, payback ~8–12 months."
+        }
       },
       "vtol": {
         "features": [
-          { "title": "VTOL + cruise dual-mode", "desc": "Takes off and lands in place with no runway; switches to fixed-wing for 180 km/h economy cruise — flexible deployment and long-range work in one airframe." },
-          { "title": "2,000 km extended range", "desc": "Fuel engine + onboard battery hybrid breaks battery-only limits — a single sortie covers 100+ km of linear infrastructure." },
-          { "title": "Large payload, multi-mission", "desc": "40 kg payload simultaneously carries optical/thermal cameras, loudspeakers and release mechanisms for multi-task missions." }
-        ]
+          {
+            "title": "VTOL + cruise dual-mode",
+            "desc": "Takes off and lands in place with no runway; switches to fixed-wing for 180 km/h economy cruise — flexible deployment and long-range work in one airframe."
+          },
+          {
+            "title": "2,000 km extended range",
+            "desc": "Fuel engine + onboard battery hybrid breaks battery-only limits — a single sortie covers 100+ km of linear infrastructure."
+          },
+          {
+            "title": "Large payload, multi-mission",
+            "desc": "40 kg payload simultaneously carries optical/thermal cameras, loudspeakers and release mechanisms for multi-task missions."
+          }
+        ],
+        "specs": [
+          {
+            "group": "Dimensions & weight",
+            "rows": [
+              {
+                "k": "Wingspan",
+                "v": "3 m"
+              },
+              {
+                "k": "Length",
+                "v": "2.8 m"
+              },
+              {
+                "k": "Empty weight",
+                "v": "140 kg"
+              },
+              {
+                "k": "Max payload",
+                "v": "40 kg"
+              }
+            ]
+          },
+          {
+            "group": "Flight performance",
+            "rows": [
+              {
+                "k": "Cruise speed",
+                "v": "180 km/h"
+              },
+              {
+                "k": "Max speed",
+                "v": "200 km/h"
+              },
+              {
+                "k": "Max range",
+                "v": "2000 km"
+              },
+              {
+                "k": "Service ceiling",
+                "v": "3000 m"
+              }
+            ]
+          },
+          {
+            "group": "Environment & control",
+            "rows": [
+              {
+                "k": "Wind resistance",
+                "v": "Force 6"
+              },
+              {
+                "k": "Control range",
+                "v": "10 km"
+              }
+            ]
+          },
+          {
+            "group": "Powertrain",
+            "rows": [
+              {
+                "k": "Power source",
+                "v": "Fuel engine + onboard battery"
+              },
+              {
+                "k": "Endurance edge",
+                "v": "Dual supply beyond battery limits"
+              }
+            ]
+          },
+          {
+            "group": "Takeoff & payload",
+            "rows": [
+              {
+                "k": "Takeoff / landing",
+                "v": "Vertical, runway-free"
+              },
+              {
+                "k": "Optional payload",
+                "v": "FPV / EO gimbal / loudspeaker / thermal imager"
+              }
+            ]
+          }
+        ],
+        "value": {
+          "rows": [
+            {
+              "k": "Method",
+              "old": "Foot/vehicle + helicopter",
+              "neo": "Vertical takeoff, runway-free"
+            },
+            {
+              "k": "Coverage",
+              "old": "3–5 km/day (manual)",
+              "neo": "100+ km per sortie"
+            },
+            {
+              "k": "Response",
+              "old": "Hours to deploy",
+              "neo": "Vertical takeoff, instant"
+            },
+            {
+              "k": "Crew",
+              "old": "3–5 person team",
+              "neo": "1–2 operators"
+            },
+            {
+              "k": "Cost per sortie",
+              "old": "~¥5,000 (helicopter)",
+              "neo": "~¥200 (fuel)"
+            },
+            {
+              "k": "Data quality",
+              "old": "Eyeball, no record",
+              "neo": "AI detection + multispectral archive"
+            }
+          ],
+          "note": "For pipeline inspection, one LingYI-1 replaces a 3–5 person crew, cuts per-sortie cost by 95%+, saves ¥0.5–0.8M/year in O&M, payback 8–16 months."
+        }
       }
-    }
+    },
+    "valueTitle": "Business value",
+    "valueColOld": "Traditional",
+    "valueColNew": "Zero-One"
   },
   "cta": {
     "title": "Want a deeper look at the products or scenarios?",
@@ -176,23 +526,71 @@
       "title": "Products",
       "lead": "Two strategic tracks — low-altitude systems (LingYI-1) and clean-mobility infrastructure (LingYI-Charge).",
       "eyebrow": "Products",
-      "meta": ["2 product lines", "Full-stack in-house", "Shipping"]
+      "meta": [
+        "2 product lines",
+        "Full-stack in-house",
+        "Shipping"
+      ]
     },
     "technology": {
       "title": "Applications & Value",
       "lead": "Real business scenarios across energy, emergency, security and EV mobility — backed by measurable deployment data.",
       "eyebrow": "Solutions",
-      "meta": ["6 real scenarios", "95% cost reduction vs helicopter", "8-16 month payback"]
+      "meta": [
+        "6 real scenarios",
+        "95% cost reduction vs helicopter",
+        "8-16 month payback"
+      ]
     },
     "about": {
       "title": "About Zero-One Innovation",
       "lead": "Shenzhen Zero-One Innovation Technology Co., Ltd. — focused on China's low-altitude economy and clean-mobility tracks.",
-      "body": "Shenzhen Zero-One Innovation Technology Co., Ltd. was founded in 2026, co-established by graduates from the AI School of Shenzhen Technology University and the University of Hong Kong. We're a technology company focused on the R&D, manufacturing and sale of intelligent robots and specialty UAVs.\n\nWe focus on two core tracks:\n· Clean-mobility infrastructure — LingYI-Charge mobile EV-charging robot, solving the 'last mile' of EV charging\n· Low-altitude economy systems — LingYI-1 VTOL fixed-wing UAV, serving industrial inspection, security reconnaissance and emergency response\n\nOur core team brings together expertise in robot motion control, UAV aerodynamics, AI vision, and embedded systems — capable of delivering end-to-end from product definition through prototyping to low-volume production.\n\nWe operate by the principle of 'fearless and meticulous' — bringing intelligent robotics into real industry use to create measurable commercial value for our customers.",
+      "body": "Shenzhen Zero-One Innovation Technology Co., Ltd. was founded in 2026, co-established by a young team from the AI School of Shenzhen Technology University and Hong Kong universities. We're a technology company focused on the R&D, manufacturing and sale of intelligent robots and specialty UAVs.\n\nWe focus on two core tracks:\n· Clean-mobility infrastructure — LingYI-Charge mobile EV-charging robot, solving the 'last mile' of EV charging\n· Low-altitude economy systems — LingYI-1 VTOL fixed-wing UAV, serving industrial inspection, security reconnaissance and emergency response\n\nOur core team brings together expertise in robot motion control, UAV aerodynamics, AI vision, and embedded systems — capable of delivering end-to-end from product definition through prototyping to low-volume production.\n\nWe operate by the principle of 'fearless and meticulous' — bringing intelligent robotics into real industry use to create measurable commercial value for our customers.",
       "techTitle": "Core R&D capabilities",
       "techDesc": "Full-stack in-house: mechanics, embedded firmware, AI algorithms and cloud all owned end-to-end. 3D printing + composites + CNC compress prototype cycles to 4 weeks. Domestic-sourced sensors + in-house control algorithms lower BOM by 40%+ versus peers.",
       "patents": "Multiple invention patents pending",
       "eyebrow": "About",
-      "meta": ["Founded 2026, Shenzhen", "SZTU + HKU heritage", "Patents pending"]
+      "meta": [
+        "Founded 2026, Shenzhen",
+        "SZTU + HK universities heritage",
+        "Patents pending"
+      ],
+      "market": {
+        "title": "Market & outlook",
+        "subtitle": "Two product lines positioned in China's low-altitude economy and clean-mobility strategies.",
+        "cols": {
+          "segment": "Segment",
+          "domestic": "China",
+          "global": "Global",
+          "growth": "CAGR"
+        },
+        "rows": [
+          {
+            "segment": "Industrial UAV",
+            "domestic": "¥45B",
+            "global": "¥120B",
+            "growth": "18% CAGR"
+          },
+          {
+            "segment": "Mobile charging",
+            "domestic": "¥12B",
+            "global": "¥38B",
+            "growth": "35% CAGR"
+          },
+          {
+            "segment": "Smart parks",
+            "domestic": "¥28B",
+            "global": "¥95B",
+            "growth": "22% CAGR"
+          },
+          {
+            "segment": "Low-altitude economy",
+            "domestic": "¥500B",
+            "global": "¥1.8T",
+            "growth": "25% CAGR"
+          }
+        ]
+      }
     },
     "contact": {
       "title": "Contact us",
@@ -203,7 +601,11 @@
       "techLabel": "Technical support",
       "techDesc": "Product usage, solutions and technical questions",
       "eyebrow": "Contact",
-      "meta": ["Shenzhen", "Business inquiries", "Technical support"]
+      "meta": [
+        "Shenzhen",
+        "Business inquiries",
+        "Technical support"
+      ]
     }
   }
 }

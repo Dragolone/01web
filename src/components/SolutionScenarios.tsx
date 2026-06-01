@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
@@ -79,9 +80,24 @@ const scenarioIcons: Record<string, React.ReactNode> = {
   ),
 };
 
+// Real scene photos from the product manual, for the scenarios they match.
+// Scenarios without a photo fall back to the schematic card.
+const scenarioImages: Record<string, string> = {
+  // VTOL
+  pipeline: "/products/drone-cruise.jpg",
+  security: "/products/drone-security.jpg",
+  rescue: "/products/drone-rescue.jpg",
+  "remote-sensing": "/products/drone-farmland.jpg",
+  // Charge
+  commercial: "/products/charge-station.jpg",
+  residential: "/products/charge-residential.jpg",
+  campus: "/products/charge-campus.jpg",
+  event: "/products/charge-event.jpg",
+};
+
 export function SolutionScenarios({ dict }: Props) {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,7 +106,8 @@ export function SolutionScenarios({ dict }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="text-xs tracking-[0.18em] uppercase text-brand mb-3">
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
             Applications
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
@@ -103,6 +120,7 @@ export function SolutionScenarios({ dict }: Props) {
           {dict.solutions.scenarios.map((s, idx) => {
             const reverse = idx % 2 === 1;
             const isComingSoon = "comingSoon" in s && s.comingSoon === true;
+            const img = scenarioImages[s.key];
             return (
               <motion.article
                 key={s.key}
@@ -112,36 +130,88 @@ export function SolutionScenarios({ dict }: Props) {
                 transition={{ duration: 0.7, ease: easeOut }}
                 className={`grid lg:grid-cols-12 gap-8 lg:gap-14 items-center ${reverse ? "lg:[&>:first-child]:order-2" : ""}`}
               >
-                {/* Visual block — pinstripe pattern for visual harmony with white page */}
+                {/* Visual block — real scene photo where available (from the product
+                    manual), otherwise a schematic card. Same frame either way. */}
                 <div className="lg:col-span-6">
                   <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-border bg-surface text-brand">
-                    {/* Diagonal pinstripes */}
-                    <div
-                      aria-hidden
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage:
-                          "repeating-linear-gradient(135deg, rgba(24,73,220,0.10) 0 1px, transparent 1px 14px)",
-                      }}
-                    />
-                    {/* Soft brand glow */}
-                    <div
-                      aria-hidden
-                      className="absolute inset-0"
-                      style={{
-                        background:
-                          "radial-gradient(55% 55% at 80% 15%, rgba(24,73,220,0.10) 0%, transparent 60%)",
-                      }}
-                    />
-                    <div className="absolute top-7 left-7 text-xs font-medium tracking-widest text-brand/70">
+                    {img ? (
+                      <>
+                        <Image
+                          src={img}
+                          alt={s.name}
+                          fill
+                          sizes="(min-width: 1024px) 50vw, 100vw"
+                          className="object-cover"
+                        />
+                        {/* Legibility gradient for the corner labels */}
+                        <div
+                          aria-hidden
+                          className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-black/30"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        {/* Blueprint grid */}
+                        <div
+                          aria-hidden
+                          className="absolute inset-0"
+                          style={{
+                            backgroundImage:
+                              "linear-gradient(rgba(24,73,220,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(24,73,220,0.06) 1px, transparent 1px)",
+                            backgroundSize: "30px 30px",
+                          }}
+                        />
+                        {/* Faint diagonal sheen */}
+                        <div
+                          aria-hidden
+                          className="absolute inset-0"
+                          style={{
+                            backgroundImage:
+                              "repeating-linear-gradient(135deg, rgba(24,73,220,0.05) 0 1px, transparent 1px 16px)",
+                          }}
+                        />
+                        {/* Soft brand glow */}
+                        <div
+                          aria-hidden
+                          className="absolute inset-0"
+                          style={{
+                            background:
+                              "radial-gradient(55% 55% at 80% 15%, rgba(24,73,220,0.12) 0%, transparent 60%)",
+                          }}
+                        />
+                        {/* Ringed icon — concentric halo for focal depth */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="relative flex items-center justify-center">
+                            <span
+                              aria-hidden
+                              className="absolute w-60 h-60 md:w-72 md:h-72 rounded-full"
+                              style={{ background: "radial-gradient(circle, rgba(24,73,220,0.10) 0%, transparent 68%)" }}
+                            />
+                            <span aria-hidden className="absolute w-56 h-56 md:w-64 md:h-64 rounded-full border border-brand/10" />
+                            <span aria-hidden className="absolute w-40 h-40 md:w-48 md:h-48 rounded-full border border-brand/15" />
+                            <div className="w-32 h-32 md:w-40 md:h-40 text-brand/85">
+                              {scenarioIcons[s.key]}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {/* Engineering crop marks at the four corners */}
+                    {(["top-4 left-4 border-l border-t", "top-4 right-4 border-r border-t", "bottom-4 left-4 border-l border-b", "bottom-4 right-4 border-r border-b"] as const).map((c) => (
+                      <span key={c} aria-hidden className={`absolute w-3.5 h-3.5 ${c} ${img ? "border-white/50" : "border-brand/25"}`} />
+                    ))}
+
+                    {/* Index */}
+                    <div className={`absolute top-7 left-7 text-xs font-medium tracking-widest ${img ? "text-white/90" : "text-brand/70"}`}>
                       {`0${idx + 1}`}
                     </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-28 h-28 md:w-32 md:h-32 text-brand/85">
-                        {scenarioIcons[s.key]}
-                      </div>
+                    {/* Scene counter */}
+                    <div className={`absolute top-7 right-7 text-xs font-medium tracking-widest tabular-nums ${img ? "text-white/70" : "text-brand/50"}`}>
+                      {`0${idx + 1} / 0${dict.solutions.scenarios.length}`}
                     </div>
-                    <div className="absolute bottom-7 left-7 text-xs font-medium tracking-wide text-brand/70 uppercase">
+                    {/* Headline */}
+                    <div className={`absolute bottom-7 left-7 text-xs font-medium tracking-wide uppercase ${img ? "text-white/90" : "text-brand/70"}`}>
                       {s.headline}
                     </div>
                   </div>

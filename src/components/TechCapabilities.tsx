@@ -9,7 +9,7 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function TechCapabilities({ dict }: Props) {
   return (
-    <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-10">
+    <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-10">
       <div className="relative rounded-[2rem] bg-[#0a0d14] text-white py-24 md:py-32 overflow-hidden shadow-[0_30px_80px_-40px_rgba(10,13,30,0.5)]">
         <div
           aria-hidden
@@ -27,7 +27,8 @@ export function TechCapabilities({ dict }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="text-xs tracking-[0.18em] uppercase text-brand mb-3">
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
             Technology
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">

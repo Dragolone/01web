@@ -19,7 +19,7 @@ const visuals: Record<string, { img: string; alt: string }> = {
 
 export function ProductMatrix({ dict, lang }: Props) {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -28,7 +28,8 @@ export function ProductMatrix({ dict, lang }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="text-xs tracking-[0.18em] uppercase text-brand mb-3">
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
             Product Matrix
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
@@ -43,7 +44,7 @@ export function ProductMatrix({ dict, lang }: Props) {
           }`}
         >
           {dict.products.items.map((item, idx) => {
-            const v = visuals[item.key] ?? visuals.robot;
+            const v = visuals[item.key] ?? visuals.charge;
             return (
               <motion.article
                 key={item.key}
@@ -64,6 +65,7 @@ export function ProductMatrix({ dict, lang }: Props) {
                     alt={v.alt}
                     width={800}
                     height={500}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>

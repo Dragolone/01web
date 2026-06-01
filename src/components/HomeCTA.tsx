@@ -10,7 +10,7 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function HomeCTA({ lang, dict }: Props) {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

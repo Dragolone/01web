@@ -8,7 +8,7 @@ export function Footer({ lang, dict }: Props) {
   const linkKeys = ["products", "technology", "about", "contact"] as const;
   const hrefMap: Record<(typeof linkKeys)[number], string> = {
     products: `/${lang}/products`,
-    technology: `/${lang}/technology`,
+    technology: `/${lang}/solutions`,
     about: `/${lang}/about`,
     contact: `/${lang}/contact`,
   };
@@ -35,9 +35,19 @@ export function Footer({ lang, dict }: Props) {
               <li key={k}>
                 <Link
                   href={hrefMap[k]}
-                  className="text-foreground/80 hover:text-brand transition-colors"
+                  className="group inline-flex items-center gap-1 text-foreground/80 hover:text-brand transition-colors"
                 >
                   {dict.footer.links[k]}
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    aria-hidden
+                    className="-translate-x-1 -translate-y-0.5 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+                  >
+                    <path d="M3 9 9 3M9 3H4.5M9 3v4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </Link>
               </li>
             ))}
@@ -45,7 +55,22 @@ export function Footer({ lang, dict }: Props) {
         </div>
         <div>
           <p className="text-xs uppercase tracking-widest text-muted mb-4">{dict.footer.contactLabel}</p>
-          <p className="text-sm text-foreground/80">810170966qq@gmail.com</p>
+          <a
+            href="mailto:810170966qq@gmail.com"
+            className="group inline-flex items-center gap-1 text-sm text-foreground/80 hover:text-brand transition-colors"
+          >
+            810170966qq@gmail.com
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden
+              className="-translate-x-1 -translate-y-0.5 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+            >
+              <path d="M3 9 9 3M9 3H4.5M9 3v4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
           <p className="mt-2 text-xs text-muted">{dict.footer.icp}</p>
         </div>
       </div>

@@ -5,9 +5,11 @@ import { PageHero } from "@/components/PageHero";
 import { SolutionScenarios } from "@/components/SolutionScenarios";
 import { TechCapabilities } from "@/components/TechCapabilities";
 
+// Route is /solutions ("解决方案"); the dictionary key stays `pages.technology`
+// as a stable internal identifier (its content is already 应用场景与价值 / Solutions).
 export async function generateMetadata({
   params,
-}: PageProps<"/[lang]/technology">): Promise<Metadata> {
+}: PageProps<"/[lang]/solutions">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang as Locale);
@@ -18,7 +20,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function TechnologyPage({ params }: PageProps<"/[lang]/technology">) {
+export default async function SolutionsPage({ params }: PageProps<"/[lang]/solutions">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);

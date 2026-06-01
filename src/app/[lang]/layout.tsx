@@ -6,6 +6,8 @@ import { hasLocale, htmlLang, locales, getDictionary, type Locale } from "./dict
 import { SITE_URL } from "../site";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { TechBackdrop } from "@/components/TechBackdrop";
+import { MotionProvider } from "@/components/MotionProvider";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -82,15 +84,35 @@ export default async function RootLayout({
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
+  // Organization structured data (real company facts only — no fabricated address).
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: dict.brand.name,
+    alternateName: "Shenzhen Zero-One Innovation Technology Co., Ltd.",
+    url: `${SITE_URL}/${lang}`,
+    logo: `${SITE_URL}/icon.png`,
+    email: "810170966qq@gmail.com",
+    foundingDate: "2026",
+    description: dict.brand.lead,
+  };
+
   return (
     <html
       lang={htmlLang[lang as Locale]}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <Navbar lang={lang as Locale} dict={dict} />
-        <main className="flex-1">{children}</main>
-        <Footer lang={lang as Locale} dict={dict} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <TechBackdrop />
+        <MotionProvider>
+          <Navbar lang={lang as Locale} dict={dict} />
+          <main className="flex-1">{children}</main>
+          <Footer lang={lang as Locale} dict={dict} />
+        </MotionProvider>
       </body>
     </html>
   );

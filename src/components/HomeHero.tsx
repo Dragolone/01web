@@ -24,15 +24,17 @@ const badgeLayout: Array<{
 ];
 
 export function HomeHero({ lang, dict }: Props) {
+  // Second product line — surfaced as a compact card so the hero shows both tracks.
+  const vtol = dict.products.items.find((i) => i.key === "vtol");
   return (
-    <section className="relative overflow-hidden pt-32 pb-12 md:pt-40 md:pb-20">
+    <section className="relative overflow-hidden pt-32 pb-10 md:pt-40 md:pb-14">
       {/* Outer background gradient */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(120% 80% at 50% 0%, rgba(24,73,220,0.10) 0%, rgba(255,255,255,0) 60%), linear-gradient(180deg, #f8f9fb 0%, #ffffff 100%)",
+            "radial-gradient(120% 80% at 50% 0%, rgba(24,73,220,0.10) 0%, rgba(255,255,255,0) 58%), linear-gradient(180deg, rgba(248,249,251,0.9) 0%, rgba(248,249,251,0) 100%)",
         }}
       />
 
@@ -77,7 +79,7 @@ export function HomeHero({ lang, dict }: Props) {
               className="mt-10 flex flex-wrap gap-3"
             >
               <Link
-                href={`/${lang}/products`}
+                href={`/${lang}/solutions`}
                 className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-brand text-white font-medium hover:bg-brand-strong transition-all hover:shadow-lg hover:shadow-brand/30"
               >
                 {dict.hero.cta}
@@ -86,7 +88,7 @@ export function HomeHero({ lang, dict }: Props) {
                 </svg>
               </Link>
               <Link
-                href={`/${lang}/technology`}
+                href={`/${lang}/products`}
                 className="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-border text-foreground/80 hover:text-foreground hover:border-foreground/30 transition-colors"
               >
                 {dict.hero.secondaryCta}
@@ -134,6 +136,7 @@ export function HomeHero({ lang, dict }: Props) {
                   width={900}
                   height={560}
                   priority
+                  sizes="(min-width: 1024px) 40vw, 80vw"
                   className="w-[78%] h-auto rounded-2xl shadow-2xl shadow-black/15"
                 />
               </motion.div>
@@ -182,6 +185,39 @@ export function HomeHero({ lang, dict }: Props) {
                 );
               })}
             </div>
+
+            {/* Second product line — compact card so the hero shows both tracks */}
+            {vtol && (
+              <Link
+                href={`/${lang}/products/vtol`}
+                className="group mt-4 flex items-center gap-4 rounded-2xl border border-border bg-white/70 backdrop-blur-sm p-3 pr-5 hover:border-brand/30 hover:shadow-lg hover:shadow-brand/5 transition-all"
+              >
+                <div className="w-24 h-16 rounded-xl overflow-hidden bg-surface shrink-0">
+                  <Image
+                    src="/products/drone-hero.jpg"
+                    alt={vtol.name}
+                    width={192}
+                    height={128}
+                    sizes="96px"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold truncate">{vtol.name}</p>
+                  <p className="mt-0.5 text-xs text-muted truncate">{vtol.summary}</p>
+                </div>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden
+                  className="ml-auto shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-brand"
+                >
+                  <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            )}
           </motion.div>
         </div>
       </div>

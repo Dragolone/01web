@@ -13,7 +13,7 @@ type Props = {
 
 export function PageHero({ title, lead, eyebrow, meta }: Props) {
   return (
-    <section className="relative pt-32 md:pt-40 pb-10 md:pb-14 overflow-hidden">
+    <section className="relative pt-32 md:pt-40 pb-12 md:pb-16 overflow-hidden">
       {/* Decorative gradient — top-right brand glow + subtle left wash */}
       <div
         aria-hidden
@@ -43,9 +43,9 @@ export function PageHero({ title, lead, eyebrow, meta }: Props) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: easeOut }}
-            className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand bg-brand-soft rounded-full px-3 py-1.5 mb-6"
+            className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-5"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-brand" />
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
             {eyebrow}
           </motion.p>
         )}

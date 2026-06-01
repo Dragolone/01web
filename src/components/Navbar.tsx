@@ -18,7 +18,7 @@ const navKeys = ["home", "products", "technology", "about"] as const;
 const navHrefMap: Record<(typeof navKeys)[number], string> = {
   home: "",
   products: "/products",
-  technology: "/technology",
+  technology: "/solutions",
   about: "/about",
 };
 
@@ -39,6 +39,21 @@ export function Navbar({ lang, dict }: Props) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Mobile menu: close on Escape, lock background scroll while open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   const rest = stripLocale(pathname);
 
@@ -118,6 +133,8 @@ export function Navbar({ lang, dict }: Props) {
           <button
             type="button"
             aria-label="Menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
             className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border border-border"
           >
@@ -134,7 +151,7 @@ export function Navbar({ lang, dict }: Props) {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-border bg-white">
+        <div id="mobile-menu" className="md:hidden border-t border-border bg-white">
           <nav className="px-6 py-4 flex flex-col gap-1">
             {navKeys.map((k) => (
               <Link

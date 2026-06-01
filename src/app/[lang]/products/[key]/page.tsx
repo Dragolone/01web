@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getDictionary, hasLocale, locales, type Locale } from "../../dictionaries";
 
 const PRODUCT_KEYS = ["charge", "vtol"] as const;
 type ProductKey = (typeof PRODUCT_KEYS)[number];
 
 const productImages: Record<ProductKey, { img: string; alt: string }> = {
-  charge: { img: "/products/robot-hero.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
-  vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
+  charge: { img: "/products/charge-station.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
+  vtol: { img: "/products/drone-cruise.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
 function isProductKey(k: string): k is ProductKey {
@@ -41,15 +41,32 @@ export default async function ProductDetailPage({
   params,
 }: PageProps<"/[lang]/products/[key]">) {
   const { lang, key } = await params;
-  if (!hasLocale(lang) || !isProductKey(key)) notFound();
+  if (!hasLocale(lang)) notFound();
+  // Unknown product key → send to the listing (cleaner than a 404 for a mistyped
+  // key, and avoids the blank-page edge of notFound() under the dynamic root layout).
+  if (!isProductKey(key)) redirect(`/${lang}/products`);
   const dict = await getDictionary(lang as Locale);
   const item = dict.products.items.find((i) => i.key === key);
-  if (!item) notFound();
+  if (!item) redirect(`/${lang}/products`);
   const visual = productImages[key];
   const detail = dict.productDetail.items[key];
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: item.name,
+    description: item.desc,
+    category: item.tag,
+    brand: { "@type": "Brand", name: dict.brand.name },
+    manufacturer: { "@type": "Organization", name: dict.brand.name },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface/40">
         <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
@@ -65,7 +82,8 @@ export default async function ProductDetailPage({
 
           <div className="grid lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6">
-              <p className="text-xs tracking-[0.18em] uppercase text-brand mb-3">
+              <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+                <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
                 Product
               </p>
               <h1 className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
@@ -81,15 +99,15 @@ export default async function ProductDetailPage({
                 {item.desc}
               </p>
               <div className="mt-8">
-                <Link
-                  href={`/${lang}/contact`}
+                <a
+                  href="#specs"
                   className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-brand text-white font-medium hover:bg-brand-strong transition-all hover:shadow-lg hover:shadow-brand/30"
                 >
                   {dict.productDetail.ctaText}
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
-                    <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-y-0.5">
+                    <path d="M7 1v12m0 0l5-5m-5 5L2 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -101,6 +119,7 @@ export default async function ProductDetailPage({
                   width={1200}
                   height={900}
                   priority
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -130,23 +149,91 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {/* Specs (placeholder) */}
-      <section className="pb-24 md:pb-32">
+      {/* Business value — comparison vs the traditional approach (from the manual) */}
+      <section className="pb-20 md:pb-28">
         <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
-          <div className="rounded-3xl border border-dashed border-border p-10 md:p-14 text-center">
-            <p className="text-xs tracking-widest uppercase text-muted">
-              {dict.productDetail.specsTitle}
-            </p>
-            <p className="mt-4 text-lg text-foreground/70 max-w-xl mx-auto">
-              {dict.productDetail.specsTBD}
-            </p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            {dict.productDetail.valueTitle}
+          </h2>
+          <div className="mt-12 overflow-hidden rounded-3xl border border-border">
+            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-surface text-xs uppercase tracking-widest text-muted">
+              <div className="col-span-4" />
+              <div className="col-span-4">{dict.productDetail.valueColOld}</div>
+              <div className="col-span-4 text-brand">{dict.productDetail.valueColNew}</div>
+            </div>
+            {detail.value.rows.map((r) => (
+              <div
+                key={r.k}
+                className="grid grid-cols-1 md:grid-cols-12 gap-1 md:gap-4 px-6 py-5 border-t border-border/70"
+              >
+                <div className="md:col-span-4 font-medium">{r.k}</div>
+                <div className="md:col-span-4 text-sm text-muted">
+                  <span className="md:hidden text-xs uppercase tracking-wider text-muted/70 mr-2">
+                    {dict.productDetail.valueColOld}
+                  </span>
+                  {r.old}
+                </div>
+                <div className="md:col-span-4 text-sm font-medium text-brand">
+                  <span className="md:hidden text-xs uppercase tracking-wider text-muted/70 mr-2">
+                    {dict.productDetail.valueColNew}
+                  </span>
+                  {r.neo}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 max-w-3xl text-sm text-muted leading-relaxed">
+            {detail.value.note}
+          </p>
+        </div>
+      </section>
+
+      {/* Specs — real parameters from the product manual */}
+      <section id="specs" className="scroll-mt-24 pb-20 md:pb-28">
+        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            {dict.productDetail.specsTitle}
+          </h2>
+          <div className="mt-12 grid gap-x-14 gap-y-12 md:grid-cols-2">
+            {detail.specs.map((group) => (
+              <div key={group.group}>
+                <p className="text-xs tracking-widest uppercase text-brand mb-4">
+                  {group.group}
+                </p>
+                <dl className="divide-y divide-border/70">
+                  {group.rows.map((r) => (
+                    <div
+                      key={r.k}
+                      className="flex items-baseline justify-between gap-6 py-3"
+                    >
+                      <dt className="text-sm text-muted shrink-0">{r.k}</dt>
+                      <dd className="text-sm font-medium text-foreground text-right">
+                        {r.v}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
+
+          {/* Full datasheet note */}
+          <div className="mt-14 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
+            <span>{dict.productDetail.specsTBD}</span>
             <a
               href="mailto:810170966qq@gmail.com"
-              className="mt-6 inline-flex items-center gap-2 text-brand hover:text-brand-strong font-medium"
+              className="group inline-flex items-center gap-1 text-brand hover:text-brand-strong font-medium"
             >
               810170966qq@gmail.com
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden
+                className="-translate-x-1 -translate-y-0.5 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+              >
+                <path d="M3 9 9 3M9 3H4.5M9 3v4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           </div>

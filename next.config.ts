@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
         destination: "/:lang/products/charge",
         permanent: true,
       },
+      // /technology was renamed to /solutions (nav label "解决方案"); keep old links alive.
+      {
+        source: "/:lang(zh|tw|en)/technology",
+        destination: "/:lang/solutions",
+        permanent: true,
+      },
     ];
   },
 };
