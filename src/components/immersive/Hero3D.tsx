@@ -4,65 +4,70 @@ import { Canvas } from "@react-three/fiber";
 import {
   Float,
   Environment,
-  Lightformer,
+  Sparkles,
   MeshDistortMaterial,
   OrbitControls,
 } from "@react-three/drei";
-import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Noise, Vignette } from "@react-three/postprocessing";
 import { useReducedMotion } from "framer-motion";
+// CC0 / public-domain HDRI, bundled locally (no network, no copyright issue).
+import city from "@pmndrs/assets/hdri/city.exr";
 
 /**
- * Active-Theory-style 3D hero object: a morphing chrome-blue blob lit by
- * coloured light cards (no external HDRI), slowly auto-rotating and draggable,
- * with bloom + film grain post-processing. Rendered client-only.
+ * Full-screen Active-Theory-style 3D scene with real depth:
+ *  - HDRI-lit chrome-blue morphing core (rich reflections)
+ *  - faint large wireframe shell behind for structure
+ *  - two parallax sparkle layers + scene fog for depth
+ *  - bloom / vignette post FX
+ * Draggable + auto-rotating. Client-only, reduced-motion aware.
  */
 export function Hero3D() {
   const reduce = useReducedMotion();
 
   return (
     <Canvas
-      dpr={[1, 2]}
-      camera={{ position: [0, 0, 5], fov: 45 }}
+      dpr={[1, 1.8]}
+      camera={{ position: [0, 0, 6], fov: 42 }}
       gl={{ antialias: true, alpha: true }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[5, 5, 5]} intensity={1.4} />
+      <fog attach="fog" args={["#070b1a", 7.5, 19]} />
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[5, 6, 5]} intensity={1.3} />
 
-      {/* local reflections via light cards (no network HDRI) */}
-      <Environment resolution={256}>
-        <group rotation={[0, 0, 1]}>
-          <Lightformer form="rect" intensity={5} position={[3, 3, 3]} scale={6} color="#9db8ff" />
-          <Lightformer form="rect" intensity={3} position={[-4, 2, -2]} scale={6} color="#1849dc" />
-          <Lightformer form="circle" intensity={3} position={[0, -4, 2]} scale={5} color="#ffffff" />
-          <Lightformer form="rect" intensity={2} position={[0, 3, -4]} scale={6} color="#2456e0" />
-        </group>
-      </Environment>
+      {/* HDRI reflections (not shown as background) */}
+      <Environment files={city} />
 
-      <Float speed={reduce ? 0 : 1.4} rotationIntensity={reduce ? 0 : 0.6} floatIntensity={reduce ? 0 : 1.1}>
+      {/* depth layers */}
+      <Sparkles count={90} scale={[18, 10, 9]} size={3} speed={reduce ? 0 : 0.25} color="#9db8ff" opacity={0.5} />
+      <Sparkles count={50} scale={[11, 7, 5]} size={7} speed={reduce ? 0 : 0.14} color="#ffffff" opacity={0.32} />
+
+      {/* faint structural shell behind the core */}
+      <mesh scale={3.6}>
+        <icosahedronGeometry args={[1, 3]} />
+        <meshBasicMaterial wireframe color="#2a4cff" transparent opacity={0.07} />
+      </mesh>
+
+      {/* morphing chrome-blue core */}
+      <Float speed={reduce ? 0 : 1.3} rotationIntensity={reduce ? 0 : 0.5} floatIntensity={reduce ? 0 : 1}>
         <mesh>
-          <icosahedronGeometry args={[1.5, 14]} />
+          <icosahedronGeometry args={[1.55, 18]} />
           <MeshDistortMaterial
             color="#16235f"
-            roughness={0.06}
-            metalness={0.9}
-            envMapIntensity={1.3}
-            distort={reduce ? 0 : 0.4}
-            speed={reduce ? 0 : 1.6}
+            roughness={0.05}
+            metalness={0.95}
+            envMapIntensity={1.4}
+            distort={reduce ? 0 : 0.42}
+            speed={reduce ? 0 : 1.5}
           />
         </mesh>
       </Float>
 
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        autoRotate={!reduce}
-        autoRotateSpeed={0.7}
-        rotateSpeed={0.5}
-      />
+      <OrbitControls enableZoom={false} enablePan={false} autoRotate={!reduce} autoRotateSpeed={0.6} rotateSpeed={0.5} />
 
       <EffectComposer>
-        <Bloom intensity={0.9} luminanceThreshold={0.18} luminanceSmoothing={0.3} mipmapBlur />
+        <Bloom intensity={1} luminanceThreshold={0.15} luminanceSmoothing={0.35} mipmapBlur />
+        <Vignette eskil={false} offset={0.25} darkness={0.85} />
         <Noise opacity={0.035} />
       </EffectComposer>
     </Canvas>
