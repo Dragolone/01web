@@ -7,10 +7,12 @@ import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 type Props = { lang: Locale; dict: Dictionary };
 
 const SPOTLIGHT_R = 260;
-// Base = the charging-robot scene shown dimmed; the cursor spotlight reveals the
-// same scene in full clarity/colour ("shine a light to reveal the real machine").
-const BASE_IMG = "/products/charge-station.jpg";
-const REVEAL_IMG = "/products/charge-station.jpg";
+// True two-image reveal across the two business tracks, tonally matched (both
+// night scenes) so the spotlight transition reads cohesively:
+//   base   = low-altitude / drone city scene
+//   reveal = new-energy / charging-robot scene
+const BASE_IMG = "/products/drone-security.jpg";
+const REVEAL_IMG = "/products/charge-residential.jpg";
 
 function RevealLayer({
   image,
@@ -103,18 +105,18 @@ export function ImmersiveHero({ lang, dict }: Props) {
       className="relative w-full overflow-hidden bg-black"
       style={{ height: "100dvh" }}
     >
-      {/* Base image (dimmed) */}
+      {/* Base image — kept vivid (Ken Burns) */}
       <div
         className="hero-zoom absolute inset-0 z-10 bg-center bg-cover bg-no-repeat"
         style={{ backgroundImage: `url(${BASE_IMG})` }}
       />
-      {/* Dimming + legibility scrim over the base */}
+      {/* Light legibility scrim — darken top (nav/heading) and bottom (captions), clear middle */}
       <div
         aria-hidden
         className="absolute inset-0 z-20"
         style={{
           background:
-            "linear-gradient(180deg, rgba(3,6,16,0.6) 0%, rgba(3,6,16,0.45) 40%, rgba(3,6,16,0.8) 100%)",
+            "linear-gradient(180deg, rgba(3,6,16,0.5) 0%, rgba(3,6,16,0.1) 26%, rgba(3,6,16,0.05) 58%, rgba(3,6,16,0.62) 100%)",
         }}
       />
 
