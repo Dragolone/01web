@@ -41,7 +41,7 @@ export function HomeHero({ lang, dict }: Props) {
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left — copy */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 min-w-0">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ export function HomeHero({ lang, dict }: Props) {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: easeOut, delay: 0.08 }}
-              className="mt-6 text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05]"
+              className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05] break-words"
             >
               {dict.brand.tagline}
               <br />
@@ -101,7 +101,7 @@ export function HomeHero({ lang, dict }: Props) {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: easeOut, delay: 0.15 }}
-            className="lg:col-span-6 relative"
+            className="lg:col-span-6 relative min-w-0"
           >
             <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-border/60 shadow-[0_30px_60px_-30px_rgba(24,73,220,0.25)]">
               {/* Stage background — soft brand-tinted gradient */}

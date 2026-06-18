@@ -94,23 +94,27 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             {dict.pages.about.market.subtitle}
           </p>
           <div className="mt-10 overflow-hidden rounded-3xl border border-border">
-            <div className="grid grid-cols-4 gap-3 px-4 md:px-6 py-3.5 bg-surface text-[10px] md:text-xs uppercase tracking-widest text-muted">
-              <div>{dict.pages.about.market.cols.segment}</div>
-              <div>{dict.pages.about.market.cols.domestic}</div>
-              <div>{dict.pages.about.market.cols.global}</div>
-              <div className="text-right">{dict.pages.about.market.cols.growth}</div>
-            </div>
-            {dict.pages.about.market.rows.map((r) => (
-              <div
-                key={r.segment}
-                className="grid grid-cols-4 gap-3 px-4 md:px-6 py-4 border-t border-border/70 text-xs md:text-sm items-center"
-              >
-                <div className="font-medium">{r.segment}</div>
-                <div className="text-muted tabular-nums">{r.domestic}</div>
-                <div className="text-muted tabular-nums">{r.global}</div>
-                <div className="text-right font-medium text-brand tabular-nums">{r.growth}</div>
+            <div className="overflow-x-auto">
+              <div className="min-w-[34rem]">
+                <div className="grid grid-cols-4 gap-3 px-4 md:px-6 py-3.5 bg-surface text-[10px] md:text-xs uppercase tracking-widest text-muted">
+                  <div>{dict.pages.about.market.cols.segment}</div>
+                  <div>{dict.pages.about.market.cols.domestic}</div>
+                  <div>{dict.pages.about.market.cols.global}</div>
+                  <div className="text-right">{dict.pages.about.market.cols.growth}</div>
+                </div>
+                {dict.pages.about.market.rows.map((r) => (
+                  <div
+                    key={r.segment}
+                    className="grid grid-cols-4 gap-3 px-4 md:px-6 py-4 border-t border-border/70 text-xs md:text-sm items-center"
+                  >
+                    <div className="font-medium">{r.segment}</div>
+                    <div className="text-muted tabular-nums">{r.domestic}</div>
+                    <div className="text-muted tabular-nums">{r.global}</div>
+                    <div className="text-right font-medium text-brand tabular-nums">{r.growth}</div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

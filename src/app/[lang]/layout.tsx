@@ -36,8 +36,8 @@ export async function generateMetadata({
     applicationName: dict.brand.name,
     keywords:
       lang === "en"
-        ? ["mobile robot", "VTOL", "smart charging station", "IoT", "Zero-One Innovation"]
-        : ["移动机器人", "智能充电站", "VTOL", "物联网", "零一唯创"],
+        ? ["mobile EV charging robot", "VTOL fixed-wing UAV", "LingYI-Charge", "LingYI-1", "Zero-One Innovation"]
+        : ["移动充电机器人", "垂起固定翼无人机", "LingYI-Charge", "LingYI-1", "低空经济", "零一唯创"],
     authors: [{ name: dict.brand.name }],
     alternates: {
       canonical: url,
