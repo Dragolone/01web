@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
-import { ParticleField } from "./ParticleField";
+import { TerrainField } from "./TerrainField";
 
 type Props = { lang: Locale; dict: Dictionary };
 
@@ -43,8 +43,8 @@ export function ImmersiveHero({ lang, dict }: Props) {
             "radial-gradient(130% 100% at 50% -10%, #14266f 0%, #0a1230 42%, #05080f 100%)",
         }}
       />
-      {/* Animated node constellation */}
-      <ParticleField className="absolute inset-0 z-0 h-full w-full" />
+      {/* Aerial survey scene: terrain ridgelines + drone flight paths */}
+      <TerrainField className="absolute inset-0 z-0 h-full w-full" />
 
       {/* Soft drifting bokeh for depth-of-field */}
       <motion.div aria-hidden style={{ y: bokehY }} className="absolute inset-0 z-0">
