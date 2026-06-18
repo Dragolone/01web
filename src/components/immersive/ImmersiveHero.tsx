@@ -19,7 +19,10 @@ export function ImmersiveHero({ lang, dict }: Props) {
       <div
         aria-hidden
         className="absolute inset-0 z-0"
-        style={{ background: "radial-gradient(130% 100% at 50% 0%, #142a73 0%, #0a1230 45%, #05080f 100%)" }}
+        style={{
+          background:
+            "radial-gradient(70% 60% at 72% 8%, rgba(0,160,220,0.30) 0%, transparent 55%), radial-gradient(60% 60% at 12% 92%, rgba(180,40,200,0.28) 0%, transparent 60%), radial-gradient(120% 100% at 50% 50%, #0c1640 0%, #070a22 50%, #05060f 100%)",
+        }}
       />
       {/* full-screen 3D scene */}
       <div className="absolute inset-0 z-0">
