@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
-type Props = { dict: Dictionary };
+type Props = { dict: Dictionary; theme?: "dark" };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -54,7 +54,8 @@ const capabilityIcons: Record<string, React.ReactNode> = {
   ),
 };
 
-export function HomeCapabilities({ dict }: Props) {
+export function HomeCapabilities({ dict, theme }: Props) {
+  const dark = theme === "dark";
   return (
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
@@ -65,14 +66,14 @@ export function HomeCapabilities({ dict }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+          <p className={`inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase mb-3 ${dark ? "text-[#5cf0ff]" : "text-brand"}`}>
+            <span aria-hidden className={`w-1.5 h-1.5 rounded-full ${dark ? "bg-[#5cf0ff]" : "bg-brand"}`} />
             Capabilities
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
+          <h2 className={`text-4xl md:text-5xl font-semibold tracking-tight ${dark ? "text-white" : ""}`}>
             {dict.homeCapabilities.title}
           </h2>
-          <p className="mt-4 text-lg text-muted">
+          <p className={`mt-4 text-lg ${dark ? "text-white/60" : "text-muted"}`}>
             {dict.homeCapabilities.subtitle}
           </p>
         </motion.div>
@@ -85,22 +86,30 @@ export function HomeCapabilities({ dict }: Props) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.06 }}
-              className="group relative p-7 rounded-3xl bg-white border border-border hover:border-brand/25 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/8 transition-all overflow-hidden"
+              className={`group relative p-7 rounded-3xl border hover:-translate-y-1 transition-all overflow-hidden ${
+                dark
+                  ? "bg-white/[0.04] border-white/10 hover:border-[#5cf0ff]/40 hover:shadow-xl hover:shadow-[#00e5ff]/10"
+                  : "bg-white border-border hover:border-brand/25 hover:shadow-xl hover:shadow-brand/8"
+              }`}
             >
-              {/* Top brand line that fades in on hover */}
+              {/* Top accent line that fades in on hover */}
               <div
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity ${dark ? "via-[#5cf0ff]" : "via-brand"}`}
               />
-              <div className="w-12 h-12 rounded-2xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-colors">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${
+                dark
+                  ? "bg-[#5cf0ff]/15 text-[#5cf0ff] group-hover:bg-[#5cf0ff] group-hover:text-[#05080f]"
+                  : "bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white"
+              }`}>
                 <span className="w-6 h-6 block">
                   {capabilityIcons[item.key]}
                 </span>
               </div>
-              <p className="mt-5 text-lg font-semibold tracking-tight">
+              <p className={`mt-5 text-lg font-semibold tracking-tight ${dark ? "text-white" : ""}`}>
                 {item.title}
               </p>
-              <p className="mt-2 text-sm text-muted leading-relaxed">
+              <p className={`mt-2 text-sm leading-relaxed ${dark ? "text-white/55" : "text-muted"}`}>
                 {item.desc}
               </p>
             </motion.div>

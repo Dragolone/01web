@@ -49,9 +49,8 @@ const featureIcons = [
 
 export function HomeFeatures({ dict }: Props) {
   return (
-    // Dark "act one" band — continues seamlessly from the immersive hero, then
-    // dissolves into the light content below.
-    <section className="relative overflow-hidden bg-[#05080f] pt-24 pb-40 text-white md:pt-28 md:pb-48">
+    // Dark "act one" band — continues seamlessly from the immersive hero.
+    <section className="relative overflow-hidden pt-24 pb-20 text-white md:pt-28 md:pb-28">
       {/* ambient brand glow */}
       <div
         aria-hidden
@@ -81,12 +80,6 @@ export function HomeFeatures({ dict }: Props) {
           ))}
         </div>
       </div>
-      {/* dissolve into the light second act */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
-        style={{ background: "linear-gradient(180deg, transparent 0%, #fafbfe 92%)" }}
-      />
     </section>
   );
 }

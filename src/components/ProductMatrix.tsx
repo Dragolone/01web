@@ -5,9 +5,9 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
-// compactTop: trim the top padding when this sits directly under a PageHero
-// (e.g. the products page) so the hero and matrix aren't separated by a double gap.
-type Props = { dict: Dictionary; lang: Locale; compactTop?: boolean };
+// compactTop: trim the top padding when this sits directly under a PageHero.
+// theme="dark": cyber-dark variant used on the immersive home page.
+type Props = { dict: Dictionary; lang: Locale; compactTop?: boolean; theme?: "dark" };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -19,7 +19,8 @@ const visuals: Record<string, { img: string; alt: string }> = {
   vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
-export function ProductMatrix({ dict, lang, compactTop }: Props) {
+export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
+  const dark = theme === "dark";
   return (
     <section className={compactTop ? "pt-4 md:pt-6 pb-20 md:pb-28" : "py-20 md:py-28"}>
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
@@ -30,14 +31,14 @@ export function ProductMatrix({ dict, lang, compactTop }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+          <p className={`inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase mb-3 ${dark ? "text-[#5cf0ff]" : "text-brand"}`}>
+            <span aria-hidden className={`w-1.5 h-1.5 rounded-full ${dark ? "bg-[#5cf0ff]" : "bg-brand"}`} />
             Product Matrix
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
+          <h2 className={`text-4xl md:text-5xl font-semibold tracking-tight ${dark ? "text-white" : ""}`}>
             {dict.products.title}
           </h2>
-          <p className="mt-4 text-lg text-muted">{dict.products.subtitle}</p>
+          <p className={`mt-4 text-lg ${dark ? "text-white/60" : "text-muted"}`}>{dict.products.subtitle}</p>
         </motion.div>
 
         <div
@@ -54,7 +55,11 @@ export function ProductMatrix({ dict, lang, compactTop }: Props) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.08 }}
-                className="group relative rounded-3xl bg-surface overflow-hidden border border-transparent hover:border-border transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5"
+                className={`group relative rounded-3xl overflow-hidden border transition-all hover:-translate-y-1 ${
+                  dark
+                    ? "bg-white/[0.04] border-white/10 hover:border-[#5cf0ff]/40 hover:shadow-xl hover:shadow-[#00e5ff]/10"
+                    : "bg-surface border-transparent hover:border-border hover:shadow-xl hover:shadow-black/5"
+                }`}
               >
                 <Link
                   href={`/${lang}/products/${item.key}`}
@@ -79,18 +84,22 @@ export function ProductMatrix({ dict, lang, compactTop }: Props) {
                 </motion.div>
                 <div className="p-7">
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-xl font-semibold">{item.name}</h3>
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-brand-soft text-brand font-medium whitespace-nowrap">
+                    <h3 className={`text-xl font-semibold ${dark ? "text-white" : ""}`}>{item.name}</h3>
+                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap ${dark ? "bg-[#5cf0ff]/15 text-[#5cf0ff]" : "bg-brand-soft text-brand"}`}>
                       {item.tag}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-brand font-medium">{item.summary}</p>
-                  <p className="mt-4 text-sm text-muted leading-relaxed">{item.desc}</p>
-                  <div className="mt-5 pt-5 border-t border-border/70 flex flex-wrap gap-1.5">
+                  <p className={`mt-1 text-sm font-medium ${dark ? "text-[#9db8ff]" : "text-brand"}`}>{item.summary}</p>
+                  <p className={`mt-4 text-sm leading-relaxed ${dark ? "text-white/55" : "text-muted"}`}>{item.desc}</p>
+                  <div className={`mt-5 pt-5 border-t flex flex-wrap gap-1.5 ${dark ? "border-white/10" : "border-border/70"}`}>
                     {item.tags.map((t) => (
                       <span
                         key={t}
-                        className="text-[11px] px-2 py-0.5 rounded-md bg-foreground/[.04] text-foreground/65 group-hover:bg-brand-soft group-hover:text-brand transition-colors"
+                        className={`text-[11px] px-2 py-0.5 rounded-md transition-colors ${
+                          dark
+                            ? "bg-white/[0.06] text-white/65 group-hover:bg-[#5cf0ff]/15 group-hover:text-[#5cf0ff]"
+                            : "bg-foreground/[.04] text-foreground/65 group-hover:bg-brand-soft group-hover:text-brand"
+                        }`}
                       >
                         {t}
                       </span>

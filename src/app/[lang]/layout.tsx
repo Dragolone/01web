@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import { TechBackdrop } from "@/components/TechBackdrop";
 import { MotionProvider } from "@/components/MotionProvider";
 import { Loader } from "@/components/immersive/Loader";
+import { ScrollProgress } from "@/components/immersive/ScrollProgress";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -117,6 +118,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         <Loader />
+        <ScrollProgress />
         <TechBackdrop />
         <MotionProvider>
           <Navbar lang={lang as Locale} dict={dict} />

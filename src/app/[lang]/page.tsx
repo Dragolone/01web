@@ -15,11 +15,15 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   return (
     <>
       <ImmersiveHero lang={lang as Locale} dict={dict} />
-      <HomeFeatures dict={dict} />
-      <ProductMatrix dict={dict} lang={lang as Locale} />
-      <HomeCapabilities dict={dict} />
-      <TechCapabilities dict={dict} />
-      <HomeCTA lang={lang as Locale} dict={dict} />
+      {/* Dark immersive act — sits over the off-white body so the whole home
+          flows as one cohesive cyber-dark experience. */}
+      <div className="relative bg-[#070a18] text-white">
+        <HomeFeatures dict={dict} />
+        <ProductMatrix dict={dict} lang={lang as Locale} theme="dark" />
+        <HomeCapabilities dict={dict} theme="dark" />
+        <TechCapabilities dict={dict} />
+        <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
+      </div>
     </>
   );
 }
