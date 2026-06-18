@@ -81,10 +81,28 @@
 ## 用户偏好（本项目特定）
 
 - **沟通语言**：中文
-- **设计风格**：极简、留白、苹果风。**不要过度设计** —— 用户原话「ui 可以优化一下 但是不要过度优化 要保证整体的简约以及风格」
-- **动效要求**：鼠标悬停渐变 + 滚动揭示（类 Apple iPhone 介绍页那种「往下滑视觉打开」）
+- **设计风格**：⚠️ **2026-06-18 已整体转向「高端深色赛博科技风 + 沉浸式」**，旧的「极简/浅白/苹果风」已作废 —— 详见下方《⚠️ 沉浸式深色改版》。原话保留备查：「ui 可以优化一下 但是不要过度优化」（但后续用户多轮明确要求做炫酷沉浸式 3D，推翻了这条）。
+- **动效要求**：鼠标悬停渐变 + 滚动揭示；首页有 WebGL 3D Hero、开场 Loader、滚动进度、页面转场（见改版节）
 - **默认语言**：简体中文 —— `proxy.ts` 强制把根路径重定向到 `/zh`，**不做** 浏览器语言协商
-- **改 UI 前先问** —— 用户反复强调"简约"，不要自作主张加内容/区块
+- **改 UI 前先问** —— 仍适用于「加内容/改信息架构」；但视觉方向已确定为深色赛博沉浸
+
+## ⚠️ 沉浸式深色改版（2026-06-18，最新现状 —— 覆盖下方多处旧的「极简/浅色」约定）
+
+经过多轮迭代，全站从「极简浅色苹果风」**整体改成「高端深色赛博科技风 + 沉浸式 WebGL」**，已合并 main 并 push（线上服务器需 `git pull`+rebuild 才生效）。**下个会话改 UI 前先认这一节，别照旧约定往浅色/极简方向退。**
+
+- **全站深色**：`globals.css` 主题 token 已翻深色（`--background:#070a18` / `--foreground` 浅 / `--surface` 半透明白玻璃 / `--border` 浅）。**所有用语义 token 的组件自动深色**。body 科技图标矩阵 tint 改成浅蓝（`rgba(150,176,255,...)`）。内页（产品/详情/方案/关于/联系/404）也全深色：开场是深色 hero，正文经 token 自动深色但仍可读。
+- **新依赖（已装，React 19 兼容）**：`three` ^0.184 / `@react-three/fiber` ^9 / `@react-three/drei` ^10 / `@react-three/postprocessing` ^3 / `@pmndrs/assets`（CC0 HDRI，本地打包离线用）。→ 「不引入重型 3D 库」这条**已被用户明确要求推翻**。
+- **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。配色青/品红/蓝/紫赛博霓虹。
+- **immersive 组件目录** `components/immersive/`：`ImmersiveHero` / `Hero3D` / `Loader`（开场幕布，挂 layout）/ `ScrollProgress`（顶部霓虹进度条，挂 layout）。`[lang]/template.tsx` = 路由切换淡入转场。（历史上还做过 ParticleField/TerrainField/ShaderField/HoloDrone，均被否后删除——别找。）
+- **首页叙事 section（顺序）**：ImmersiveHero → ProductMatrix → **HomeSolutions(新)** → HomeCapabilities → **HomeTech(新)** → TechCapabilities(商业价值已 dashboard 化) → HomeCTA(深色光束)。`HomeSolutions.tsx`/`HomeTech.tsx` 为新增组件。首页内容包在 `<div bg-[#070a18]>` 暗场容器里。
+- **`theme="dark"` 变体**：`ProductMatrix`/`HomeCapabilities`/`HomeCTA` 有 `theme?:"dark"` prop；首页与产品页都传 `dark`（玻璃卡+霓虹）。它们的浅色分支基本已不用（全站深色）。
+- **新增字典 key（三语已同步）**：`heroImmersive`（title1/title2/subtitle/tags/ctaPrimary/ctaSecondary）、`homeSolutions`、`homeTech`、`tech` 增 `metric/note/disclaimer`。**新增产品定位已拓宽**到「机器人 / 无人机 / AIoT / 智能硬件 / 自动化解决方案 / 智慧园区 / 远程运维平台」（用户亲自定的对外定位，非编造；与那个机器人小程序的真实 IoT/控制台能力一致）。
+- **导航栏**：始终白字白 logo（`brightness-0 invert`），滚动后变**深色玻璃**（不再白条）。
+- **字体**：新增 Playfair Display（仅英文点缀，如 hero 的 `ZERO-ONE INNOVATION`）；正文仍 Geist。
+- **背景纹理**：全站「直线网格」已统一换成**柔和点阵**（`radial-gradient` 圆点，用户嫌横竖线不自然）。
+- **作废的旧约定**（下方仍能看到，但**以本节为准**）：①「off-white #fafbfe 底色」→ 已深色；②「不要在白→黑加 fade overlay」→ 现到处用深↔浅渐变过渡且 OK；③「max-w-[88rem]」→ 已全站改 **96rem**；④「极简/不过度设计」视觉层面已不适用。
+- **品牌名**：首页文案统一用「零一唯创」，**别写「01唯创」**（用户 2026-06-18 纠正过）。英文 `Zero-One Innovation`。
+- **未做（用户判定非必要）**：首页精简版「应用场景」（/solutions 已有完整版）。
 
 ## 技术栈
 
@@ -94,6 +112,8 @@
 | React | 19.2.4 | |
 | 样式 | Tailwind CSS v4 | `@import "tailwindcss"` + `@theme inline` 注入品牌 token |
 | 动效 | framer-motion 12 | client components only |
+| 3D / WebGL | three ^0.184 + @react-three/fiber ^9 + drei ^10 + postprocessing ^3 + @pmndrs/assets | 仅首页 Hero3D 用；client-only 动态加载(ssr:false)；见《沉浸式深色改版》 |
+| 字体 | + Playfair Display | 仅英文点缀；正文仍 Geist |
 | i18n | Next.js 16 原生 i18n routing | 不依赖 next-intl 等第三方库 |
 | 语言 | TypeScript | strict |
 | 字体 | Geist Sans / Mono + PingFang SC 备用 | |
