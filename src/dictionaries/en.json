@@ -675,5 +675,44 @@
         ]
       }
     ]
+  },
+  "homeTech": {
+    "eyebrow": "Technology",
+    "title": "The system layer that makes smart hardware deployable",
+    "subtitle": "From cloud control to edge integration — one connected layer across devices, data and operations.",
+    "items": [
+      {
+        "t": "Cloud Control",
+        "d": "Centralised cloud control & dispatch"
+      },
+      {
+        "t": "IoT Gateway",
+        "d": "Multi-protocol device onboarding & gateway"
+      },
+      {
+        "t": "Real-time Communication",
+        "d": "Low-latency realtime comms & commands"
+      },
+      {
+        "t": "Device Management",
+        "d": "Device monitoring & remote O&M"
+      },
+      {
+        "t": "Data Dashboard",
+        "d": "Data visualisation & ops dashboards"
+      },
+      {
+        "t": "Edge Integration",
+        "d": "Edge computing & local coordination"
+      },
+      {
+        "t": "Computer Vision",
+        "d": "Vision recognition & AI integration"
+      },
+      {
+        "t": "Mini Program / Web",
+        "d": "Mini Program & web console"
+      }
+    ]
   }
 }

@@ -675,5 +675,44 @@
         ]
       }
     ]
+  },
+  "homeTech": {
+    "eyebrow": "Technology",
+    "title": "支撐智慧硬體落地的系統能力",
+    "subtitle": "從雲端控制到邊緣整合，貫通設備連接、資料與營運的一體化系統底座。",
+    "items": [
+      {
+        "t": "Cloud Control",
+        "d": "雲端集中控制與遠端調度"
+      },
+      {
+        "t": "IoT Gateway",
+        "d": "多協定設備接入與閘道管理"
+      },
+      {
+        "t": "Real-time Communication",
+        "d": "低延遲即時通訊與指令下發"
+      },
+      {
+        "t": "Device Management",
+        "d": "設備狀態監控與遠端運維"
+      },
+      {
+        "t": "Data Dashboard",
+        "d": "資料視覺化與營運看板"
+      },
+      {
+        "t": "Edge Integration",
+        "d": "邊緣運算與本地協同"
+      },
+      {
+        "t": "Computer Vision",
+        "d": "視覺辨識與 AI 演算法接入"
+      },
+      {
+        "t": "Mini Program / Web",
+        "d": "小程式與 Web 控制台"
+      }
+    ]
   }
 }

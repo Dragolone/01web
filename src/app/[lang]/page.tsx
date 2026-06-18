@@ -4,6 +4,7 @@ import { ImmersiveHero } from "@/components/immersive/ImmersiveHero";
 import { HomeFeatures } from "@/components/HomeFeatures";
 import { ProductMatrix } from "@/components/ProductMatrix";
 import { HomeSolutions } from "@/components/HomeSolutions";
+import { HomeTech } from "@/components/HomeTech";
 import { HomeCapabilities } from "@/components/HomeCapabilities";
 import { TechCapabilities } from "@/components/TechCapabilities";
 import { HomeCTA } from "@/components/HomeCTA";
@@ -25,7 +26,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(120,150,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,0.04) 1px, transparent 1px)",
+              "radial-gradient(rgba(140,170,255,0.13) 1px, transparent 1.5px)",
             backgroundSize: "60px 60px",
           }}
         />
@@ -41,6 +42,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <ProductMatrix dict={dict} lang={lang as Locale} theme="dark" />
         <HomeSolutions dict={dict} />
         <HomeCapabilities dict={dict} theme="dark" />
+        <HomeTech dict={dict} />
         <TechCapabilities dict={dict} />
         <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
       </div>

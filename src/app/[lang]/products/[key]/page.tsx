@@ -77,7 +77,7 @@ export default async function ProductDetailPage({
           className="absolute inset-0 -z-10 opacity-60"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(120,150,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,0.07) 1px, transparent 1px)",
+              "radial-gradient(rgba(140,170,255,0.13) 1px, transparent 1.5px)",
             backgroundSize: "54px 54px",
             maskImage: "radial-gradient(110% 90% at 50% 0%, black 25%, transparent 75%)",
             WebkitMaskImage: "radial-gradient(110% 90% at 50% 0%, black 25%, transparent 75%)",

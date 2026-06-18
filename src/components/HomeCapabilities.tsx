@@ -104,7 +104,7 @@ export function HomeCapabilities({ dict, theme }: Props) {
                   className="pointer-events-none absolute inset-0 opacity-40"
                   style={{
                     backgroundImage:
-                      "linear-gradient(rgba(120,150,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,0.08) 1px, transparent 1px)",
+                      "radial-gradient(rgba(140,170,255,0.13) 1px, transparent 1.5px)",
                     backgroundSize: "26px 26px",
                     maskImage: "radial-gradient(120% 80% at 0% 0%, black, transparent 70%)",
                     WebkitMaskImage: "radial-gradient(120% 80% at 0% 0%, black, transparent 70%)",
