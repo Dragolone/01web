@@ -30,7 +30,8 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
         meta={dict.pages.contact.meta}
       />
       <section className="pb-20 md:pb-28">
-        <div className="mx-auto max-w-4xl px-6 lg:px-10 grid gap-5 md:grid-cols-2">
+        <div className="mx-auto max-w-4xl px-6 lg:px-10">
+          <div className="grid gap-5 md:grid-cols-2">
           {[
             {
               subject: "Business%20inquiry",
@@ -83,6 +84,20 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
               </div>
             </a>
           ))}
+          </div>
+
+          <div className="mt-5 rounded-3xl border border-border p-8">
+            <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+              <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+              {dict.pages.contact.addrLabel}
+            </p>
+            <p className="text-lg font-semibold tracking-tight">{dict.pages.contact.company}</p>
+            <p className="mt-2 text-sm text-muted leading-relaxed">{dict.pages.contact.addr}</p>
+            <p className="mt-1 text-xs text-muted">
+              {dict.pages.contact.creditLabel}
+              {dict.pages.contact.creditCode}
+            </p>
+          </div>
         </div>
       </section>
     </>

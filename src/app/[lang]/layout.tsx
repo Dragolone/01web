@@ -84,7 +84,7 @@ export default async function RootLayout({
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
-  // Organization structured data (real company facts only — no fabricated address).
+  // Organization structured data (real, registered company facts only).
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -93,7 +93,15 @@ export default async function RootLayout({
     url: `${SITE_URL}/${lang}`,
     logo: `${SITE_URL}/icon.png`,
     email: "810170966qq@gmail.com",
-    foundingDate: "2026",
+    foundingDate: "2026-03-03",
+    taxID: "91440300MAK7XEPD58",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "CN",
+      addressRegion: lang === "en" ? "Guangdong" : "广东省",
+      addressLocality: lang === "en" ? "Shenzhen" : "深圳市",
+      streetAddress: dict.pages.contact.addr,
+    },
     description: dict.brand.lead,
   };
 

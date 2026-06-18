@@ -605,7 +605,12 @@
         "Shenzhen",
         "Business inquiries",
         "Technical support"
-      ]
+      ],
+      "addrLabel": "Registered office",
+      "company": "Shenzhen Zero-One Innovation Technology Co., Ltd.",
+      "addr": "No. 2-49 Shaxin Road (South Extension), Pingshan District, Shenzhen, Guangdong, China",
+      "creditLabel": "Unified Social Credit Code: ",
+      "creditCode": "91440300MAK7XEPD58"
     }
   }
 }

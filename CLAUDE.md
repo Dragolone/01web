@@ -23,10 +23,10 @@
 
 | 项 | 状态 | 含义 |
 |---|---|---|
-| 公司主体 | **尚未注册** | Footer 文案是「公司主体注册中 · ICP 备案准备中」；联系页**不能**加假地址/电话 |
+| 公司主体 | **✅ 已注册（2026-03-03）** | 深圳零一唯创科技有限公司 / 统一社会信用代码 `91440300MAK7XEPD58` / 法人 龙俊洁 / 注册地址 深圳市坪山区马峦街道沙坣社区沙新路（南延伸段）2-49号。已写进 `[lang]/layout.tsx` 的 Organization JSON-LD（taxID + address）+ 联系页地址卡（三语 `pages.contact.{addrLabel,company,addr,creditLabel,creditCode}`）。**地址是真的，已上墙公开**（旧版「联系页不能加地址」的红线已解除） |
 | 付费/试用客户 | **0** | **不要**做客户 logo 墙、案例区、"已部署 X 台"数字 —— 全是假的 |
 | 专利 | 已有但未公开授权号 | 只能用「多项发明专利申请中」占位（zh.json `pages.about.patents`），不写数字 |
-| 域名 | 未定 | SEO 资源用占位 `https://www.zeroone-innovation.com`，由 `NEXT_PUBLIC_SITE_URL` 覆盖 |
+| 域名 | **✅ www.01weichuang.com（已备案上线）** | ICP：粤ICP备2026041942号-2（footer 已挂，链 beian.miit.gov.cn）。腾讯云广州托管。`site.ts` 默认值已改成真实域名，仍可被 `NEXT_PUBLIC_SITE_URL` 覆盖。⏳ 公安联网备案待办（服务开通起 30 天内，~2026-07-18） |
 | 企业邮箱 | 未启用 | 全站用 gmail。联系页用「商务合作 / 技术支持」两栏分流卡片伪装专业感 |
 | 产品成熟度 | **两条产品线都已落地** | LingYI-Charge 和 LingYI-1 都有完整参数和应用场景（见下方「真实产品信息」节），**不要**再写成「敬请期待」或「概念产品」 |
 
@@ -97,7 +97,7 @@
 | i18n | Next.js 16 原生 i18n routing | 不依赖 next-intl 等第三方库 |
 | 语言 | TypeScript | strict |
 | 字体 | Geist Sans / Mono + PingFang SC 备用 | |
-| 部署 | 待定 | 备案中 → 计划腾讯云轻量 + Cloudflare CDN |
+| 部署 | ✅ 腾讯云广州（43.139.159.234）+ HTTPS | www.01weichuang.com 已上线备案 |
 
 ## ⚠️ Next.js 16 破坏性变更
 
@@ -140,7 +140,7 @@ src/
 │   ├── HomeHero.tsx (client)      ← Hero 舞台 + 主产品图 + 4 浮动卡 + **VTOL 双赛道迷你卡**（舞台下方）
 │   ├── HomeFeatures / HomeCTA / HomeCapabilities (client)
 │   ├── ProductMatrix.tsx (client) ← 产品卡片（fallback 用 visuals.charge，别用已删的 visuals.robot）
-│   ├── SolutionScenarios.tsx (client) ← 8 场景；其中 4 个（pipeline/security/commercial/event）用真实实景图，其余示意卡（scenarioImages map）
+│   ├── SolutionScenarios.tsx (client) ← 8 场景**全部有实景图**（scenarioImages map：4 张 PDF 抽图 + 4 张 ChatGPT 生成）。示意卡 fallback 分支保留但已无场景命中
 │   ├── TechCapabilities.tsx (client) ← 「可量化商业价值」深色浮起卡片（VTOL 用，dict.tech）
 │   └── PageHero.tsx (client)      ← 内页通用 hero（eyebrow 圆点 + meta + 装饰流线）
 ├── dictionaries/                  ← zh.json（默认/最权威）/ zh-Hant.json（/tw 台湾用词）/ en.json。新增 key 三个同步
@@ -157,9 +157,12 @@ public/
     ├── drone-hero.jpg             ← LingYI-1 飞行视角（HomeHero VTOL 迷你卡）
     ├── charge-station.jpg         ← 【PDF 抽出】充电机器人给特斯拉充电（charge 详情 hero + commercial 场景）
     ├── charge-event.jpg           ← 【PDF 抽出】音乐节应急供电（event 场景）
+    ├── charge-residential.jpg     ← 【ChatGPT 生成，传 robot-hero 当参考图】住宅夜景机械臂插枪（residential 场景）
+    ├── charge-campus.jpg          ← 【ChatGPT 生成】园区充电小车巡航（campus 场景）
     ├── drone-cruise.jpg           ← 【PDF 抽出】无人机跨湖巡航（vtol 详情 hero + pipeline 场景）
-    ├── drone-alley.jpg            ← 【PDF 抽出】无人机巷战垂起（security 场景）
-    ├── delivery-robot-office.jpg  ← ⚠️ 非公司产品（高个子配送机器人），**已无引用**，可删
+    ├── drone-security.jpg         ← 【ChatGPT 生成】城市夜景广场垂停（security 场景，替换了像 AI 的旧 drone-alley）
+    ├── drone-rescue.jpg           ← 【ChatGPT 生成】洪水灾区上空（rescue 场景）
+    ├── drone-farmland.jpg         ← 【ChatGPT 生成】农田遥感巡航（remote-sensing 场景）
     └── _design-reference.jpg      ← ⚠️ 设计参考，不要上线
 
 static_style/                       ← 原始 VI 素材，重裁图时回这里找
@@ -291,12 +294,13 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - ✅ **基于 PDF 真实信息大重写完成**（2026-06-01）：字典三同步用 PDF 真实产品名/规格/场景；产品 key 重命名 robot→charge；产品矩阵从首版的"3 个模糊产品"对齐到"2 个真实产品"；TechCapabilities 改成商业价值对比（vs 直升机降本 95% 等实数据）
 - ✅ **视觉细化轮**（2026-06-01）：HomeCapabilities 图标 / TechCapabilities 浮起卡片 / 场景 6→8 贴 PDF / Footer i18n / max-w-7xl→max-w-[88rem]
 - ✅ **2026-06-01 大轮**（详见上面各「关键设计决策」）：创办方脱敏 / 背景→科技图标矩阵 + TechBackdrop / `/technology`→`/solutions`(+redirect) / 产品详情真实规格表 + Charge&VTOL 商业价值 / 关于页市场规模表 / 从 PDF 抽 4 张实景图填解决方案场景卡 + 升级产品详情 hero / 统一节奏 py-20 md:py-28 / eyebrow 圆点 / Hero VTOL 双赛道迷你卡 / 联系页图标卡 / a11y(focus-visible + reduced-motion + 汉堡 aria) / JSON-LD / 三语品牌化 404 / 「查看技术规格」锚点滚动
-- ⏸ **域名 + 备案**：未启动。用户决定先开发。备案需要 2-3 周，越早启动越好（但不是 Claude 该推动的事，提醒用户即可）
-- ⏸ Vercel 预览部署：未启动
-- ⏸ 国内服务器 + Cloudflare CDN：备案后做
-- ⏸ **上线前必做**：设 `NEXT_PUBLIC_SITE_URL=https://<真实域名>`，否则 OG 图 / sitemap / canonical 全部用占位 `https://www.zeroone-innovation.com`
+- ✅ **域名 + 备案 + 上线**：www.01weichuang.com 已备案（粤ICP备2026041942号-2）+ HTTPS，部署在腾讯云广州（43.139.159.234）。`site.ts` 默认域名已改成真实域名
+- ⏳ **公安联网备案**：服务开通起 30 天内必做（~2026-07-18），数据码 `b2a747a66b31b0ea4206454ec634e1`。办完拿到公安备案号加到 footer（链全国互联网安全管理服务平台）
+- ⏸ 部署细节（服务器进程守护方式/nginx 配置）：本仓库无记录，需在服务器上现查（`git pull` → `npm ci` → `npm run build` → 重启服务）
+- ⏸ Cloudflare CDN：可选
+- 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
-- ⏸ 视觉素材：已从 PDF 抽 4 张实景图（充电特斯拉/音乐节/巡航/巷战）。剩 4 个场景（rescue/remote-sensing/residential/campus）手册无图，仍用示意卡；有图后按 SolutionScenarios 的 `scenarioImages` map 补即可
+- ✅ 视觉素材：8 个场景全部有图。4 张 PDF 抽图（充电特斯拉/音乐节/巡航）+ 4 张 ChatGPT 生成（drone-security 城市夜景 / drone-rescue 洪水 / drone-farmland 农田 / charge-residential 住宅 / charge-campus 园区 —— 共 5 张，含替换旧 drone-alley）。生成手法：纪实摄影措辞压 AI 味，充电小车造型靠传 robot-hero.jpg 当参考图锁形态（2026-06-04）
 - ⏸ 手册里未上网的 B 端内容（合作模式 / 客户画像 / 竞争优势 / 组件清单）—— 用户偏极简没硬塞，需要时再加
 
 ## 反模式 / 禁止
@@ -344,7 +348,7 @@ npm run dev          # 起 Turbopack dev 服务器，默认 :3000
 
 | 变量 | 默认 | 何时设 |
 |---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | `https://www.zeroone-innovation.com`（占位） | **部署前必设**真实域名。`src/app/site.ts` 集中读，sitemap/robots/canonical/OG 全部依赖它 |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.01weichuang.com`（已是真实域名） | `src/app/site.ts` 集中读，sitemap/robots/canonical/OG 全部依赖它。部署环境可显式再设一遍做双保险 |
 
 ### Dev server 启动遇到 `MODULE_NOT_FOUND .next/.../middleware-manifest.json`
 
