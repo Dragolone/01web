@@ -79,21 +79,30 @@
     "items": [
       {
         "label": "Cost per sortie",
-        "value": "5,000 CNY (helicopter) → 200 CNY (LingYI-1), 95% reduction"
+        "value": "5,000 CNY (helicopter) → 200 CNY (LingYI-1), 95% reduction",
+        "metric": "−95%",
+        "note": "¥5,000 → ¥200 per run (vs helicopter)"
       },
       {
         "label": "Single-sortie coverage",
-        "value": "3-5 km/day (manual) → 100+ km (LingYI-1)"
+        "value": "3-5 km/day (manual) → 100+ km (LingYI-1)",
+        "metric": "100 km+",
+        "note": "Manual 3–5 km/day → 100 km-scale"
       },
       {
         "label": "Deployment response",
-        "value": "Hours (traditional) → Instant vertical takeoff (LingYI-1)"
+        "value": "Hours (traditional) → Instant vertical takeoff (LingYI-1)",
+        "metric": "Instant",
+        "note": "VTOL instant response (hours traditionally)"
       },
       {
         "label": "ROI",
-        "value": "500-800k CNY annual savings, payback in 8-16 months"
+        "value": "500-800k CNY annual savings, payback in 8-16 months",
+        "metric": "8–16 mo",
+        "note": "Payback period · ¥0.5–0.8M/yr O&M saved"
       }
-    ]
+    ],
+    "disclaimer": "Illustrative estimates; actual figures depend on the specific deployment and scenario."
   },
   "homeCapabilities": {
     "title": "Full-stack Capabilities",

@@ -18,9 +18,9 @@ export function HomeCTA({ lang, dict, theme }: Props) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: easeOut }}
-          className={`relative overflow-hidden rounded-[2rem] px-8 py-16 text-center md:px-16 md:py-20 ${
+          className={`relative overflow-hidden rounded-[2rem] px-8 py-20 text-center md:px-16 md:py-24 ${
             dark
-              ? "border border-white/10 bg-white/[0.04] text-white backdrop-blur-sm"
+              ? "border border-white/10 bg-[#0a0f20] text-white"
               : "bg-gradient-to-br from-brand to-brand-strong text-white"
           }`}
         >
@@ -29,11 +29,35 @@ export function HomeCTA({ lang, dict, theme }: Props) {
             className="absolute inset-0"
             style={{
               background: dark
-                ? "radial-gradient(60% 80% at 50% 0%, rgba(0,229,255,0.16) 0%, transparent 60%), radial-gradient(50% 70% at 90% 100%, rgba(255,61,240,0.14) 0%, transparent 60%)"
+                ? "radial-gradient(60% 80% at 50% 0%, rgba(0,150,220,0.20) 0%, transparent 60%), radial-gradient(50% 70% at 90% 100%, rgba(124,92,255,0.18) 0%, transparent 60%)"
                 : "radial-gradient(60% 60% at 100% 0%, rgba(255,255,255,0.6) 0%, transparent 50%)",
               opacity: dark ? 1 : 0.2,
             }}
           />
+          {dark && (
+            <>
+              {/* light beams */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(115deg, transparent 38%, rgba(0,229,255,0.10) 48%, transparent 56%), linear-gradient(115deg, transparent 60%, rgba(255,61,240,0.08) 68%, transparent 74%)",
+                }}
+              />
+              {/* data dot grid */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-50"
+                style={{
+                  backgroundImage: "radial-gradient(rgba(140,170,255,0.12) 1px, transparent 1.5px)",
+                  backgroundSize: "28px 28px",
+                  maskImage: "radial-gradient(90% 90% at 50% 50%, black, transparent 80%)",
+                  WebkitMaskImage: "radial-gradient(90% 90% at 50% 50%, black, transparent 80%)",
+                }}
+              />
+            </>
+          )}
           <h2 className="relative text-3xl md:text-5xl font-semibold tracking-tight">
             {dict.cta.title}
           </h2>

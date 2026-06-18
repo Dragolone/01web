@@ -19,6 +19,17 @@ export function TechCapabilities({ dict }: Props) {
               "radial-gradient(60% 50% at 80% 20%, rgba(24,73,220,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 10% 80%, rgba(24,73,220,0.18) 0%, transparent 60%)",
           }}
         />
+        {/* data-grid dot field for a command-center feel */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-50"
+          style={{
+            backgroundImage: "radial-gradient(rgba(140,170,255,0.12) 1px, transparent 1.5px)",
+            backgroundSize: "30px 30px",
+            maskImage: "radial-gradient(100% 100% at 50% 0%, black, transparent 85%)",
+            WebkitMaskImage: "radial-gradient(100% 100% at 50% 0%, black, transparent 85%)",
+          }}
+        />
         <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -37,7 +48,7 @@ export function TechCapabilities({ dict }: Props) {
           <p className="mt-4 text-lg text-white/60">{dict.tech.subtitle}</p>
         </motion.div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {dict.tech.items.map((item, idx) => (
             <motion.div
               key={item.label}
@@ -45,14 +56,20 @@ export function TechCapabilities({ dict }: Props) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.06 }}
-              className="group p-8 rounded-3xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all hover:border-[#5cf0ff]/40 hover:bg-white/[0.06] hover:shadow-[0_0_40px_-12px_rgba(0,229,255,0.5)]"
             >
-              <p className="text-xs tracking-widest uppercase text-brand">{`0${idx + 1}`}</p>
-              <p className="mt-3 text-xl font-medium">{item.label}</p>
-              <p className="mt-3 text-white/65 leading-relaxed">{item.value}</p>
+              <div className="flex items-center justify-between">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">{item.label}</p>
+                <span className="font-mono text-[11px] tracking-widest text-white/25">{`0${idx + 1}`}</span>
+              </div>
+              <p className="mt-5 bg-gradient-to-r from-white to-[#9db8ff] bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl">
+                {item.metric}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-white/55">{item.note}</p>
             </motion.div>
           ))}
         </div>
+        <p className="mt-8 text-xs text-white/35">* {dict.tech.disclaimer}</p>
         </div>
       </div>
     </section>
