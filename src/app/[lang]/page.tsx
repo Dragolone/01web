@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "./dictionaries";
-import { HomeHero } from "@/components/HomeHero";
+import { ImmersiveHero } from "@/components/immersive/ImmersiveHero";
 import { HomeFeatures } from "@/components/HomeFeatures";
 import { ProductMatrix } from "@/components/ProductMatrix";
 import { HomeCapabilities } from "@/components/HomeCapabilities";
@@ -14,7 +14,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
-      <HomeHero lang={lang as Locale} dict={dict} />
+      <ImmersiveHero lang={lang as Locale} dict={dict} />
       <HomeFeatures dict={dict} />
       <ProductMatrix dict={dict} lang={lang as Locale} />
       <HomeCapabilities dict={dict} />

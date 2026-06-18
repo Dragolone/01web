@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
 type Props = { lang: Locale; dict: Dictionary };
@@ -26,6 +32,27 @@ const badgeLayout: Array<{
 export function HomeHero({ lang, dict }: Props) {
   // Second product line — surfaced as a compact card so the hero shows both tracks.
   const vtol = dict.products.items.find((i) => i.key === "vtol");
+
+  // Subtle mouse parallax on the product stage (desktop only; respects reduced motion).
+  const reduce = useReducedMotion();
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const sx = useSpring(px, { stiffness: 120, damping: 18, mass: 0.4 });
+  const sy = useSpring(py, { stiffness: 120, damping: 18, mass: 0.4 });
+  const range = reduce ? 0 : 14;
+  const stageX = useTransform(sx, [-0.5, 0.5], [-range, range]);
+  const stageY = useTransform(sy, [-0.5, 0.5], [-range, range]);
+  const handleParallax = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    px.set((e.clientX - r.left) / r.width - 0.5);
+    py.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const resetParallax = () => {
+    px.set(0);
+    py.set(0);
+  };
+
   return (
     <section className="relative overflow-hidden pt-32 pb-10 md:pt-40 md:pb-14">
       {/* Outer background gradient */}
@@ -102,8 +129,13 @@ export function HomeHero({ lang, dict }: Props) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: easeOut, delay: 0.15 }}
             className="lg:col-span-6 relative min-w-0"
+            onMouseMove={handleParallax}
+            onMouseLeave={resetParallax}
           >
-            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-border/60 shadow-[0_30px_60px_-30px_rgba(24,73,220,0.25)]">
+            <motion.div
+              style={{ x: stageX, y: stageY }}
+              className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-border/60 shadow-[0_30px_60px_-30px_rgba(24,73,220,0.25)]"
+            >
               {/* Stage background — soft brand-tinted gradient */}
               <div
                 aria-hidden
@@ -184,7 +216,7 @@ export function HomeHero({ lang, dict }: Props) {
                   </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
 
             {/* Second product line — compact card so the hero shows both tracks */}
             {vtol && (

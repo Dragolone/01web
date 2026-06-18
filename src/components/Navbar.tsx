@@ -56,6 +56,11 @@ export function Navbar({ lang, dict }: Props) {
   }, [open]);
 
   const rest = stripLocale(pathname);
+  // The home page leads with a full-screen dark immersive hero, so at the very
+  // top the navbar goes white-on-transparent; once scrolled it reverts to the
+  // standard light glassmorphism. Other pages always use the light treatment.
+  const isHome = rest === "";
+  const overHero = isHome && !scrolled;
 
   return (
     <header
@@ -69,7 +74,7 @@ export function Navbar({ lang, dict }: Props) {
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10 h-16 flex items-center justify-between">
         <Link href={`/${lang}`} className="flex items-center gap-2 group">
           <Image
-            src="/brand/logo-512.png"
+            src={overHero ? "/brand/logo-white.png" : "/brand/logo-512.png"}
             alt={dict.brand.name}
             width={140}
             height={36}
@@ -89,9 +94,13 @@ export function Navbar({ lang, dict }: Props) {
                 href={href}
                 className={clsx(
                   "px-4 py-2 text-sm rounded-full transition-colors",
-                  active
-                    ? "text-brand"
-                    : "text-foreground/80 hover:text-foreground hover:bg-black/[.04]"
+                  overHero
+                    ? active
+                      ? "text-white"
+                      : "text-white/75 hover:text-white hover:bg-white/10"
+                    : active
+                      ? "text-brand"
+                      : "text-foreground/80 hover:text-foreground hover:bg-black/[.04]"
                 )}
               >
                 {dict.nav[k]}
@@ -102,7 +111,12 @@ export function Navbar({ lang, dict }: Props) {
 
         <div className="flex items-center gap-2">
           {/* 3-segment language pill: 简 / 繁 / EN */}
-          <div className="inline-flex items-center rounded-full border border-border p-0.5 bg-white/60 backdrop-blur-sm">
+          <div
+            className={clsx(
+              "inline-flex items-center rounded-full border p-0.5 backdrop-blur-sm transition-colors",
+              overHero ? "border-white/25 bg-white/10" : "border-border bg-white/60"
+            )}
+          >
             {locales.map((loc) => {
               const isActive = loc === lang;
               const href = `/${loc}${rest}`;
@@ -113,9 +127,13 @@ export function Navbar({ lang, dict }: Props) {
                   aria-current={isActive ? "page" : undefined}
                   className={clsx(
                     "min-w-[2.25rem] h-7 px-2.5 inline-flex items-center justify-center text-xs font-medium rounded-full transition-colors",
-                    isActive
-                      ? "bg-foreground text-white"
-                      : "text-foreground/65 hover:text-foreground"
+                    overHero
+                      ? isActive
+                        ? "bg-white text-[#0a1024]"
+                        : "text-white/70 hover:text-white"
+                      : isActive
+                        ? "bg-foreground text-white"
+                        : "text-foreground/65 hover:text-foreground"
                   )}
                 >
                   {localeLabels[loc]}
@@ -136,7 +154,10 @@ export function Navbar({ lang, dict }: Props) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border border-border"
+            className={clsx(
+              "md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border transition-colors",
+              overHero ? "border-white/40 text-white" : "border-border"
+            )}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
