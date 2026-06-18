@@ -60,7 +60,7 @@ export function HomeFeatures({ dict }: Props) {
             "radial-gradient(60% 40% at 80% 0%, rgba(40,92,224,0.18) 0%, transparent 60%), radial-gradient(50% 40% at 10% 30%, rgba(40,92,224,0.10) 0%, transparent 60%)",
         }}
       />
-      <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
           {dict.hero.features.map((f, idx) => (
             <motion.div

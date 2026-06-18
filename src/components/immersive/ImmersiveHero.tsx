@@ -69,7 +69,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
       />
 
       {/* copy */}
-      <div className="relative z-10 mx-auto w-full max-w-[88rem] px-6 lg:px-10">
+      <div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-10">
         <div className="relative max-w-2xl">
           {/* subtle glass panel behind text */}
           <div
@@ -87,7 +87,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
             {dict.brand.nameEn}
           </motion.p>
 
-          <h1 className="mt-3 text-4xl font-semibold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
                 initial={{ y: "115%" }}
@@ -114,7 +114,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
             initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.9, ease: easeOut, delay: 0.62 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg"
+            className="mt-7 max-w-xl text-base leading-[1.85] text-white/75 sm:text-lg"
           >
             {h.subtitle}
           </motion.p>
@@ -129,7 +129,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
             {h.tags.map((t) => (
               <li
                 key={t}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 text-xs text-white/80 backdrop-blur-sm"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-[13px] text-white/85 backdrop-blur-sm transition-colors hover:border-[#5cf0ff]/40 hover:text-white"
               >
                 <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
                 {t}

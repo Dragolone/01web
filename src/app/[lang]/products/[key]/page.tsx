@@ -88,7 +88,7 @@ export default async function ProductDetailPage({
           className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24"
           style={{ background: "linear-gradient(180deg, transparent 0%, #fafbfe 96%)" }}
         />
-        <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
+        <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
           <Link
             href={`/${lang}/products`}
             className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-8"
@@ -149,7 +149,7 @@ export default async function ProductDetailPage({
 
       {/* Features */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+        <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
             {dict.productDetail.featuresTitle}
           </h2>
@@ -170,7 +170,7 @@ export default async function ProductDetailPage({
 
       {/* Business value — comparison vs the traditional approach (from the manual) */}
       <section className="pb-20 md:pb-28">
-        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+        <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
             {dict.productDetail.valueTitle}
           </h2>
@@ -209,7 +209,7 @@ export default async function ProductDetailPage({
 
       {/* Specs — real parameters from the product manual */}
       <section id="specs" className="scroll-mt-24 pb-20 md:pb-28">
-        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+        <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
             {dict.productDetail.specsTitle}
           </h2>

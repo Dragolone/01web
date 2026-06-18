@@ -44,7 +44,7 @@ export function PageHero({ title, lead, eyebrow, meta }: Props) {
         }}
       />
 
-      <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
         {eyebrow && (
           <motion.p
             initial={{ opacity: 0, y: 10 }}

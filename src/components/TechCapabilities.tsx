@@ -19,7 +19,7 @@ export function TechCapabilities({ dict }: Props) {
               "radial-gradient(60% 50% at 80% 20%, rgba(24,73,220,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 10% 80%, rgba(24,73,220,0.18) 0%, transparent 60%)",
           }}
         />
-        <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
+        <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

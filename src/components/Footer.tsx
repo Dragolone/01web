@@ -15,7 +15,7 @@ export function Footer({ lang, dict }: Props) {
 
   return (
     <footer className="border-t border-border mt-32">
-      <div className="mx-auto max-w-[88rem] px-6 lg:px-10 py-14 grid gap-10 md:grid-cols-3">
+      <div className="mx-auto max-w-[96rem] px-6 lg:px-10 py-14 grid gap-10 md:grid-cols-3">
         <div>
           <Image
             src="/brand/logo-512.png"
@@ -82,7 +82,7 @@ export function Footer({ lang, dict }: Props) {
         </div>
       </div>
       <div className="border-t border-border">
-        <p className="mx-auto max-w-[88rem] px-6 lg:px-10 py-5 text-xs text-muted">
+        <p className="mx-auto max-w-[96rem] px-6 lg:px-10 py-5 text-xs text-muted">
           {dict.footer.copy}
         </p>
       </div>

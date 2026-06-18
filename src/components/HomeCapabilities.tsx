@@ -58,7 +58,7 @@ export function HomeCapabilities({ dict, theme }: Props) {
   const dark = theme === "dark";
   return (
     <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+      <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,19 +97,38 @@ export function HomeCapabilities({ dict, theme }: Props) {
                 aria-hidden
                 className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity ${dark ? "via-[#5cf0ff]" : "via-brand"}`}
               />
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${
-                dark
-                  ? "bg-[#5cf0ff]/15 text-[#5cf0ff] group-hover:bg-[#5cf0ff] group-hover:text-[#05080f]"
-                  : "bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white"
-              }`}>
-                <span className="w-6 h-6 block">
-                  {capabilityIcons[item.key]}
+              {/* faint grid background (dark only) for a system-panel feel */}
+              {dark && (
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-40"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(120,150,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,0.08) 1px, transparent 1px)",
+                    backgroundSize: "26px 26px",
+                    maskImage: "radial-gradient(120% 80% at 0% 0%, black, transparent 70%)",
+                    WebkitMaskImage: "radial-gradient(120% 80% at 0% 0%, black, transparent 70%)",
+                  }}
+                />
+              )}
+              <div className="relative flex items-start justify-between">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${
+                  dark
+                    ? "bg-[#5cf0ff]/15 text-[#5cf0ff] group-hover:bg-[#5cf0ff] group-hover:text-[#05080f]"
+                    : "bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white"
+                }`}>
+                  <span className="w-6 h-6 block">
+                    {capabilityIcons[item.key]}
+                  </span>
+                </div>
+                <span className={`font-mono text-sm tracking-widest ${dark ? "text-white/25" : "text-foreground/20"}`}>
+                  {`0${idx + 1}`}
                 </span>
               </div>
-              <p className={`mt-5 text-lg font-semibold tracking-tight ${dark ? "text-white" : ""}`}>
+              <p className={`relative mt-5 text-lg font-semibold tracking-tight ${dark ? "text-white" : ""}`}>
                 {item.title}
               </p>
-              <p className={`mt-2 text-sm leading-relaxed ${dark ? "text-white/55" : "text-muted"}`}>
+              <p className={`relative mt-2 text-sm leading-relaxed ${dark ? "text-white/55" : "text-muted"}`}>
                 {item.desc}
               </p>
             </motion.div>

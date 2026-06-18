@@ -23,7 +23,7 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
   const dark = theme === "dark";
   return (
     <section className={compactTop ? "pt-4 md:pt-6 pb-20 md:pb-28" : "py-20 md:py-28"}>
-      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+      <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -42,7 +42,7 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
         </motion.div>
 
         <div
-          className={`mt-14 grid gap-6 md:grid-cols-2 ${
+          className={`mt-16 grid gap-8 md:grid-cols-2 ${
             dict.products.items.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
           }`}
         >
@@ -82,9 +82,9 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
-                <div className="p-7">
+                <div className="p-8">
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className={`text-xl font-semibold ${dark ? "text-white" : ""}`}>{item.name}</h3>
+                    <h3 className={`text-2xl font-semibold ${dark ? "text-white" : ""}`}>{item.name}</h3>
                     <span className={`text-xs px-2.5 py-1 rounded-full font-medium whitespace-nowrap ${dark ? "bg-[#5cf0ff]/15 text-[#5cf0ff]" : "bg-brand-soft text-brand"}`}>
                       {item.tag}
                     </span>
