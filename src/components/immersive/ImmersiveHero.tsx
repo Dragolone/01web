@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
-import { HoloDrone } from "./HoloDrone";
+
+// WebGL hero object — client-only (no SSR) to avoid running three.js on the server.
+const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Hero3D), { ssr: false });
 
 type Props = { lang: Locale; dict: Dictionary };
 
@@ -139,8 +142,9 @@ export function ImmersiveHero({ lang, dict }: Props) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: easeOut, delay: 0.5 }}
+            className="relative mx-auto aspect-square w-full max-w-[40rem]"
           >
-            <HoloDrone />
+            <Hero3D />
           </motion.div>
 
           {/* real-spec annotation chips */}
