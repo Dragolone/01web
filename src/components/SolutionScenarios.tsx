@@ -97,7 +97,7 @@ const scenarioImages: Record<string, string> = {
 
 export function SolutionScenarios({ dict }: Props) {
   return (
-    <section className="py-20 md:py-28">
+    <section className="pt-4 md:pt-6 pb-20 md:pb-28">
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

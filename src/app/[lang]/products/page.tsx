@@ -32,7 +32,7 @@ export default async function ProductsPage({ params }: PageProps<"/[lang]/produc
         eyebrow={dict.pages.products.eyebrow}
         meta={dict.pages.products.meta}
       />
-      <ProductMatrix dict={dict} lang={lang as Locale} />
+      <ProductMatrix dict={dict} lang={lang as Locale} compactTop />
       <HomeCapabilities dict={dict} />
       <HomeCTA lang={lang as Locale} dict={dict} />
     </>

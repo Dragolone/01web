@@ -5,7 +5,9 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
-type Props = { dict: Dictionary; lang: Locale };
+// compactTop: trim the top padding when this sits directly under a PageHero
+// (e.g. the products page) so the hero and matrix aren't separated by a double gap.
+type Props = { dict: Dictionary; lang: Locale; compactTop?: boolean };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -17,9 +19,9 @@ const visuals: Record<string, { img: string; alt: string }> = {
   vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
-export function ProductMatrix({ dict, lang }: Props) {
+export function ProductMatrix({ dict, lang, compactTop }: Props) {
   return (
-    <section className="py-20 md:py-28">
+    <section className={compactTop ? "pt-4 md:pt-6 pb-20 md:pb-28" : "py-20 md:py-28"}>
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
