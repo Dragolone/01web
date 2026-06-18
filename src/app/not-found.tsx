@@ -43,7 +43,7 @@ export default function NotFound() {
             alt="零一唯创"
             width={140}
             height={36}
-            className="h-7 w-auto mx-auto mb-10 opacity-80"
+            className="h-7 w-auto mx-auto mb-10 opacity-80 brightness-0 invert"
           />
           <p className="text-7xl md:text-8xl font-semibold tracking-tight text-brand">
             404

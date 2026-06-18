@@ -86,7 +86,7 @@ export default async function ProductDetailPage({
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24"
-          style={{ background: "linear-gradient(180deg, transparent 0%, #fafbfe 96%)" }}
+          style={{ background: "linear-gradient(180deg, transparent 0%, #070a18 96%)" }}
         />
         <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
           <Link
@@ -157,11 +157,11 @@ export default async function ProductDetailPage({
             {detail.features.map((f, idx) => (
               <div
                 key={f.title}
-                className="p-7 rounded-3xl border border-border bg-white"
+                className="p-7 rounded-3xl border border-white/10 bg-white/[0.04]"
               >
-                <p className="text-xs tracking-widest uppercase text-brand">{`0${idx + 1}`}</p>
-                <p className="mt-3 text-lg font-medium">{f.title}</p>
-                <p className="mt-2 text-sm text-muted leading-relaxed">{f.desc}</p>
+                <p className="text-xs tracking-widest uppercase text-[#5cf0ff]">{`0${idx + 1}`}</p>
+                <p className="mt-3 text-lg font-medium text-white">{f.title}</p>
+                <p className="mt-2 text-sm text-white/55 leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>

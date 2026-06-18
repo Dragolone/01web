@@ -22,7 +22,7 @@ export function Footer({ lang, dict }: Props) {
             alt={dict.brand.name}
             width={140}
             height={36}
-            className="h-7 w-auto"
+            className="h-7 w-auto brightness-0 invert"
           />
           <p className="mt-4 text-sm text-muted max-w-xs leading-relaxed">
             {dict.brand.lead}

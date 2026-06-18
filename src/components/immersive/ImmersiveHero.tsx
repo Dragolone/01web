@@ -119,23 +119,20 @@ export function ImmersiveHero({ lang, dict }: Props) {
             {h.subtitle}
           </motion.p>
 
-          {/* capability tags */}
-          <motion.ul
+          {/* capability tags — plain text with subtle dividers (no boxes) */}
+          <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeOut, delay: 0.74 }}
-            className="mt-6 flex flex-wrap gap-2"
+            className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/75"
           >
-            {h.tags.map((t) => (
-              <li
-                key={t}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-[13px] text-white/85 backdrop-blur-sm transition-colors hover:border-[#5cf0ff]/40 hover:text-white"
-              >
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
+            {h.tags.map((t, i) => (
+              <span key={t} className="inline-flex items-center gap-4">
+                {i > 0 && <span aria-hidden className="h-3.5 w-px bg-white/20" />}
                 {t}
-              </li>
+              </span>
             ))}
-          </motion.ul>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}

@@ -93,7 +93,7 @@ export function PageHero({ title, lead, eyebrow, meta }: Props) {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 h-24 -z-10"
-        style={{ background: "linear-gradient(180deg, transparent 0%, #fafbfe 96%)" }}
+        style={{ background: "linear-gradient(180deg, transparent 0%, #070a18 96%)" }}
       />
     </section>
   );

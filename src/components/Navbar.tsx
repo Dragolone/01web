@@ -56,16 +56,13 @@ export function Navbar({ lang, dict }: Props) {
   }, [open]);
 
   const rest = stripLocale(pathname);
-  // Every page now opens with a dark hero, so at the very top the navbar goes
-  // white-on-transparent; once scrolled it reverts to light glassmorphism.
-  const overHero = !scrolled;
 
   return (
     <header
       className={clsx(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/85 backdrop-blur-md border-b border-border"
+          ? "bg-[#070a18]/80 backdrop-blur-xl border-b border-white/10"
           : "bg-transparent"
       )}
     >
@@ -77,11 +74,7 @@ export function Navbar({ lang, dict }: Props) {
             width={140}
             height={36}
             priority
-            className={clsx(
-              "h-8 w-auto transition-[filter] duration-300",
-              // logo-512.png is transparent; invert it to solid white over the dark hero
-              overHero && "brightness-0 invert"
-            )}
+            className="h-8 w-auto brightness-0 invert"
           />
         </Link>
 
@@ -96,13 +89,7 @@ export function Navbar({ lang, dict }: Props) {
                 href={href}
                 className={clsx(
                   "px-4 py-2 text-[15px] rounded-full transition-colors",
-                  overHero
-                    ? active
-                      ? "text-white"
-                      : "text-white/75 hover:text-white hover:bg-white/10"
-                    : active
-                      ? "text-brand"
-                      : "text-foreground/80 hover:text-foreground hover:bg-black/[.04]"
+                  active ? "text-white" : "text-white/70 hover:text-white hover:bg-white/10"
                 )}
               >
                 {dict.nav[k]}
@@ -114,10 +101,7 @@ export function Navbar({ lang, dict }: Props) {
         <div className="flex items-center gap-2">
           {/* 3-segment language pill: 简 / 繁 / EN */}
           <div
-            className={clsx(
-              "inline-flex items-center rounded-full border p-0.5 backdrop-blur-sm transition-colors",
-              overHero ? "border-white/25 bg-white/10" : "border-border bg-white/60"
-            )}
+            className="inline-flex items-center rounded-full border border-white/20 bg-white/10 p-0.5 backdrop-blur-sm"
           >
             {locales.map((loc) => {
               const isActive = loc === lang;
@@ -129,13 +113,7 @@ export function Navbar({ lang, dict }: Props) {
                   aria-current={isActive ? "page" : undefined}
                   className={clsx(
                     "min-w-[2.25rem] h-7 px-2.5 inline-flex items-center justify-center text-xs font-medium rounded-full transition-colors",
-                    overHero
-                      ? isActive
-                        ? "bg-white text-[#0a1024]"
-                        : "text-white/70 hover:text-white"
-                      : isActive
-                        ? "bg-foreground text-white"
-                        : "text-foreground/65 hover:text-foreground"
+                    isActive ? "bg-white text-[#0a1024]" : "text-white/70 hover:text-white"
                   )}
                 >
                   {localeLabels[loc]}
@@ -156,10 +134,7 @@ export function Navbar({ lang, dict }: Props) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className={clsx(
-              "md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border transition-colors",
-              overHero ? "border-white/40 text-white" : "border-border"
-            )}
+            className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/40 text-white"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -174,14 +149,14 @@ export function Navbar({ lang, dict }: Props) {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="md:hidden border-t border-border bg-white">
+        <div id="mobile-menu" className="md:hidden border-t border-white/10 bg-[#070a18]/95 backdrop-blur-xl">
           <nav className="px-6 py-4 flex flex-col gap-1">
             {navKeys.map((k) => (
               <Link
                 key={k}
                 href={`/${lang}${navHrefMap[k]}`}
                 onClick={() => setOpen(false)}
-                className="py-3 text-base text-foreground/85 hover:text-brand"
+                className="py-3 text-base text-white/85 hover:text-white"
               >
                 {dict.nav[k]}
               </Link>
