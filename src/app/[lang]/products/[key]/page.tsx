@@ -70,7 +70,7 @@ export default async function ProductDetailPage({
       {/* Hero — dark cyber opening, dissolving into light content */}
       <section
         className="relative isolate overflow-hidden pt-32 pb-24 md:pt-40 md:pb-28 text-white"
-        style={{ background: "radial-gradient(120% 100% at 50% -10%, #142a73 0%, #0a1230 45%, #070a18 100%)" }}
+        style={{ background: "radial-gradient(120% 100% at 50% -10%, #0e1c4a 0%, #09122a 45%, #060912 100%)" }}
       >
         <div
           aria-hidden

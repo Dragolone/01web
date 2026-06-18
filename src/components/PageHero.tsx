@@ -20,7 +20,7 @@ export function PageHero({ title, lead, eyebrow, meta }: Props) {
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
-        style={{ background: "radial-gradient(120% 100% at 50% -10%, #142a73 0%, #0a1230 45%, #070a18 100%)" }}
+        style={{ background: "radial-gradient(120% 100% at 50% -10%, #0e1c4a 0%, #09122a 45%, #060912 100%)" }}
       />
       {/* blueprint grid */}
       <div
