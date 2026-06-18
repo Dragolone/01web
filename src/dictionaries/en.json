@@ -612,5 +612,18 @@
       "creditLabel": "Unified Social Credit Code: ",
       "creditCode": "91440300MAK7XEPD58"
     }
+  },
+  "heroImmersive": {
+    "title1": "Forward · Innovate",
+    "title2": "Bring intelligent systems into the real world",
+    "subtitle": "Zero-One Innovation focuses on robotics, UAVs, AIoT and smart-hardware systems, delivering deployable automation solutions for parks, enterprises and industry clients.",
+    "tags": [
+      "Robotics",
+      "UAV",
+      "AIoT Platform",
+      "Custom Hardware"
+    ],
+    "ctaPrimary": "Explore solutions",
+    "ctaSecondary": "View products"
   }
 }

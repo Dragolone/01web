@@ -78,7 +78,7 @@ export function Navbar({ lang, dict }: Props) {
             height={36}
             priority
             className={clsx(
-              "h-7 w-auto transition-[filter] duration-300",
+              "h-8 w-auto transition-[filter] duration-300",
               // logo-512.png is transparent; invert it to solid white over the dark hero
               overHero && "brightness-0 invert"
             )}
@@ -95,7 +95,7 @@ export function Navbar({ lang, dict }: Props) {
                 key={k}
                 href={href}
                 className={clsx(
-                  "px-4 py-2 text-sm rounded-full transition-colors",
+                  "px-4 py-2 text-[15px] rounded-full transition-colors",
                   overHero
                     ? active
                       ? "text-white"
@@ -146,7 +146,7 @@ export function Navbar({ lang, dict }: Props) {
 
           <Link
             href={`/${lang}/contact`}
-            className="hidden sm:inline-flex items-center justify-center h-9 px-5 rounded-full bg-brand text-white text-sm font-medium hover:bg-brand-strong transition-colors shadow-sm shadow-brand/20"
+            className="hidden sm:inline-flex items-center justify-center h-10 px-6 rounded-full bg-brand text-white text-[15px] font-medium hover:bg-brand-strong transition-all hover:shadow-[0_0_28px_-6px_rgba(24,73,220,0.9)] shadow-sm shadow-brand/20"
           >
             {dict.nav.cta}
           </Link>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
@@ -10,19 +10,29 @@ type Props = { lang: Locale; dict: Dictionary };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
-// WebGL scene — client-only (no SSR) to keep three.js off the server.
+// WebGL scene — client-only (no SSR).
 const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Hero3D), { ssr: false });
 
 export function ImmersiveHero({ lang, dict }: Props) {
+  const h = dict.heroImmersive;
+  const sectionRef = useRef<HTMLElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  // Cursor-following gradient glow (direct DOM write — no re-render per move).
+  const [active, setActive] = useState(true);
+
+  // Pause the 3D render loop while the hero is off-screen (fixes scroll-back jank).
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0.04 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const onMove = (e: React.MouseEvent<HTMLElement>) => {
     const el = glowRef.current;
     if (!el) return;
     const r = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    el.style.background = `radial-gradient(420px circle at ${x}px ${y}px, rgba(0,229,255,0.16), rgba(155,107,255,0.10) 40%, transparent 70%)`;
+    el.style.background = `radial-gradient(420px circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(0,229,255,0.14), rgba(155,107,255,0.08) 42%, transparent 70%)`;
     el.style.opacity = "1";
   };
   const onLeave = () => {
@@ -31,42 +41,43 @@ export function ImmersiveHero({ lang, dict }: Props) {
 
   return (
     <section
+      ref={sectionRef}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       className="relative isolate flex min-h-[100svh] items-center overflow-hidden text-white"
     >
-      {/* dark base behind the canvas */}
+      {/* dark base */}
       <div
         aria-hidden
         className="absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(70% 60% at 72% 8%, rgba(0,160,220,0.30) 0%, transparent 55%), radial-gradient(60% 60% at 12% 92%, rgba(180,40,200,0.28) 0%, transparent 60%), radial-gradient(120% 100% at 50% 50%, #0c1640 0%, #070a22 50%, #05060f 100%)",
-        }}
+        style={{ background: "radial-gradient(120% 100% at 70% 0%, #142a73 0%, #0a1230 46%, #05060f 100%)" }}
       />
-      {/* full-screen 3D scene */}
+      {/* 3D scene */}
       <div className="absolute inset-0 z-0">
-        <Hero3D />
+        <Hero3D active={active} />
       </div>
-      {/* cursor-following gradient glow */}
-      <div
-        ref={glowRef}
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300"
-      />
-      {/* legibility scrim — stronger on the left where the copy sits */}
+      {/* cursor glow */}
+      <div ref={glowRef} aria-hidden className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300" />
+      {/* legibility scrim — left/bottom heavy so the headline reads over the scene */}
       <div
         aria-hidden
         className="absolute inset-0 z-[5]"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,8,16,0.78) 0%, rgba(5,8,16,0.45) 38%, transparent 62%), linear-gradient(0deg, rgba(5,8,16,0.55) 0%, transparent 30%)",
+            "linear-gradient(90deg, rgba(5,6,15,0.86) 0%, rgba(5,6,15,0.55) 34%, rgba(5,6,15,0.05) 60%, transparent 75%), linear-gradient(0deg, rgba(5,6,15,0.6) 0%, transparent 32%)",
         }}
       />
 
       {/* copy */}
       <div className="relative z-10 mx-auto w-full max-w-[88rem] px-6 lg:px-10">
-        <div className="max-w-2xl">
+        <div className="relative max-w-2xl">
+          {/* subtle glass panel behind text */}
+          <div
+            aria-hidden
+            className="absolute -inset-x-6 -inset-y-6 -z-10 rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-[3px] sm:-inset-x-8 sm:-inset-y-8"
+            style={{ maskImage: "linear-gradient(90deg, black 55%, transparent)", WebkitMaskImage: "linear-gradient(90deg, black 55%, transparent)" }}
+          />
+
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,7 +87,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
             {dict.brand.nameEn}
           </motion.p>
 
-          <h1 className="mt-3 text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="mt-3 text-4xl font-semibold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl">
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
                 initial={{ y: "115%" }}
@@ -84,7 +95,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
                 transition={{ duration: 1, ease: easeOut, delay: 0.3 }}
                 className="block"
               >
-                {dict.brand.tagline}
+                {h.title1}
               </motion.span>
             </span>
             <span className="block overflow-hidden pb-[0.08em]">
@@ -94,7 +105,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
                 transition={{ duration: 1, ease: easeOut, delay: 0.44 }}
                 className="block bg-gradient-to-r from-white to-[#9db8ff] bg-clip-text text-transparent"
               >
-                {dict.brand.tagline2}
+                {h.title2}
               </motion.span>
             </span>
           </h1>
@@ -103,22 +114,40 @@ export function ImmersiveHero({ lang, dict }: Props) {
             initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.9, ease: easeOut, delay: 0.62 }}
-            className="mt-7 max-w-xl text-lg leading-relaxed text-white/75"
+            className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg"
           >
-            {dict.brand.lead}
+            {h.subtitle}
           </motion.p>
+
+          {/* capability tags */}
+          <motion.ul
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: easeOut, delay: 0.74 }}
+            className="mt-6 flex flex-wrap gap-2"
+          >
+            {h.tags.map((t) => (
+              <li
+                key={t}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 text-xs text-white/80 backdrop-blur-sm"
+              >
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
+                {t}
+              </li>
+            ))}
+          </motion.ul>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: easeOut, delay: 0.78 }}
-            className="mt-10 flex flex-wrap gap-3"
+            transition={{ duration: 0.8, ease: easeOut, delay: 0.86 }}
+            className="mt-9 flex flex-wrap gap-3"
           >
             <Link
               href={`/${lang}/solutions`}
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 font-medium text-[#0a1024] transition-all hover:bg-white/90 hover:shadow-[0_0_44px_-6px_rgba(150,180,255,0.7)]"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 font-medium text-[#0a1024] transition-all hover:bg-white/90 hover:shadow-[0_0_44px_-6px_rgba(150,180,255,0.8)]"
             >
-              {dict.hero.cta}
+              {h.ctaPrimary}
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
                 <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -127,7 +156,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
               href={`/${lang}/products`}
               className="inline-flex h-12 items-center gap-2 rounded-full border border-white/30 px-7 font-medium text-white/90 backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/5"
             >
-              {dict.hero.secondaryCta}
+              {h.ctaSecondary}
             </Link>
           </motion.div>
         </div>

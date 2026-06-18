@@ -612,5 +612,18 @@
       "creditLabel": "统一社会信用代码：",
       "creditCode": "91440300MAK7XEPD58"
     }
+  },
+  "heroImmersive": {
+    "title1": "向前·创新",
+    "title2": "让智能系统进入真实场景",
+    "subtitle": "01唯创聚焦机器人、无人机、AIoT 与智能硬件系统，为园区、企业与行业客户提供可落地的自动化解决方案。",
+    "tags": [
+      "机器人系统",
+      "无人机应用",
+      "AIoT 平台",
+      "智能硬件定制"
+    ],
+    "ctaPrimary": "了解解决方案",
+    "ctaSecondary": "查看产品"
   }
 }

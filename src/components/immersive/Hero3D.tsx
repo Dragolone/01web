@@ -116,14 +116,16 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
   );
 }
 
-export function Hero3D() {
+export function Hero3D({ active = true }: { active?: boolean }) {
   const reduce = useReducedMotion();
 
   return (
     <Canvas
-      dpr={[1, 2]}
+      // Pause the render loop when the hero is scrolled out of view (perf).
+      frameloop={active ? "always" : "never"}
+      dpr={[1, 1.7]}
       camera={{ position: [0, 0, 6], fov: 42 }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >
       <fog attach="fog" args={["#080619", 8, 22]} />
@@ -158,14 +160,17 @@ export function Hero3D() {
         </Float>
       ))}
 
+      {/* shifted right so it doesn't sit behind the headline */}
       <Float speed={reduce ? 0 : 1} rotationIntensity={0} floatIntensity={reduce ? 0 : 0.7}>
-        <Turbine reduce={reduce} />
+        <group position={[1.6, 0.15, 0]}>
+          <Turbine reduce={reduce} />
+        </group>
       </Float>
 
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
 
       <EffectComposer>
-        <Bloom intensity={1.5} luminanceThreshold={0.1} luminanceSmoothing={0.4} mipmapBlur />
+        <Bloom intensity={1.15} luminanceThreshold={0.16} luminanceSmoothing={0.4} mipmapBlur />
         <ChromaticAberration offset={[0.0007, 0.0007]} radialModulation={false} modulationOffset={0} />
         <Vignette eskil={false} offset={0.22} darkness={0.92} />
         <Noise opacity={0.028} />
