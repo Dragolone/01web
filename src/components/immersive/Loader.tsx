@@ -51,12 +51,12 @@ export function Loader() {
             className="flex flex-col items-center gap-6"
           >
             <Image
-              src="/brand/logo-white.png"
+              src="/brand/logo-512.png"
               alt=""
               width={180}
               height={46}
               priority
-              className="h-9 w-auto"
+              className="h-9 w-auto brightness-0 invert"
             />
             <div className="h-px w-40 overflow-hidden bg-white/15">
               <motion.div

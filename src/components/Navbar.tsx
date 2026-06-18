@@ -74,12 +74,16 @@ export function Navbar({ lang, dict }: Props) {
       <div className="mx-auto max-w-[88rem] px-6 lg:px-10 h-16 flex items-center justify-between">
         <Link href={`/${lang}`} className="flex items-center gap-2 group">
           <Image
-            src={overHero ? "/brand/logo-white.png" : "/brand/logo-512.png"}
+            src="/brand/logo-512.png"
             alt={dict.brand.name}
             width={140}
             height={36}
             priority
-            className="h-7 w-auto"
+            className={clsx(
+              "h-7 w-auto transition-[filter] duration-300",
+              // logo-512.png is transparent; invert it to solid white over the dark hero
+              overHero && "brightness-0 invert"
+            )}
           />
         </Link>
 

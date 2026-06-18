@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
-import { ShaderField } from "./ShaderField";
+import { ParticleField } from "./ParticleField";
 
 type Props = { lang: Locale; dict: Dictionary };
 
@@ -35,8 +35,8 @@ export function ImmersiveHero({ lang, dict }: Props) {
             "radial-gradient(120% 90% at 50% 0%, #12246b 0%, #0a1024 45%, #060b18 100%)",
         }}
       />
-      {/* Animated shader field */}
-      <ShaderField className="absolute inset-0 z-0 h-full w-full" />
+      {/* Animated node constellation */}
+      <ParticleField className="absolute inset-0 z-0 h-full w-full" />
       {/* Legibility scrim */}
       <div
         aria-hidden
