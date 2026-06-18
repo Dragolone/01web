@@ -71,11 +71,11 @@ export function ImmersiveHero({ lang, dict }: Props) {
       {/* copy */}
       <div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-10">
         <div className="relative max-w-2xl">
-          {/* subtle glass panel behind text */}
+          {/* borderless soft dark halo for legibility (no panel/edge) */}
           <div
             aria-hidden
-            className="absolute -inset-x-6 -inset-y-6 -z-10 rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-[3px] sm:-inset-x-8 sm:-inset-y-8"
-            style={{ maskImage: "linear-gradient(90deg, black 55%, transparent)", WebkitMaskImage: "linear-gradient(90deg, black 55%, transparent)" }}
+            className="absolute -inset-x-10 -inset-y-12 -z-10"
+            style={{ background: "radial-gradient(62% 60% at 28% 50%, rgba(5,6,15,0.6) 0%, transparent 75%)" }}
           />
 
           <motion.p

@@ -625,5 +625,55 @@
     ],
     "ctaPrimary": "Explore solutions",
     "ctaSecondary": "View products"
+  },
+  "homeSolutions": {
+    "eyebrow": "Solutions",
+    "title": "Intelligent solutions for real-world scenarios",
+    "subtitle": "From device connectivity to automated operations — across parks, low-altitude, energy and remote O&M.",
+    "items": [
+      {
+        "key": "park",
+        "title": "Smart Park Automation",
+        "desc": "Patrol, security linkage, unattended operation and mobile-robot deployment, working as one system.",
+        "keywords": [
+          "Patrol",
+          "Security linkage",
+          "Unattended",
+          "Mobile robots"
+        ]
+      },
+      {
+        "key": "uav",
+        "title": "Low-altitude UAV",
+        "desc": "Drone inspection, route missions, data return and air-ground coordination for inspection and security.",
+        "keywords": [
+          "Inspection",
+          "Route missions",
+          "Data return",
+          "Air-ground"
+        ]
+      },
+      {
+        "key": "energy",
+        "title": "Robotic Mobile Energy",
+        "desc": "Mobile charging robots and unmanned recharging — energy services for vehicles and equipment.",
+        "keywords": [
+          "Mobile charging",
+          "Unmanned recharge",
+          "Energy service"
+        ]
+      },
+      {
+        "key": "platform",
+        "title": "Remote Control & O&M Platform",
+        "desc": "Mini Program, web console, cloud functions, database, IoT gateway and real-time communication.",
+        "keywords": [
+          "Mini Program / Web",
+          "Cloud functions",
+          "IoT gateway",
+          "Realtime"
+        ]
+      }
+    ]
   }
 }
