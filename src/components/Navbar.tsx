@@ -56,11 +56,9 @@ export function Navbar({ lang, dict }: Props) {
   }, [open]);
 
   const rest = stripLocale(pathname);
-  // The home page leads with a full-screen dark immersive hero, so at the very
-  // top the navbar goes white-on-transparent; once scrolled it reverts to the
-  // standard light glassmorphism. Other pages always use the light treatment.
-  const isHome = rest === "";
-  const overHero = isHome && !scrolled;
+  // Every page now opens with a dark hero, so at the very top the navbar goes
+  // white-on-transparent; once scrolled it reverts to light glassmorphism.
+  const overHero = !scrolled;
 
   return (
     <header

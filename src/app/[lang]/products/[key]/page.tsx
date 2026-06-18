@@ -67,12 +67,31 @@ export default async function ProductDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
-      {/* Hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-surface/40">
-        <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
+      {/* Hero — dark cyber opening, dissolving into light content */}
+      <section
+        className="relative isolate overflow-hidden pt-32 pb-24 md:pt-40 md:pb-28 text-white"
+        style={{ background: "radial-gradient(120% 100% at 50% -10%, #142a73 0%, #0a1230 45%, #070a18 100%)" }}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-60"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(120,150,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,255,0.07) 1px, transparent 1px)",
+            backgroundSize: "54px 54px",
+            maskImage: "radial-gradient(110% 90% at 50% 0%, black 25%, transparent 75%)",
+            WebkitMaskImage: "radial-gradient(110% 90% at 50% 0%, black 25%, transparent 75%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24"
+          style={{ background: "linear-gradient(180deg, transparent 0%, #fafbfe 96%)" }}
+        />
+        <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
           <Link
             href={`/${lang}/products`}
-            className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-8"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M13 7H1m0 0l5 5M1 7l5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -82,20 +101,20 @@ export default async function ProductDetailPage({
 
           <div className="grid lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6">
-              <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
-                <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+              <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#9db8ff] mb-3">
+                <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-[#5cf0ff]" />
                 Product
               </p>
               <h1 className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
                 {item.name}
               </h1>
               <div className="mt-5 flex items-center gap-3">
-                <span className="text-xs px-2.5 py-1 rounded-full bg-brand-soft text-brand font-medium">
+                <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-[#9db8ff] font-medium">
                   {item.tag}
                 </span>
-                <p className="text-base text-brand font-medium">{item.summary}</p>
+                <p className="text-base text-[#9db8ff] font-medium">{item.summary}</p>
               </div>
-              <p className="mt-6 text-lg text-foreground/75 leading-relaxed max-w-xl">
+              <p className="mt-6 text-lg text-white/70 leading-relaxed max-w-xl">
                 {item.desc}
               </p>
               <div className="mt-8">
@@ -112,7 +131,7 @@ export default async function ProductDetailPage({
             </div>
 
             <div className="lg:col-span-6">
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-surface">
+              <div className="aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl shadow-black/30">
                 <Image
                   src={visual.img}
                   alt={visual.alt}
