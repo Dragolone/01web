@@ -61,7 +61,13 @@ export function ProductMatrix({ dict, lang, compactTop }: Props) {
                   aria-label={item.name}
                   className="absolute inset-0 z-10"
                 />
-                <div className="aspect-[16/10] overflow-hidden">
+                <motion.div
+                  initial={{ clipPath: "inset(0 0 100% 0)" }}
+                  whileInView={{ clipPath: "inset(0 0 0% 0)" }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.9, ease: easeOut, delay: idx * 0.08 + 0.1 }}
+                  className="aspect-[16/10] overflow-hidden"
+                >
                   <Image
                     src={v.img}
                     alt={v.alt}
@@ -70,7 +76,7 @@ export function ProductMatrix({ dict, lang, compactTop }: Props) {
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                </div>
+                </motion.div>
                 <div className="p-7">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="text-xl font-semibold">{item.name}</h3>

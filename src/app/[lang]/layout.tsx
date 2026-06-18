@@ -8,6 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TechBackdrop } from "@/components/TechBackdrop";
 import { MotionProvider } from "@/components/MotionProvider";
+import { Loader } from "@/components/immersive/Loader";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -115,6 +116,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
+        <Loader />
         <TechBackdrop />
         <MotionProvider>
           <Navbar lang={lang as Locale} dict={dict} />
