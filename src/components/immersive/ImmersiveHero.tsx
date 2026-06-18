@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
@@ -13,8 +14,27 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Hero3D), { ssr: false });
 
 export function ImmersiveHero({ lang, dict }: Props) {
+  const glowRef = useRef<HTMLDivElement>(null);
+  // Cursor-following gradient glow (direct DOM write — no re-render per move).
+  const onMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = glowRef.current;
+    if (!el) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    el.style.background = `radial-gradient(420px circle at ${x}px ${y}px, rgba(0,229,255,0.16), rgba(155,107,255,0.10) 40%, transparent 70%)`;
+    el.style.opacity = "1";
+  };
+  const onLeave = () => {
+    if (glowRef.current) glowRef.current.style.opacity = "0";
+  };
+
   return (
-    <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden text-white">
+    <section
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden text-white"
+    >
       {/* dark base behind the canvas */}
       <div
         aria-hidden
@@ -28,6 +48,12 @@ export function ImmersiveHero({ lang, dict }: Props) {
       <div className="absolute inset-0 z-0">
         <Hero3D />
       </div>
+      {/* cursor-following gradient glow */}
+      <div
+        ref={glowRef}
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300"
+      />
       {/* legibility scrim — stronger on the left where the copy sits */}
       <div
         aria-hidden
