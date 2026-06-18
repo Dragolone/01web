@@ -71,7 +71,14 @@ export function Footer({ lang, dict }: Props) {
               <path d="M3 9 9 3M9 3H4.5M9 3v4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
-          <p className="mt-2 text-xs text-muted">{dict.footer.icp}</p>
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2 block text-xs text-muted hover:text-brand transition-colors"
+          >
+            {dict.footer.icp}
+          </a>
         </div>
       </div>
       <div className="border-t border-border">
