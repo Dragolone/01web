@@ -49,31 +49,44 @@ const featureIcons = [
 
 export function HomeFeatures({ dict }: Props) {
   return (
-    <section className="pt-4 pb-20 md:pt-6 md:pb-28">
-      <div className="mx-auto max-w-[88rem] px-6 lg:px-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+    // Dark "act one" band — continues seamlessly from the immersive hero, then
+    // dissolves into the light content below.
+    <section className="relative overflow-hidden bg-[#05080f] pt-24 pb-40 text-white md:pt-28 md:pb-48">
+      {/* ambient brand glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(60% 40% at 80% 0%, rgba(40,92,224,0.18) 0%, transparent 60%), radial-gradient(50% 40% at 10% 30%, rgba(40,92,224,0.10) 0%, transparent 60%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-[88rem] px-6 lg:px-10">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
           {dict.hero.features.map((f, idx) => (
             <motion.div
               key={f.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, ease: easeOut, delay: idx * 0.06 }}
-              className="group p-5 md:p-6 rounded-2xl bg-white border border-border hover:border-brand/25 hover:shadow-lg hover:shadow-brand/5 hover:-translate-y-0.5 transition-all"
+              transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.1 }}
+              className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.08] md:p-6"
             >
-              <div className="w-10 h-10 rounded-xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-colors">
-                <span className="w-5 h-5 block">{featureIcons[idx]}</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#9db8ff]/15 text-[#9db8ff] transition-colors group-hover:bg-[#9db8ff] group-hover:text-[#05080f]">
+                <span className="block h-5 w-5">{featureIcons[idx]}</span>
               </div>
-              <p className="mt-4 text-[15px] font-semibold tracking-tight">
-                {f.title}
-              </p>
-              <p className="mt-1.5 text-[13px] text-muted leading-relaxed">
-                {f.desc}
-              </p>
+              <p className="mt-4 text-[15px] font-semibold tracking-tight">{f.title}</p>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-white/55">{f.desc}</p>
             </motion.div>
           ))}
         </div>
       </div>
+      {/* dissolve into the light second act */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
+        style={{ background: "linear-gradient(180deg, transparent 0%, #fafbfe 92%)" }}
+      />
     </section>
   );
 }
