@@ -123,7 +123,7 @@ export function Hero3D({ active = true }: { active?: boolean }) {
     <Canvas
       // Pause the render loop when the hero is scrolled out of view (perf).
       frameloop={active ? "always" : "never"}
-      dpr={[1, 2]}
+      dpr={[1, 1.8]}
       camera={{ position: [0, 0, 6], fov: 42 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
@@ -142,9 +142,9 @@ export function Hero3D({ active = true }: { active?: boolean }) {
       </Environment>
 
       {/* fine, dense sparkle layers */}
-      <Sparkles count={620} scale={[22, 12, 12]} size={1} speed={reduce ? 0 : 0.3} color="#7fe9ff" opacity={0.7} />
-      <Sparkles count={320} scale={[16, 10, 9]} size={1.5} speed={reduce ? 0 : 0.18} color="#ff9bf2" opacity={0.5} />
-      <Sparkles count={190} scale={[11, 8, 6]} size={2.1} speed={reduce ? 0 : 0.1} color="#ffffff" opacity={0.55} />
+      <Sparkles count={520} scale={[22, 12, 12]} size={1} speed={reduce ? 0 : 0.3} color="#7fe9ff" opacity={0.7} />
+      <Sparkles count={280} scale={[16, 10, 9]} size={1.5} speed={reduce ? 0 : 0.18} color="#ff9bf2" opacity={0.5} />
+      <Sparkles count={160} scale={[11, 8, 6]} size={2.1} speed={reduce ? 0 : 0.1} color="#ffffff" opacity={0.55} />
 
       <mesh scale={4}>
         <icosahedronGeometry args={[1, 3]} />

@@ -124,7 +124,7 @@ export function Navbar({ lang, dict }: Props) {
 
           <Link
             href={`/${lang}/contact`}
-            className="hidden sm:inline-flex items-center justify-center h-10 px-6 rounded-full bg-brand text-white text-[15px] font-medium hover:bg-brand-strong transition-all hover:shadow-[0_0_28px_-6px_rgba(24,73,220,0.9)] shadow-sm shadow-brand/20"
+            className="hidden sm:inline-flex items-center justify-center h-10 px-6 rounded-full bg-white text-[#0a1024] text-[15px] font-medium transition-all hover:bg-white/90 hover:shadow-[0_0_28px_-6px_rgba(150,180,255,0.7)] shadow-sm shadow-black/10"
           >
             {dict.nav.cta}
           </Link>
@@ -164,7 +164,7 @@ export function Navbar({ lang, dict }: Props) {
             <Link
               href={`/${lang}/contact`}
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center justify-center h-11 rounded-full bg-brand text-white font-medium"
+              className="mt-2 inline-flex items-center justify-center h-11 rounded-full bg-white text-[#0a1024] font-medium transition-all hover:bg-white/90"
             >
               {dict.nav.cta}
             </Link>
