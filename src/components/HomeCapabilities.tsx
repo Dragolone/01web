@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CardFx } from "@/components/CardFx";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: Dictionary; theme?: "dark" };
@@ -131,6 +132,7 @@ export function HomeCapabilities({ dict, theme }: Props) {
               <p className={`relative mt-2 text-sm leading-relaxed ${dark ? "text-white/55" : "text-muted"}`}>
                 {item.desc}
               </p>
+              <CardFx color={dark ? undefined : "rgba(47,107,255,0.12)"} />
             </motion.div>
           ))}
         </div>

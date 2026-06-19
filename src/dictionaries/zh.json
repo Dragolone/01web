@@ -691,35 +691,35 @@
     "subtitle": "从云端控制到边缘集成，贯通设备连接、数据与运营的一体化系统底座。",
     "items": [
       {
-        "t": "Cloud Control",
+        "t": "云端控制",
         "d": "云端集中控制与远程调度"
       },
       {
-        "t": "IoT Gateway",
+        "t": "物联网网关",
         "d": "多协议设备接入与网关管理"
       },
       {
-        "t": "Real-time Communication",
+        "t": "实时通信",
         "d": "低延迟实时通信与指令下发"
       },
       {
-        "t": "Device Management",
+        "t": "设备管理",
         "d": "设备状态监控与远程运维"
       },
       {
-        "t": "Data Dashboard",
+        "t": "数据看板",
         "d": "数据可视化与运营看板"
       },
       {
-        "t": "Edge Integration",
+        "t": "边缘集成",
         "d": "边缘计算与本地协同"
       },
       {
-        "t": "Computer Vision",
+        "t": "计算机视觉",
         "d": "视觉识别与 AI 算法接入"
       },
       {
-        "t": "Mini Program / Web",
+        "t": "小程序 / Web",
         "d": "小程序与 Web 控制台"
       }
     ]

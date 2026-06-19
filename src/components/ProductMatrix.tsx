@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { CardFx } from "@/components/CardFx";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
 // compactTop: trim the top padding when this sits directly under a PageHero.
@@ -110,6 +111,7 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
                   aria-hidden
                   className="pointer-events-none absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
                 />
+                <CardFx color={dark ? undefined : "rgba(47,107,255,0.12)"} />
               </motion.article>
             );
           })}

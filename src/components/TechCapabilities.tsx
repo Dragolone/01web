@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CardFx } from "@/components/CardFx";
+import { CountUp } from "@/components/CountUp";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: Dictionary };
@@ -62,10 +64,11 @@ export function TechCapabilities({ dict }: Props) {
                 <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">{item.label}</p>
                 <span className="font-mono text-[11px] tracking-widest text-white/25">{`0${idx + 1}`}</span>
               </div>
-              <p className="mt-5 bg-gradient-to-r from-white to-[#9db8ff] bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl">
-                {item.metric}
+              <p className="mt-5 bg-gradient-to-r from-white to-[#9db8ff] bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl tabular-nums">
+                <CountUp value={item.metric} />
               </p>
               <p className="mt-3 text-sm leading-relaxed text-white/55">{item.note}</p>
+              <CardFx />
             </motion.div>
           ))}
         </div>

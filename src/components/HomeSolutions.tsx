@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CardFx } from "@/components/CardFx";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: Dictionary };
@@ -69,6 +70,7 @@ export function HomeSolutions({ dict }: Props) {
                   </span>
                 ))}
               </div>
+              <CardFx />
             </motion.div>
           ))}
         </div>

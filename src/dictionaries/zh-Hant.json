@@ -691,35 +691,35 @@
     "subtitle": "從雲端控制到邊緣整合，貫通設備連接、資料與營運的一體化系統底座。",
     "items": [
       {
-        "t": "Cloud Control",
+        "t": "雲端控制",
         "d": "雲端集中控制與遠端調度"
       },
       {
-        "t": "IoT Gateway",
+        "t": "物聯網閘道",
         "d": "多協定設備接入與閘道管理"
       },
       {
-        "t": "Real-time Communication",
+        "t": "即時通訊",
         "d": "低延遲即時通訊與指令下發"
       },
       {
-        "t": "Device Management",
+        "t": "裝置管理",
         "d": "設備狀態監控與遠端運維"
       },
       {
-        "t": "Data Dashboard",
+        "t": "資料看板",
         "d": "資料視覺化與營運看板"
       },
       {
-        "t": "Edge Integration",
+        "t": "邊緣整合",
         "d": "邊緣運算與本地協同"
       },
       {
-        "t": "Computer Vision",
+        "t": "電腦視覺",
         "d": "視覺辨識與 AI 演算法接入"
       },
       {
-        "t": "Mini Program / Web",
+        "t": "小程式 / Web",
         "d": "小程式與 Web 控制台"
       }
     ]

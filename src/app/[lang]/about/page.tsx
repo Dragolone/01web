@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
+import { CountUp } from "@/components/CountUp";
 
 export async function generateMetadata({
   params,
@@ -108,9 +109,9 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
                     className="grid grid-cols-4 gap-3 px-4 md:px-6 py-4 border-t border-border/70 text-xs md:text-sm items-center"
                   >
                     <div className="font-medium">{r.segment}</div>
-                    <div className="text-muted tabular-nums">{r.domestic}</div>
-                    <div className="text-muted tabular-nums">{r.global}</div>
-                    <div className="text-right font-medium text-brand tabular-nums">{r.growth}</div>
+                    <div className="text-muted tabular-nums"><CountUp value={r.domestic} /></div>
+                    <div className="text-muted tabular-nums"><CountUp value={r.global} /></div>
+                    <div className="text-right font-medium text-brand tabular-nums"><CountUp value={r.growth} /></div>
                   </div>
                 ))}
               </div>

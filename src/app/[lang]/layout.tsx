@@ -74,6 +74,8 @@ export async function generateMetadata({
       images: [`${SITE_URL}/opengraph-image`],
     },
     robots: { index: true, follow: true },
+    // 动态根布局不会自动注入根级 manifest 路由的 link（同 opengraph-image 的坑），显式声明：
+    manifest: "/manifest.webmanifest",
     // icons are auto-injected from src/app/icon.png + src/app/apple-icon.png
   };
 }
@@ -125,6 +127,7 @@ export default async function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer lang={lang as Locale} dict={dict} />
         </MotionProvider>
+        <div className="film-grain" aria-hidden />
       </body>
     </html>
   );

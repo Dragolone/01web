@@ -19,11 +19,12 @@ export function ImmersiveHero({ lang, dict }: Props) {
   const glowRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(true);
 
-  // Pause the 3D render loop while the hero is off-screen (fixes scroll-back jank).
+  // Only pause the 3D render loop once the hero is fully off-screen (not visible →
+  // no point spending GPU). While any part of the hero is on screen it keeps animating.
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0.04 });
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0 });
     io.observe(el);
     return () => io.disconnect();
   }, []);

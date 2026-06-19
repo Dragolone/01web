@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CardFx } from "@/components/CardFx";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: Dictionary };
@@ -58,6 +59,7 @@ export function HomeTech({ dict }: Props) {
                 </div>
                 <p className="mt-4 text-base font-semibold text-white">{it.t}</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-white/55">{it.d}</p>
+                <CardFx size={260} />
               </motion.div>
             ))}
           </div>
