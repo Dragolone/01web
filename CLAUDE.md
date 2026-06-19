@@ -92,7 +92,7 @@
 
 - **全站深色**：`globals.css` 主题 token 已翻深色（`--background:#070a18` / `--foreground` 浅 / `--surface` 半透明白玻璃 / `--border` 浅）。**所有用语义 token 的组件自动深色**。body 科技图标矩阵 tint 改成浅蓝（`rgba(150,176,255,...)`）。内页（产品/详情/方案/关于/联系/404）也全深色：开场是深色 hero，正文经 token 自动深色但仍可读。
 - **新依赖（已装，React 19 兼容）**：`three` ^0.184 / `@react-three/fiber` ^9 / `@react-three/drei` ^10 / `@react-three/postprocessing` ^3 / `@pmndrs/assets`（CC0 HDRI，本地打包离线用）。→ 「不引入重型 3D 库」这条**已被用户明确要求推翻**。
-- **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。配色青/品红/蓝/紫赛博霓虹。
+- **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。配色青/品红/蓝/紫赛博霓虹。**性能旋钮 + 用户偏好（2026-06-19，重要）**：可调的有 `dpr`（当前 `[1,1.8]`）/ Sparkles 粒子数（当前 ~960 = 520+280+160）/ EffectComposer 后处理 pass（Bloom+色散+Vignette+Noise 全开）。但用户**明确要效果优先**，**已否过「滚动时暂停渲染」和「降画质/大幅减粒子」**——别再为性能去停涡轮或砍画质，最多按用户口令微调一档；离屏暂停只保留 `IntersectionObserver threshold:0`（完全看不见才 `never`，不要再加「滚动手势中暂停」那套）。
 - **immersive 组件目录** `components/immersive/`：`ImmersiveHero` / `Hero3D` / `Loader`（开场幕布，挂 layout）/ `ScrollProgress`（顶部霓虹进度条，挂 layout）。`[lang]/template.tsx` = 路由切换淡入转场。（历史上还做过 ParticleField/TerrainField/ShaderField/HoloDrone，均被否后删除——别找。）
 - **首页叙事 section（顺序）**：ImmersiveHero → ProductMatrix → **HomeSolutions(新)** → HomeCapabilities → **HomeTech(新)** → TechCapabilities(商业价值已 dashboard 化) → HomeCTA(深色光束)。`HomeSolutions.tsx`/`HomeTech.tsx` 为新增组件。首页内容包在 `<div bg-[#070a18]>` 暗场容器里。
 - **`theme="dark"` 变体**：`ProductMatrix`/`HomeCapabilities`/`HomeCTA` 有 `theme?:"dark"` prop；首页与产品页都传 `dark`（玻璃卡+霓虹）。它们的浅色分支基本已不用（全站深色）。
@@ -102,6 +102,14 @@
 - **背景纹理**：全站「直线网格」已统一换成**柔和点阵**（`radial-gradient` 圆点，用户嫌横竖线不自然）。
 - **作废的旧约定**（下方仍能看到，但**以本节为准**）：①「off-white #fafbfe 底色」→ 已深色；②「不要在白→黑加 fade overlay」→ 现到处用深↔浅渐变过渡且 OK；③「max-w-[88rem]」→ 已全站改 **96rem**；④「极简/不过度设计」视觉层面已不适用。
 - **品牌名**：首页文案统一用「零一唯创」，**别写「01唯创」**（用户 2026-06-18 纠正过）。英文 `Zero-One Innovation`。
+- **2026-06-19 视觉/性能/PWA 轮（已 push main）**：
+  - **卡片光效** `components/CardFx.tsx`：鼠标跟随光斑 + 悬停流光渐变边框，作为 overlay drop-in 嵌进各卡片网格（ProductMatrix/HomeCapabilities/TechCapabilities/HomeSolutions/HomeTech）。`pointer-events-none` 不挡 Link；边框动画只在 hover 跑（idle 零开销）。样式在 `globals.css .card-fx*`（含 `@property --fx-angle`）。深色卡用青、浅色分支传 brand 蓝。
+  - **数字滚动计数** `components/CountUp.tsx`：滚到视口 0→目标值。**SSR 渲染真实值**（SEO/无 JS 安全），客户端 arm 到 0 再 count；范围/非数字（「百公里级」「8–16 月」「5,000→200」）原样不动。用在关于页市场表 + TechCapabilities metric。⚠️ **正则匹配必须 `useMemo` 缓存**——否则每帧 setState 重渲染产生新数组引用、effect 反复重启、数字永不停（踩过这个 bug）。
+  - **film-grain 噪点**：`globals.css .film-grain` + layout 挂一层 fixed 噪点。**禁止用 `mix-blend-mode`**（fixed + blend = 每帧全屏重绘 = 滚动卡顿，踩过），改 `transform: translateZ(0)` 提成静态 GPU 合成层；触屏 `@media (hover:none)` 隐藏。
+  - **PWA**：`app/manifest.ts`（深色启动屏 #070a18 / 用 `/icon.png` 512）。proxy matcher 已排除 `manifest.webmanifest`；layout `generateMetadata` 显式 `manifest`（动态根布局不自动注入，同 og:image 坑）。
+  - **导航栏「联系我们」按钮**：由 `bg-brand` 纯蓝改 **白底深字**（`bg-white text-[#0a1024]`），与首页 CTA 统一（桌面 + 移动端两处）——用户嫌孤立的蓝不搭深色霓虹。
+  - **HomeTech 卡片标题**：zh/tw 已改中文（en 保留英文），**别再改回英文**（用户专门提过中文版不该出现英文标题）。
+  - **脚手架清理**：删了 `public/` 的 next/vercel/window/file/globe.svg；`package.json` 的 dev + build 都带 `--turbopack`。
 - **未做（用户判定非必要）**：首页精简版「应用场景」（/solutions 已有完整版）。
 
 ## 技术栈
@@ -128,9 +136,9 @@
 3. **全局 `PageProps<'/[lang]'>` 和 `LayoutProps<'/[lang]'>`** 类型自动可用，直接当类型注解
 4. **`hasLocale()`** 模式：先验证 locale 合法再走逻辑，不合法 `notFound()`
 5. **`unstable_instant`** 可以导出加速 client 导航（暂未用到，但 `node_modules/next/dist/docs/01-app/01-getting-started/index.md` 里提到过）
-6. **`opengraph-image.tsx` 放在根级（`app/opengraph-image.tsx`）不会被 `[lang]/layout.tsx` 自动注入 `og:image` meta** —— 必须在 layout 的 `generateMetadata` 里显式写 `openGraph.images: [{ url: \`${SITE_URL}/opengraph-image\`, ... }]` + `twitter.images`。文档未提，dev 不报错，社交分享时才发现没图。
+6. **`opengraph-image.tsx` 放在根级（`app/opengraph-image.tsx`）不会被 `[lang]/layout.tsx` 自动注入 `og:image` meta** —— 必须在 layout 的 `generateMetadata` 里显式写 `openGraph.images: [{ url: \`${SITE_URL}/opengraph-image\`, ... }]` + `twitter.images`。文档未提，dev 不报错，社交分享时才发现没图。**同坑：`app/manifest.ts`（PWA）也一样**——必须在 `generateMetadata` 里显式 `manifest: "/manifest.webmanifest"`，否则动态根布局不会注入 `<link rel="manifest">`（已加）。
 7. **Satori (`next/og` 的 `ImageResponse`) 严格约束**：① `height={数字}` 不能字符串 ② 任何有多个 children 的 `<div>` 必须显式 `style={{ display: "flex", ... }}` ③ 不能用 `<br/>` 在 multi-child 容器里，要拆成两个 `<span>` ④ dev/lint 都不报错，**build 时** prerender 阶段才抛
-8. **`proxy.ts` 的 `matcher` 必须排除根级 metadata 路由**：当前是 `"/((?!_next|api|opengraph-image|twitter-image|sitemap.xml|robots.txt|.*\\..*).*)"`。漏掉的话，`/opengraph-image` 会被重定向到不存在的 `/zh/opengraph-image`，社交平台 fetch 失败。新增任何根级路由（manifest、ads.txt 等）都要加进来。
+8. **`proxy.ts` 的 `matcher` 必须排除根级 metadata 路由**：当前是 `"/((?!_next|api|opengraph-image|twitter-image|sitemap.xml|robots.txt|manifest.webmanifest|.*\\..*).*)"`（已含 manifest.webmanifest）。漏掉的话，`/opengraph-image` 会被重定向到不存在的 `/zh/opengraph-image`，社交平台 fetch 失败。新增任何根级路由（manifest、ads.txt 等）都要加进来。
 
 ## 目录结构
 
@@ -150,8 +158,8 @@ src/
 │   ├── not-found.tsx              ← ✅ 真正生效的 404：自带完整 `<html>`（无根 layout 可借），client 用 usePathname 取 locale 出三语
 │   ├── site.ts                    ← SITE_URL 常量（读 NEXT_PUBLIC_SITE_URL）
 │   ├── sitemap.ts                 ← SITE_PATHS × 3 locale × hreflang 互链（SITE_PATHS 里已是 /solutions）
-│   ├── robots.ts / opengraph-image.tsx / icon.png / apple-icon.png
-│   └── globals.css                ← Tailwind + 品牌 token + 全页基底「科技图标矩阵」+ focus-visible 环 + reduced-motion media query（见「背景」「a11y」）
+│   ├── robots.ts / opengraph-image.tsx / manifest.ts(PWA) / icon.png / apple-icon.png
+│   └── globals.css                ← Tailwind + 品牌 token + 全页基底「科技图标矩阵」+ film-grain 噪点层 + .card-fx 卡片光效 + focus-visible 环 + reduced-motion media query（见「背景」「a11y」「2026-06-19 视觉轮」）
 ├── components/
 │   ├── Navbar.tsx (client)        ← 3 段语言切换 + 移动端汉堡（aria-expanded/ESC/锁滚动）+ 滚动毛玻璃
 │   ├── Footer.tsx (server)        ← 链接悬停滑入 ↗ 箭头
@@ -162,7 +170,9 @@ src/
 │   ├── ProductMatrix.tsx (client) ← 产品卡片（fallback 用 visuals.charge，别用已删的 visuals.robot）
 │   ├── SolutionScenarios.tsx (client) ← 8 场景**全部有实景图**（scenarioImages map：4 张 PDF 抽图 + 4 张 ChatGPT 生成）。示意卡 fallback 分支保留但已无场景命中
 │   ├── TechCapabilities.tsx (client) ← 「可量化商业价值」深色浮起卡片（VTOL 用，dict.tech）
-│   └── PageHero.tsx (client)      ← 内页通用 hero（eyebrow 圆点 + meta + 装饰流线）
+│   ├── PageHero.tsx (client)      ← 内页通用 hero（eyebrow 圆点 + meta + 装饰流线）
+│   ├── CardFx.tsx (client)        ← 卡片鼠标光斑 + 悬停流光边框 overlay（drop-in，pointer-events-none），样式在 globals.css .card-fx*
+│   └── CountUp.tsx (client)       ← 数字滚动计数（SSR 真实值，范围/非数字不动；⚠️ useMemo 缓存正则别去掉，否则数字一直跳）
 ├── dictionaries/                  ← zh.json（默认/最权威）/ zh-Hant.json（/tw 台湾用词）/ en.json。新增 key 三个同步
 └── proxy.ts                       ← 非 locale 路径 → 加 /zh 前缀重定向（matcher 已排除根级 metadata 路由）
 
@@ -321,6 +331,9 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
 - ✅ 视觉素材：8 个场景全部有图。4 张 PDF 抽图（充电特斯拉/音乐节/巡航）+ 4 张 ChatGPT 生成（drone-security 城市夜景 / drone-rescue 洪水 / drone-farmland 农田 / charge-residential 住宅 / charge-campus 园区 —— 共 5 张，含替换旧 drone-alley）。生成手法：纪实摄影措辞压 AI 味，充电小车造型靠传 robot-hero.jpg 当参考图锁形态（2026-06-04）
+- ✅ **2026-06-19 视觉/性能/PWA 轮**（详见《沉浸式深色改版》末条）：CardFx 卡片光斑+流光边框 / CountUp 数字滚动计数 / film-grain 噪点 / PWA manifest / 导航按钮白底 / HomeTech 标题中文化 / 删脚手架 svg + 启用 turbopack / Hero3D 性能微调（dpr 1.8、粒子 ~960）
+- 💡 **访问统计 / 联系表单**：评估过，用户暂不做（腾讯云 CVM 后台只有服务器/带宽监控，看不到 PV/UV/来源；要真统计得埋 JS 或服务器侧 GoAccess）。需要时再上。
+- 💡 图片转 WebP：评估过线上已由 next/image 自动优化，手动转只瘦仓库、要改路径有破图风险，**暂不做**。
 - ⏸ 手册里未上网的 B 端内容（合作模式 / 客户画像 / 竞争优势 / 组件清单）—— 用户偏极简没硬塞，需要时再加
 
 ## 反模式 / 禁止
@@ -346,6 +359,11 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 | **别删 a11y 硬化** | `focus-visible` 焦点环 / `prefers-reduced-motion` / `MotionProvider` / 汉堡 `aria-expanded` 都要留 |
 | **背景别退回纯点阵** | 用户明确要「一个个小图案、随机分布、科技元素」。当前 globals.css body 是 360px 科技图标矩阵，调强弱改 alpha 即可 |
 | **新增 section 节奏用 `py-20 md:py-28`** | 全站已统一，别再引入 py-12/16/24/32 |
+| **film-grain / 全屏 fixed 层别用 `mix-blend-mode`** | fixed + blend = 每帧全屏重绘，滚动卡顿。用 `transform: translateZ(0)` 提成静态合成层（踩过） |
+| **别为性能停 Hero3D 涡轮或降画质** | 用户要效果优先，已否过「滚动时暂停渲染」「降画质/大幅减粒子」。只保留离屏（`threshold:0`）暂停 |
+| **HomeTech 卡片标题 zh/tw 别改回英文** | 用户专门指出中文版不该出现英文标题。en 才保留英文 |
+| **CountUp 的正则匹配别去掉 `useMemo`** | 否则每帧 setState 重渲染→新数组引用→effect 重启→数字一直跳（踩过） |
+| **新增根级 metadata 路由记得加进 `proxy.ts` matcher** | manifest.webmanifest 已加；新增 manifest/ads.txt 等都要排除，否则被重定向到 /zh/... fetch 失败 |
 
 ## 本地开发
 
