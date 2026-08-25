@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
+import { ContactForm } from "@/components/ContactForm";
 
 export async function generateMetadata({
   params,
@@ -31,7 +32,8 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
       />
       <section className="pb-20 md:pb-28">
         <div className="mx-auto max-w-4xl px-6 lg:px-10">
-          <div className="grid gap-5 md:grid-cols-2">
+          <ContactForm lang={lang as Locale} dict={dict} />
+          <div className="mt-5 grid gap-5 md:grid-cols-2">
           {[
             {
               subject: "Business%20inquiry",

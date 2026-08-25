@@ -28,7 +28,7 @@
 | 专利 | 已有但未公开授权号 | 只能用「多项发明专利申请中」占位（zh.json `pages.about.patents`），不写数字 |
 | 域名 | **✅ www.01weichuang.com（已备案上线）** | ICP：粤ICP备2026041942号-2（footer 已挂，链 beian.miit.gov.cn）。腾讯云广州托管。`site.ts` 默认值已改成真实域名，仍可被 `NEXT_PUBLIC_SITE_URL` 覆盖。⏳ 公安联网备案待办（服务开通起 30 天内，~2026-07-18） |
 | 企业邮箱 | 未启用 | 全站用 gmail。联系页用「商务合作 / 技术支持」两栏分流卡片伪装专业感 |
-| 产品成熟度 | **两条产品线都已落地** | LingYI-Charge 和 LingYI-1 都有完整参数和应用场景（见下方「真实产品信息」节），**不要**再写成「敬请期待」或「概念产品」 |
+| 产品成熟度 | **⚠️ 2026-08-25 用户确认：两条产品线都还没有实体样机、没有实测数据** | 网站只写手册里的设计规格和应用场景（仍从「真实产品信息」节取），**不写**「已交付 / 量产 / 部署数量 / 客户数」——`products.items[vtol].tag` 已由「已交付」改「低空装备」，`pages.products.meta` 里的「已交付」改「多项专利申请中」。商业价值区保留手册测算值但带 disclaimer。也**不要**写成「敬请期待 / 概念产品」（两头都别偏） |
 
 ## 真实产品信息（来自 PDF 产品手册）
 
@@ -94,23 +94,36 @@
 - **新依赖（已装，React 19 兼容）**：`three` ^0.184 / `@react-three/fiber` ^9 / `@react-three/drei` ^10 / `@react-three/postprocessing` ^3 / `@pmndrs/assets`（CC0 HDRI，本地打包离线用）。→ 「不引入重型 3D 库」这条**已被用户明确要求推翻**。
 - **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。配色青/品红/蓝/紫赛博霓虹。**性能旋钮 + 用户偏好（2026-06-19，重要）**：可调的有 `dpr`（当前 `[1,1.8]`）/ Sparkles 粒子数（当前 ~960 = 520+280+160）/ EffectComposer 后处理 pass（Bloom+色散+Vignette+Noise 全开）。但用户**明确要效果优先**，**已否过「滚动时暂停渲染」和「降画质/大幅减粒子」**——别再为性能去停涡轮或砍画质，最多按用户口令微调一档；离屏暂停只保留 `IntersectionObserver threshold:0`（完全看不见才 `never`，不要再加「滚动手势中暂停」那套）。
 - **immersive 组件目录** `components/immersive/`：`ImmersiveHero` / `Hero3D` / `Loader`（开场幕布，挂 layout）/ `ScrollProgress`（顶部霓虹进度条，挂 layout）。`[lang]/template.tsx` = 路由切换淡入转场。（历史上还做过 ParticleField/TerrainField/ShaderField/HoloDrone，均被否后删除——别找。）
-- **首页叙事 section（顺序）**：ImmersiveHero → ProductMatrix → **HomeSolutions(新)** → HomeCapabilities → **HomeTech(新)** → TechCapabilities(商业价值已 dashboard 化) → HomeCTA(深色光束)。`HomeSolutions.tsx`/`HomeTech.tsx` 为新增组件。首页内容包在 `<div bg-[#070a18]>` 暗场容器里。
+- **首页叙事 section（顺序，2026-08-25 后）**：ImmersiveHero → HomeFeatures(4 张具体文案卡) → ProductMatrix → **HomeSolutions(实景图 + 8 场景列表)** → **HomeAbout(关于我们预览)** → TechCapabilities(商业价值) → HomeCTA。~~HomeCapabilities~~ / ~~HomeTech~~ 已删。首页内容包在 `<div bg-[#070a18]>` 暗场容器里。
 - **`theme="dark"` 变体**：`ProductMatrix`/`HomeCapabilities`/`HomeCTA` 有 `theme?:"dark"` prop；首页与产品页都传 `dark`（玻璃卡+霓虹）。它们的浅色分支基本已不用（全站深色）。
-- **新增字典 key（三语已同步）**：`heroImmersive`（title1/title2/subtitle/tags/ctaPrimary/ctaSecondary）、`homeSolutions`、`homeTech`、`tech` 增 `metric/note/disclaimer`。**新增产品定位已拓宽**到「机器人 / 无人机 / AIoT / 智能硬件 / 自动化解决方案 / 智慧园区 / 远程运维平台」（用户亲自定的对外定位，非编造；与那个机器人小程序的真实 IoT/控制台能力一致）。
+- **新增字典 key（三语已同步）**：`heroImmersive`（title1/title2/subtitle/tags/ctaPrimary/ctaSecondary）、`homeSolutions`、`tech` 增 `metric/note/disclaimer`。**新增产品定位已拓宽**到「机器人 / 无人机 / AIoT / 智能硬件 / 自动化解决方案 / 智慧园区 / 远程运维平台」（用户亲自定的对外定位，非编造；与那个机器人小程序的真实 IoT/控制台能力一致）。
 - **导航栏**：始终白字白 logo（`brightness-0 invert`），滚动后变**深色玻璃**（不再白条）。
 - **字体**：新增 Playfair Display（仅英文点缀，如 hero 的 `ZERO-ONE INNOVATION`）；正文仍 Geist。
 - **背景纹理**：全站「直线网格」已统一换成**柔和点阵**（`radial-gradient` 圆点，用户嫌横竖线不自然）。
 - **作废的旧约定**（下方仍能看到，但**以本节为准**）：①「off-white #fafbfe 底色」→ 已深色；②「不要在白→黑加 fade overlay」→ 现到处用深↔浅渐变过渡且 OK；③「max-w-[88rem]」→ 已全站改 **96rem**；④「极简/不过度设计」视觉层面已不适用。
 - **品牌名**：首页文案统一用「零一唯创」，**别写「01唯创」**（用户 2026-06-18 纠正过）。英文 `Zero-One Innovation`。
 - **2026-06-19 视觉/性能/PWA 轮（已 push main）**：
-  - **卡片光效** `components/CardFx.tsx`：鼠标跟随光斑 + 悬停流光渐变边框，作为 overlay drop-in 嵌进各卡片网格（ProductMatrix/HomeCapabilities/TechCapabilities/HomeSolutions/HomeTech）。`pointer-events-none` 不挡 Link；边框动画只在 hover 跑（idle 零开销）。样式在 `globals.css .card-fx*`（含 `@property --fx-angle`）。深色卡用青、浅色分支传 brand 蓝。
+  - **卡片光效** `components/CardFx.tsx`：鼠标跟随光斑 + 悬停流光渐变边框，作为 overlay drop-in 嵌进各卡片网格（ProductMatrix/TechCapabilities；HomeSolutions/HomeCapabilities/HomeTech 已删或改版不再用）。`pointer-events-none` 不挡 Link；边框动画只在 hover 跑（idle 零开销）。样式在 `globals.css .card-fx*`（含 `@property --fx-angle`）。深色卡用青、浅色分支传 brand 蓝。
   - **数字滚动计数** `components/CountUp.tsx`：滚到视口 0→目标值。**SSR 渲染真实值**（SEO/无 JS 安全），客户端 arm 到 0 再 count；范围/非数字（「百公里级」「8–16 月」「5,000→200」）原样不动。用在关于页市场表 + TechCapabilities metric。⚠️ **正则匹配必须 `useMemo` 缓存**——否则每帧 setState 重渲染产生新数组引用、effect 反复重启、数字永不停（踩过这个 bug）。
   - **film-grain 噪点**：`globals.css .film-grain` + layout 挂一层 fixed 噪点。**禁止用 `mix-blend-mode`**（fixed + blend = 每帧全屏重绘 = 滚动卡顿，踩过），改 `transform: translateZ(0)` 提成静态 GPU 合成层；触屏 `@media (hover:none)` 隐藏。
   - **PWA**：`app/manifest.ts`（深色启动屏 #070a18 / 用 `/icon.png` 512）。proxy matcher 已排除 `manifest.webmanifest`；layout `generateMetadata` 显式 `manifest`（动态根布局不自动注入，同 og:image 坑）。
   - **导航栏「联系我们」按钮**：由 `bg-brand` 纯蓝改 **白底深字**（`bg-white text-[#0a1024]`），与首页 CTA 统一（桌面 + 移动端两处）——用户嫌孤立的蓝不搭深色霓虹。
-  - **HomeTech 卡片标题**：zh/tw 已改中文（en 保留英文），**别再改回英文**（用户专门提过中文版不该出现英文标题）。
+  - （HomeTech 组件已于 2026-08-25 删除，但「中文版不出现英文标题」的要求仍适用全站）
   - **脚手架清理**：删了 `public/` 的 next/vercel/window/file/globe.svg；`package.json` 的 dev + build 都带 `--turbopack`。
-- **未做（用户判定非必要）**：首页精简版「应用场景」（/solutions 已有完整版）。
+- **2026-08-25 去 AI 化 + 功能轮**（用户原话：两块卡片区「有点 AI 化」，且「没有实体、没有实体数据」，按优先级全做）：
+  - **砍重复**：删 `HomeCapabilities.tsx`（与 `HomeFeatures` 同 4 点重复）+ 死代码 `HomeHero.tsx`；字典 `homeCapabilities` key 已删。产品页改用 `HomeFeatures`。`hero.features` 文案已改成具体版（「样机最快 4 周下线」「BOM 比同类低 40%」「背靠深技大 AI 学院」）。
+  - **HomeTech 已删（两版都被否）**：第一版「分层 + 药丸标签」嫌 AI 化，第二版「工程拓扑图 SVG」用户说「这不像网站首页会做的事情」——**首页不放系统架构/技术拓扑这类白皮书内容**。位置换成 `HomeAbout.tsx`（关于我们预览：`brand.vision` 做标题 + `pages.about.body` 首段 + `pages.about.meta` 三事实 + drone-cruise 实景图 + 去 /about 的按钮，全部复用关于页字典，不新增 key）。字典 `homeTech` key 已删。
+  - **HomeSolutions → 实景图版**：按产品线分两组，每组一张大实景图 + 4 条场景行（缩略图 + 名称 + highlights），行链到 `/solutions#<key>`（SolutionScenarios article 已加 `id` + `scroll-mt-28`）。字典 `homeSolutions.groups[].scenarios` 引用 `solutions.scenarios` 的 key，**不再另造一套分类**。场景图 map 抽到 `components/scenarioImages.ts` 共用。
+  - **小标全部走字典**：`products.eyebrow`/`tech.eyebrow`/`solutions.eyebrow`/`pages.*.eyebrow` zh/tw 已中文（「产品」「商业价值」「应用场景」…），en 保留英文。**别再硬编码英文 eyebrow**。TechCapabilities 去掉了 `01 02 03` 编号；`white/35` 类低对比说明文字提到 `/50-60`。
+  - **联系表单**：`components/ContactForm.tsx`（client）+ `app/api/contact/route.ts`（nodemailer，env `SMTP_HOST/PORT/USER/PASS/CONTACT_TO`，见 `.env.example`；honeypot + 每 IP 10 分钟 5 次限流）。**SMTP 未配置时接口返 503，表单自动退回 mailto 按钮**——所以线上不配也不会坏。⏳ 用户需要在服务器 `.env.local` 填 SMTP（建议腾讯企业邮 smtp.exmail.qq.com:465）。
+  - **隐私政策页** `/[lang]/privacy`（`pages.privacy` 三语，PIPL 需要，表单底部 + footer `links.privacy` 已链）；sitemap `SITE_PATHS` 已含。
+  - **`app/[lang]/error.tsx`**：路由级错误边界（三语，usePathname 取 locale），不再白屏。
+  - **安全头**：`next.config.ts` `headers()` 加 HSTS / nosniff / X-Frame-Options / Referrer-Policy / Permissions-Policy。**没加 CSP**（three/framer/JSON-LD 需要 nonce，要加得单独做）。
+  - **微信分享缩略图**：layout body 首个元素放了 `display:none` 的 512px `/icon.png` `<img>`（微信/QQ 不认 og:image，抓页面首张 ≥300px 图）。
+  - **Hero3D `lite` 档（仅触屏/<768px）**：dpr `[1,1.25]`、粒子减半、去 ChromaticAberration + Noise。`ImmersiveHero` 用 `useSyncExternalStore` 监听 `(hover:none) and (pointer:coarse)`。**桌面端参数一个没动**（用户效果优先的约束仍在）。Loader 幕布最短 850→500ms。
+  - **ProductMatrix 揭示动画改 variants 驱动**：原来内层 clipPath 单独 `whileInView`，第一张卡会漏触发导致图片区空白（headless 复现过）。现在外层 article `variants hidden/show` 传播到内层，**别改回嵌套 whileInView**。
+  - **修 bug**：`pages.technology.meta[0]`「6 个真实场景」→ 8。`tsconfig.exclude` 加 `codegraph`（本地有个 2GB 的无关工具仓库 `codegraph/`，已 gitignore，但 tsc 会扫到导致 build 失败）。
+  - **跳过（需要真实素材，用户确认没有）**：产品图集/视频、更高清主产品图（PDF 已不在仓库）、微信二维码/电话、客户案例、新闻/招聘页。
 
 ## 技术栈
 
@@ -120,6 +133,7 @@
 | React | 19.2.4 | |
 | 样式 | Tailwind CSS v4 | `@import "tailwindcss"` + `@theme inline` 注入品牌 token |
 | 动效 | framer-motion 12 | client components only |
+| 发信 | nodemailer | 仅 `api/contact` 用，SMTP 走 env |
 | 3D / WebGL | three ^0.184 + @react-three/fiber ^9 + drei ^10 + postprocessing ^3 + @pmndrs/assets | 仅首页 Hero3D 用；client-only 动态加载(ssr:false)；见《沉浸式深色改版》 |
 | 字体 | + Playfair Display | 仅英文点缀；正文仍 Geist |
 | i18n | Next.js 16 原生 i18n routing | 不依赖 next-intl 等第三方库 |
@@ -154,7 +168,10 @@ src/
 │   │   ├── products/[key]/page.tsx ← 产品详情（key: **charge|vtol**；非法 key → `redirect('/products')` 不是 notFound，见 404 架构）。含 features+specs 表+value 对比+Product JSON-LD
 │   │   ├── solutions/page.tsx     ← 解决方案页（旧 /technology 改名，dict 仍用 pages.technology）。SolutionScenarios + TechCapabilities
 │   │   ├── about/page.tsx         ← 公司简介 + 双产品图 + 研发/专利 + 市场规模表
-│   │   └── contact/page.tsx       ← 商务/技术两卡（带图标 + 悬停 ↗）
+│   │   ├── contact/page.tsx       ← ContactForm + 商务/技术两卡 + 地址卡
+│   │   ├── privacy/page.tsx       ← 隐私政策（pages.privacy）
+│   │   └── error.tsx              ← 路由级错误边界（三语）
+│   ├── api/contact/route.ts       ← 表单发信（nodemailer + env SMTP_*；未配置返 503）
 │   ├── not-found.tsx              ← ✅ 真正生效的 404：自带完整 `<html>`（无根 layout 可借），client 用 usePathname 取 locale 出三语
 │   ├── site.ts                    ← SITE_URL 常量（读 NEXT_PUBLIC_SITE_URL）
 │   ├── sitemap.ts                 ← SITE_PATHS × 3 locale × hreflang 互链（SITE_PATHS 里已是 /solutions）
@@ -165,8 +182,12 @@ src/
 │   ├── Footer.tsx (server)        ← 链接悬停滑入 ↗ 箭头
 │   ├── MotionProvider.tsx (client)← `<MotionConfig reducedMotion="user">` 包裹全站（动效降级）
 │   ├── TechBackdrop.tsx (server)  ← 全局 fixed 背景层（角落辉光 + 左右 blueprint 网格/电路带，mask 横向渐隐）
-│   ├── HomeHero.tsx (client)      ← Hero 舞台 + 主产品图 + 4 浮动卡 + **VTOL 双赛道迷你卡**（舞台下方）
-│   ├── HomeFeatures / HomeCTA / HomeCapabilities (client)
+│   ├── HomeFeatures.tsx (client)  ← Hero 下方 4 张具体卖点卡（dict.hero.features）；产品页也用它
+│   ├── HomeSolutions.tsx (client) ← 首页应用场景：实景图 + 8 场景行，链 /solutions#key
+│   ├── HomeAbout.tsx (client)     ← 首页关于我们预览（复用 pages.about + brand.vision）
+│   ├── HomeCTA.tsx (client)
+│   ├── ContactForm.tsx (client)   ← 联系表单，POST /api/contact，503 时退回 mailto
+│   ├── scenarioImages.ts          ← 8 场景实景图 map（HomeSolutions + SolutionScenarios 共用）
 │   ├── ProductMatrix.tsx (client) ← 产品卡片（fallback 用 visuals.charge，别用已删的 visuals.robot）
 │   ├── SolutionScenarios.tsx (client) ← 8 场景**全部有实景图**（scenarioImages map：4 张 PDF 抽图 + 4 张 ChatGPT 生成）。示意卡 fallback 分支保留但已无场景命中
 │   ├── TechCapabilities.tsx (client) ← 「可量化商业价值」深色浮起卡片（VTOL 用，dict.tech）
@@ -178,7 +199,8 @@ src/
 
 # PDF 手册在仓库根目录（不是 docs/）：零一唯创-产品手册(3).pdf + 零一唯创（1）.pdf（均 untracked）
 
-next.config.ts                     ← redirects 308: /products/robot|station → /products/charge；/technology → /solutions
+next.config.ts                     ← redirects 308（/products/robot|station → charge；/technology → /solutions）+ headers() 安全头
+.env.example                       ← NEXT_PUBLIC_SITE_URL + SMTP_* 模板
 
 public/
 ├── brand/                         ← logo.png（透明 1710×439）/ logo-white.png / logo-512.png（header/favicon 512×131）
@@ -325,14 +347,15 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - ✅ **视觉细化轮**（2026-06-01）：HomeCapabilities 图标 / TechCapabilities 浮起卡片 / 场景 6→8 贴 PDF / Footer i18n / max-w-7xl→max-w-[88rem]
 - ✅ **2026-06-01 大轮**（详见上面各「关键设计决策」）：创办方脱敏 / 背景→科技图标矩阵 + TechBackdrop / `/technology`→`/solutions`(+redirect) / 产品详情真实规格表 + Charge&VTOL 商业价值 / 关于页市场规模表 / 从 PDF 抽 4 张实景图填解决方案场景卡 + 升级产品详情 hero / 统一节奏 py-20 md:py-28 / eyebrow 圆点 / Hero VTOL 双赛道迷你卡 / 联系页图标卡 / a11y(focus-visible + reduced-motion + 汉堡 aria) / JSON-LD / 三语品牌化 404 / 「查看技术规格」锚点滚动
 - ✅ **域名 + 备案 + 上线**：www.01weichuang.com 已备案（粤ICP备2026041942号-2）+ HTTPS，部署在腾讯云广州（43.139.159.234）。`site.ts` 默认域名已改成真实域名
-- ⏳ **公安联网备案**：服务开通起 30 天内必做（~2026-07-18），数据码 `b2a747a66b31b0ea4206454ec634e1`。办完拿到公安备案号加到 footer（链全国互联网安全管理服务平台）
+- ⚠️ **公安联网备案已超期**（截止 ~2026-07-18，2026-08-25 提醒过用户尚未确认办理），数据码 `b2a747a66b31b0ea4206454ec634e1`。办完拿到公安备案号加到 footer（链全国互联网安全管理服务平台）
 - ⏸ 部署细节（服务器进程守护方式/nginx 配置）：本仓库无记录，需在服务器上现查（`git pull` → `npm ci` → `npm run build` → 重启服务）
 - ⏸ Cloudflare CDN：可选
 - 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
 - ✅ 视觉素材：8 个场景全部有图。4 张 PDF 抽图（充电特斯拉/音乐节/巡航）+ 4 张 ChatGPT 生成（drone-security 城市夜景 / drone-rescue 洪水 / drone-farmland 农田 / charge-residential 住宅 / charge-campus 园区 —— 共 5 张，含替换旧 drone-alley）。生成手法：纪实摄影措辞压 AI 味，充电小车造型靠传 robot-hero.jpg 当参考图锁形态（2026-06-04）
 - ✅ **2026-06-19 视觉/性能/PWA 轮**（详见《沉浸式深色改版》末条）：CardFx 卡片光斑+流光边框 / CountUp 数字滚动计数 / film-grain 噪点 / PWA manifest / 导航按钮白底 / HomeTech 标题中文化 / 删脚手架 svg + 启用 turbopack / Hero3D 性能微调（dpr 1.8、粒子 ~960）
-- 💡 **访问统计 / 联系表单**：评估过，用户暂不做（腾讯云 CVM 后台只有服务器/带宽监控，看不到 PV/UV/来源；要真统计得埋 JS 或服务器侧 GoAccess）。需要时再上。
+- ⏳ **表单 SMTP 待配置**：服务器 `.env.local` 填 `SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASS/CONTACT_TO` 后 `/api/contact` 即生效；不配则表单退回 mailto
+- 💡 **访问统计**：评估过，用户暂不做（腾讯云 CVM 后台只有服务器/带宽监控，看不到 PV/UV/来源；要真统计得埋 JS 或服务器侧 GoAccess）。需要时再上。
 - 💡 图片转 WebP：评估过线上已由 next/image 自动优化，手动转只瘦仓库、要改路径有破图风险，**暂不做**。
 - ⏸ 手册里未上网的 B 端内容（合作模式 / 客户画像 / 竞争优势 / 组件清单）—— 用户偏极简没硬塞，需要时再加
 
@@ -361,8 +384,13 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 | **新增 section 节奏用 `py-20 md:py-28`** | 全站已统一，别再引入 py-12/16/24/32 |
 | **film-grain / 全屏 fixed 层别用 `mix-blend-mode`** | fixed + blend = 每帧全屏重绘，滚动卡顿。用 `transform: translateZ(0)` 提成静态合成层（踩过） |
 | **别为性能停 Hero3D 涡轮或降画质** | 用户要效果优先，已否过「滚动时暂停渲染」「降画质/大幅减粒子」。只保留离屏（`threshold:0`）暂停 |
-| **HomeTech 卡片标题 zh/tw 别改回英文** | 用户专门指出中文版不该出现英文标题。en 才保留英文 |
+| **zh/tw 页面别出现英文标题/小标** | 用户专门指出中文版不该出现英文标题。en 才保留英文（原 HomeTech 组件已删，规则仍适用全站） |
 | **CountUp 的正则匹配别去掉 `useMemo`** | 否则每帧 setState 重渲染→新数组引用→effect 重启→数字一直跳（踩过） |
+| **首页别再堆等宽卡片网格** | 2026-08-25 用户嫌「AI 化」：同一模板（英文小标+标题+N 张等宽卡+01/02 编号+图标方块）连续堆 6 个 section 就是模板感。新 section 优先用实景图/图表/非对称布局，文案要有具体部件和数字 |
+| **别硬编码英文 eyebrow** | 小标全部走字典 `*.eyebrow`，zh/tw 中文 |
+| **Hero3D `lite` 只给触屏/窄屏** | 桌面端画质参数不动；别把 lite 逻辑扩到桌面 |
+| **ProductMatrix 揭示别改回嵌套 whileInView** | 会漏触发导致第一张卡图片空白；用 variants 传播 |
+| **不写「已交付 / 量产 / 客户数」** | 用户 2026-08-25 确认没有实体和实测数据 |
 | **新增根级 metadata 路由记得加进 `proxy.ts` matcher** | manifest.webmanifest 已加；新增 manifest/ads.txt 等都要排除，否则被重定向到 /zh/... fetch 失败 |
 
 ## 本地开发

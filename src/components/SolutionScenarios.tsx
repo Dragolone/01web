@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { scenarioImages } from "@/components/scenarioImages";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: Dictionary };
@@ -80,21 +81,6 @@ const scenarioIcons: Record<string, React.ReactNode> = {
   ),
 };
 
-// Real scene photos from the product manual, for the scenarios they match.
-// Scenarios without a photo fall back to the schematic card.
-const scenarioImages: Record<string, string> = {
-  // VTOL
-  pipeline: "/products/drone-cruise.jpg",
-  security: "/products/drone-security.jpg",
-  rescue: "/products/drone-rescue.jpg",
-  "remote-sensing": "/products/drone-farmland.jpg",
-  // Charge
-  commercial: "/products/charge-station.jpg",
-  residential: "/products/charge-residential.jpg",
-  campus: "/products/charge-campus.jpg",
-  event: "/products/charge-event.jpg",
-};
-
 export function SolutionScenarios({ dict }: Props) {
   return (
     <section className="pt-4 md:pt-6 pb-20 md:pb-28">
@@ -108,7 +94,7 @@ export function SolutionScenarios({ dict }: Props) {
         >
           <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
             <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
-            Applications
+            {dict.solutions.eyebrow}
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
             {dict.solutions.title}
@@ -124,11 +110,12 @@ export function SolutionScenarios({ dict }: Props) {
             return (
               <motion.article
                 key={s.key}
+                id={s.key}
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, ease: easeOut }}
-                className={`grid lg:grid-cols-12 gap-8 lg:gap-14 items-center ${reverse ? "lg:[&>:first-child]:order-2" : ""}`}
+                className={`scroll-mt-28 grid lg:grid-cols-12 gap-8 lg:gap-14 items-center ${reverse ? "lg:[&>:first-child]:order-2" : ""}`}
               >
                 {/* Visual block — real scene photo where available (from the product
                     manual), otherwise a schematic card. Same frame either way. */}

@@ -119,6 +119,9 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
+        {/* WeChat/QQ share thumbnail: they ignore og:image and grab the first ≥300px <img> in the HTML. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/icon.png" alt="" width={512} height={512} aria-hidden style={{ display: "none" }} />
         <Loader />
         <ScrollProgress />
         <TechBackdrop />

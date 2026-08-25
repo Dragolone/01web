@@ -4,8 +4,7 @@ import { ImmersiveHero } from "@/components/immersive/ImmersiveHero";
 import { HomeFeatures } from "@/components/HomeFeatures";
 import { ProductMatrix } from "@/components/ProductMatrix";
 import { HomeSolutions } from "@/components/HomeSolutions";
-import { HomeTech } from "@/components/HomeTech";
-import { HomeCapabilities } from "@/components/HomeCapabilities";
+import { HomeAbout } from "@/components/HomeAbout";
 import { TechCapabilities } from "@/components/TechCapabilities";
 import { HomeCTA } from "@/components/HomeCTA";
 
@@ -40,9 +39,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         />
         <HomeFeatures dict={dict} />
         <ProductMatrix dict={dict} lang={lang as Locale} theme="dark" />
-        <HomeSolutions dict={dict} />
-        <HomeCapabilities dict={dict} theme="dark" />
-        <HomeTech dict={dict} />
+        <HomeSolutions dict={dict} lang={lang as Locale} />
+        <HomeAbout dict={dict} lang={lang as Locale} />
         <TechCapabilities dict={dict} />
         <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
       </div>

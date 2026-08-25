@@ -116,14 +116,20 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
   );
 }
 
-export function Hero3D({ active = true }: { active?: boolean }) {
+/**
+ * `lite` = touch/small-screen tier only (set by ImmersiveHero): lower dpr, half
+ * the sparkles, no chromatic aberration / film noise passes. Desktop keeps the
+ * full effect — do not lower desktop quality for performance (user decision).
+ */
+export function Hero3D({ active = true, lite = false }: { active?: boolean; lite?: boolean }) {
   const reduce = useReducedMotion();
+  const sparkle = (n: number) => (lite ? Math.round(n / 2) : n);
 
   return (
     <Canvas
       // Pause the render loop when the hero is scrolled out of view (perf).
       frameloop={active ? "always" : "never"}
-      dpr={[1, 1.8]}
+      dpr={lite ? [1, 1.25] : [1, 1.8]}
       camera={{ position: [0, 0, 6], fov: 42 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
@@ -133,7 +139,7 @@ export function Hero3D({ active = true }: { active?: boolean }) {
       <pointLight position={[6, 3, 4]} intensity={45} color="#00e5ff" distance={32} />
       <pointLight position={[-6, -2, 3]} intensity={45} color="#ff3df0" distance={32} />
 
-      <Environment resolution={256}>
+      <Environment resolution={lite ? 128 : 256}>
         <Lightformer form="rect" intensity={6} position={[4, 3, 3]} scale={[7, 3, 1]} color="#00e5ff" />
         <Lightformer form="rect" intensity={5} position={[-5, 1, -1]} scale={[7, 4, 1]} color="#ff3df0" />
         <Lightformer form="rect" intensity={4} position={[0, 4, -4]} scale={[9, 3, 1]} color="#3b6bff" />
@@ -142,9 +148,9 @@ export function Hero3D({ active = true }: { active?: boolean }) {
       </Environment>
 
       {/* fine, dense sparkle layers */}
-      <Sparkles count={520} scale={[22, 12, 12]} size={1} speed={reduce ? 0 : 0.3} color="#7fe9ff" opacity={0.7} />
-      <Sparkles count={280} scale={[16, 10, 9]} size={1.5} speed={reduce ? 0 : 0.18} color="#ff9bf2" opacity={0.5} />
-      <Sparkles count={160} scale={[11, 8, 6]} size={2.1} speed={reduce ? 0 : 0.1} color="#ffffff" opacity={0.55} />
+      <Sparkles count={sparkle(520)} scale={[22, 12, 12]} size={1} speed={reduce ? 0 : 0.3} color="#7fe9ff" opacity={0.7} />
+      <Sparkles count={sparkle(280)} scale={[16, 10, 9]} size={1.5} speed={reduce ? 0 : 0.18} color="#ff9bf2" opacity={0.5} />
+      <Sparkles count={sparkle(160)} scale={[11, 8, 6]} size={2.1} speed={reduce ? 0 : 0.1} color="#ffffff" opacity={0.55} />
 
       <mesh scale={4}>
         <icosahedronGeometry args={[1, 3]} />
@@ -170,10 +176,12 @@ export function Hero3D({ active = true }: { active?: boolean }) {
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
 
       <EffectComposer>
-        <Bloom intensity={1.15} luminanceThreshold={0.16} luminanceSmoothing={0.4} mipmapBlur />
-        <ChromaticAberration offset={[0.0007, 0.0007]} radialModulation={false} modulationOffset={0} />
-        <Vignette eskil={false} offset={0.22} darkness={0.92} />
-        <Noise opacity={0.028} />
+        {[
+          <Bloom key="bloom" intensity={1.15} luminanceThreshold={0.16} luminanceSmoothing={0.4} mipmapBlur />,
+          ...(lite ? [] : [<ChromaticAberration key="ca" offset={[0.0007, 0.0007]} radialModulation={false} modulationOffset={0} />]),
+          <Vignette key="vig" eskil={false} offset={0.22} darkness={0.92} />,
+          ...(lite ? [] : [<Noise key="noise" opacity={0.028} />]),
+        ]}
       </EffectComposer>
     </Canvas>
   );

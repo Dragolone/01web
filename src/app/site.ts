@@ -13,4 +13,5 @@ export const SITE_PATHS = [
   "/solutions",
   "/about",
   "/contact",
+  "/privacy",
 ] as const;

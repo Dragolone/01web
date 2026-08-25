@@ -5,12 +5,13 @@ import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 type Props = { lang: Locale; dict: Dictionary };
 
 export function Footer({ lang, dict }: Props) {
-  const linkKeys = ["products", "technology", "about", "contact"] as const;
+  const linkKeys = ["products", "technology", "about", "contact", "privacy"] as const;
   const hrefMap: Record<(typeof linkKeys)[number], string> = {
     products: `/${lang}/products`,
     technology: `/${lang}/solutions`,
     about: `/${lang}/about`,
     contact: `/${lang}/contact`,
+    privacy: `/${lang}/privacy`,
   };
 
   return (

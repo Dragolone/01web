@@ -1,0 +1,10 @@
+# codegraph 工具自身的源码仓库（Rust/crates/扩展），与本官网项目无关，勿索引
+codegraph/
+/codegraph/
+**/codegraph/**
+
+# 构建产物 / 依赖
+node_modules/
+.next/
+out/
+build/

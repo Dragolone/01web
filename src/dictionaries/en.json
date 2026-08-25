@@ -26,20 +26,20 @@
     ],
     "features": [
       {
-        "title": "Full-stack in-house R&D",
-        "desc": "Mechanics, embedded systems, AI algorithms and cloud — owned end to end"
+        "title": "We build the whole stack",
+        "desc": "Mechanics, embedded, AI algorithms and cloud scheduling are all written in house, so hardware and software iterate together without waiting on outside vendors."
       },
       {
-        "title": "Rapid prototyping",
-        "desc": "3D printing + composites + CNC, sample cycles down to 4 weeks"
+        "title": "Prototypes in as little as 4 weeks",
+        "desc": "3D printing, CNC and composites under one roof — a new prototype in as little as 4 weeks, so ideas get validated fast."
       },
       {
-        "title": "Cost-engineered BOM",
-        "desc": "Domestic sensors + in-house control algorithms — 40% lower BOM than peers"
+        "title": "40% lower BOM than peers",
+        "desc": "Domestic sensors for the key parts and in-house control algorithms with no license fees bring total material cost to about 60% of comparable products."
       },
       {
-        "title": "Industry-academia link",
-        "desc": "Powered by Shenzhen Technology University AI Lab resources"
+        "title": "Backed by SZTU's AI school",
+        "desc": "Co-developed with the AI school at Shenzhen Technology University, with direct access to its labs and compute platform."
       }
     ]
   },
@@ -64,14 +64,15 @@
         "name": "LingYI-1 VTOL Fixed-Wing UAV",
         "summary": "Vertical takeoff · 2,000 km range · 40 kg payload",
         "desc": "A large VTOL fixed-wing UAV built for industrial inspection, security reconnaissance and emergency response. 3 m wingspan, fuel-electric hybrid power breaks battery limits, 2,000 km single-sortie coverage at 180 km/h cruise — operating from urban streets to remote terrain with no runway.",
-        "tag": "Shipping",
+        "tag": "Low-altitude",
         "tags": [
           "2,000 km range",
           "40 kg payload",
           "180 km/h"
         ]
       }
-    ]
+    ],
+    "eyebrow": "Products"
   },
   "tech": {
     "title": "Measurable Commercial Value",
@@ -102,33 +103,8 @@
         "note": "Payback period · ¥0.5–0.8M/yr O&M saved"
       }
     ],
-    "disclaimer": "Illustrative estimates; actual figures depend on the specific deployment and scenario."
-  },
-  "homeCapabilities": {
-    "title": "Full-stack Capabilities",
-    "subtitle": "Mechanics, firmware, algorithms, cloud — end-to-end autonomy.",
-    "items": [
-      {
-        "key": "fullstack",
-        "title": "End-to-end in-house R&D",
-        "desc": "Mechanics, embedded, AI algorithms and cloud platform all built in-house — tight hardware-software co-iteration."
-      },
-      {
-        "key": "rapid",
-        "title": "Rapid prototyping",
-        "desc": "3D printing + composites + CNC keeps prototype cycles as short as 4 weeks."
-      },
-      {
-        "key": "cost",
-        "title": "Cost-engineered BOM",
-        "desc": "Domestic sensors with in-house control algorithms reduce BOM by 40%+ vs peers."
-      },
-      {
-        "key": "research",
-        "title": "Industry-academia link",
-        "desc": "Joint lab with the AI School of Shenzhen Technology University — shared research platform."
-      }
-    ]
+    "disclaimer": "Illustrative estimates; actual figures depend on the specific deployment and scenario.",
+    "eyebrow": "Business value"
   },
   "solutions": {
     "title": "Applications",
@@ -223,7 +199,8 @@
           "Removable after event"
         ]
       }
-    ]
+    ],
+    "eyebrow": "Applications"
   },
   "productDetail": {
     "backToProducts": "Back to products",
@@ -527,7 +504,8 @@
       "products": "Products",
       "technology": "Solutions",
       "about": "About",
-      "contact": "Contact"
+      "contact": "Contact",
+      "privacy": "Privacy"
     }
   },
   "pages": {
@@ -538,7 +516,7 @@
       "meta": [
         "2 product lines",
         "Full-stack in-house",
-        "Shipping"
+        "Patents pending"
       ]
     },
     "technology": {
@@ -546,7 +524,7 @@
       "lead": "Real business scenarios across energy, emergency, security and EV mobility — backed by measurable deployment data.",
       "eyebrow": "Solutions",
       "meta": [
-        "6 real scenarios",
+        "8 real scenarios",
         "95% cost reduction vs helicopter",
         "8-16 month payback"
       ]
@@ -619,7 +597,72 @@
       "company": "Shenzhen Zero-One Innovation Technology Co., Ltd.",
       "addr": "No. 2-49 Shaxin Road (South Extension), Pingshan District, Shenzhen, Guangdong, China",
       "creditLabel": "Unified Social Credit Code: ",
-      "creditCode": "91440300MAK7XEPD58"
+      "creditCode": "91440300MAK7XEPD58",
+      "form": {
+        "title": "Send us a message",
+        "lead": "Tell us what you need and we will reply within 1–2 business days.",
+        "name": "Name",
+        "email": "Email",
+        "company": "Company (optional)",
+        "type": "Inquiry type",
+        "types": [
+          "Product inquiry",
+          "Request product materials",
+          "Partnership",
+          "Technical support",
+          "Other"
+        ],
+        "message": "Message",
+        "placeholder": "Briefly describe your scenario, quantity or timeline…",
+        "submit": "Send message",
+        "sending": "Sending…",
+        "success": "Received — we will get back to you shortly.",
+        "error": "Sending failed. Please try again later or email us directly.",
+        "fallback": "The online form is not enabled yet — click to email us instead",
+        "privacy": "By submitting you agree to our ",
+        "privacyLink": "Privacy Policy",
+        "privacyTail": " for handling your contact details.",
+        "required": "Please fill in the required fields",
+        "invalidEmail": "Please enter a valid email address"
+      }
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "lead": "We only collect what we need to reply to you. No advertising trackers.",
+      "eyebrow": "Privacy",
+      "meta": [
+        "Last updated: 25 August 2026"
+      ],
+      "sections": [
+        {
+          "h": "What we collect",
+          "p": "When you contact us through the website form we receive the name, email, company, inquiry type and message you provide. Our server also records IP address, time, browser type and pages visited in access logs for security and troubleshooting."
+        },
+        {
+          "h": "How we use it",
+          "p": "This information is used only to answer your inquiry, arrange business or technical follow-up, and keep the website running. We do not use it for unrelated marketing."
+        },
+        {
+          "h": "Cookies and analytics",
+          "p": "This website uses no advertising cookies and no third-party analytics. Browser storage is only used to remember page preferences such as language."
+        },
+        {
+          "h": "Storage and protection",
+          "p": "Form submissions are delivered to our work mailbox by email and kept there. Access logs are retained for no more than 90 days. We apply reasonable technical and organisational measures against leakage, tampering or loss."
+        },
+        {
+          "h": "Third parties",
+          "p": "We do not sell, rent or share your personal information with third parties, except where required by law or strictly necessary for email delivery."
+        },
+        {
+          "h": "Your rights",
+          "p": "You may request access to, correction of, or deletion of the personal information we hold about you. Contact us at the address below and we will respond within 15 business days."
+        },
+        {
+          "h": "Contact",
+          "p": "Shenzhen Zero-One Innovation Technology Co., Ltd. · 810170966qq@gmail.com · No. 2-49 Shaxin Road (South Extension), Pingshan District, Shenzhen, Guangdong, China"
+        }
+      ]
     }
   },
   "heroImmersive": {
@@ -636,92 +679,33 @@
     "ctaSecondary": "View products"
   },
   "homeSolutions": {
-    "eyebrow": "Solutions",
-    "title": "Intelligent solutions for real-world scenarios",
-    "subtitle": "From device connectivity to automated operations — across parks, low-altitude, energy and remote O&M.",
-    "items": [
+    "eyebrow": "Applications",
+    "title": "Eight scenarios, two product lines",
+    "subtitle": "Every scenario maps to a real need from our product manual. Open one to see the full solution.",
+    "groups": [
       {
-        "key": "park",
-        "title": "Smart Park Automation",
-        "desc": "Patrol, security linkage, unattended operation and mobile-robot deployment, working as one system.",
-        "keywords": [
-          "Patrol",
-          "Security linkage",
-          "Unattended",
-          "Mobile robots"
+        "key": "vtol",
+        "product": "LingYI-1 VTOL fixed-wing UAV",
+        "tagline": "Low-altitude equipment · inspection / rescue / security / remote sensing",
+        "scenarios": [
+          "pipeline",
+          "rescue",
+          "security",
+          "remote-sensing"
         ]
       },
       {
-        "key": "uav",
-        "title": "Low-altitude UAV",
-        "desc": "Drone inspection, route missions, data return and air-ground coordination for inspection and security.",
-        "keywords": [
-          "Inspection",
-          "Route missions",
-          "Data return",
-          "Air-ground"
-        ]
-      },
-      {
-        "key": "energy",
-        "title": "Robotic Mobile Energy",
-        "desc": "Mobile charging robots and unmanned recharging — energy services for vehicles and equipment.",
-        "keywords": [
-          "Mobile charging",
-          "Unmanned recharge",
-          "Energy service"
-        ]
-      },
-      {
-        "key": "platform",
-        "title": "Remote Control & O&M Platform",
-        "desc": "Mini Program, web console, cloud functions, database, IoT gateway and real-time communication.",
-        "keywords": [
-          "Mini Program / Web",
-          "Cloud functions",
-          "IoT gateway",
-          "Realtime"
+        "key": "charge",
+        "product": "LingYI-Charge mobile EV charging robot",
+        "tagline": "Smart e-mobility · the charger comes to the car",
+        "scenarios": [
+          "commercial",
+          "residential",
+          "campus",
+          "event"
         ]
       }
-    ]
-  },
-  "homeTech": {
-    "eyebrow": "Technology",
-    "title": "The system layer that makes smart hardware deployable",
-    "subtitle": "From cloud control to edge integration — one connected layer across devices, data and operations.",
-    "items": [
-      {
-        "t": "Cloud Control",
-        "d": "Centralised cloud control & dispatch"
-      },
-      {
-        "t": "IoT Gateway",
-        "d": "Multi-protocol device onboarding & gateway"
-      },
-      {
-        "t": "Real-time Communication",
-        "d": "Low-latency realtime comms & commands"
-      },
-      {
-        "t": "Device Management",
-        "d": "Device monitoring & remote O&M"
-      },
-      {
-        "t": "Data Dashboard",
-        "d": "Data visualisation & ops dashboards"
-      },
-      {
-        "t": "Edge Integration",
-        "d": "Edge computing & local coordination"
-      },
-      {
-        "t": "Computer Vision",
-        "d": "Vision recognition & AI integration"
-      },
-      {
-        "t": "Mini Program / Web",
-        "d": "Mini Program & web console"
-      }
-    ]
+    ],
+    "more": "See all scenarios"
   }
 }

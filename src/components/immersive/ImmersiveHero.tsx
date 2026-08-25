@@ -2,13 +2,25 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
 type Props = { lang: Locale; dict: Dictionary };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
+
+const LITE_QUERY = "(hover: none) and (pointer: coarse)";
+const getLite = () => window.matchMedia(LITE_QUERY).matches || window.innerWidth < 768;
+const subscribeLite = (cb: () => void) => {
+  const mq = window.matchMedia(LITE_QUERY);
+  mq.addEventListener("change", cb);
+  window.addEventListener("resize", cb);
+  return () => {
+    mq.removeEventListener("change", cb);
+    window.removeEventListener("resize", cb);
+  };
+};
 
 // WebGL scene — client-only (no SSR).
 const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Hero3D), { ssr: false });
@@ -18,6 +30,8 @@ export function ImmersiveHero({ lang, dict }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(true);
+  // Touch / small screens get the lighter render tier (see Hero3D `lite`).
+  const lite = useSyncExternalStore(subscribeLite, getLite, () => false);
 
   // Only pause the 3D render loop once the hero is fully off-screen (not visible →
   // no point spending GPU). While any part of the hero is on screen it keeps animating.
@@ -55,7 +69,7 @@ export function ImmersiveHero({ lang, dict }: Props) {
       />
       {/* 3D scene */}
       <div className="absolute inset-0 z-0">
-        <Hero3D active={active} />
+        <Hero3D active={active} lite={lite} />
       </div>
       {/* cursor glow */}
       <div ref={glowRef} aria-hidden className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300" />

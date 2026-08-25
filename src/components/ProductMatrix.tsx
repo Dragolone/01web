@@ -34,7 +34,7 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
         >
           <p className={`inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase mb-3 ${dark ? "text-[#5cf0ff]" : "text-brand"}`}>
             <span aria-hidden className={`w-1.5 h-1.5 rounded-full ${dark ? "bg-[#5cf0ff]" : "bg-brand"}`} />
-            Product Matrix
+            {dict.products.eyebrow}
           </p>
           <h2 className={`text-4xl md:text-5xl font-semibold tracking-tight ${dark ? "text-white" : ""}`}>
             {dict.products.title}
@@ -52,8 +52,11 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
             return (
               <motion.article
                 key={item.key}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                // Variants propagate to the image reveal below, so card + image
+                // always animate together (a nested whileInView could miss).
+                variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0 } }}
+                initial="hidden"
+                whileInView="show"
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.08 }}
                 className={`group relative rounded-3xl overflow-hidden border transition-all hover:-translate-y-1 ${
@@ -68,10 +71,10 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
                   className="absolute inset-0 z-10"
                 />
                 <motion.div
-                  initial={{ clipPath: "inset(0 0 100% 0)" }}
-                  whileInView={{ clipPath: "inset(0 0 0% 0)" }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.9, ease: easeOut, delay: idx * 0.08 + 0.1 }}
+                  variants={{
+                    hidden: { clipPath: "inset(0 0 100% 0)" },
+                    show: { clipPath: "inset(0 0 0% 0)", transition: { duration: 0.9, ease: easeOut, delay: idx * 0.08 + 0.1 } },
+                  }}
                   className="aspect-[16/10] overflow-hidden"
                 >
                   <Image

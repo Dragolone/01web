@@ -40,9 +40,9 @@ export function TechCapabilities({ dict }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
-            Technology
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#5cf0ff] mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-[#5cf0ff]" />
+            {dict.tech.eyebrow}
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
             {dict.tech.title}
@@ -60,10 +60,7 @@ export function TechCapabilities({ dict }: Props) {
               transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.06 }}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all hover:border-[#5cf0ff]/40 hover:bg-white/[0.06] hover:shadow-[0_0_40px_-12px_rgba(0,229,255,0.5)]"
             >
-              <div className="flex items-center justify-between">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">{item.label}</p>
-                <span className="font-mono text-[11px] tracking-widest text-white/25">{`0${idx + 1}`}</span>
-              </div>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-white/60">{item.label}</p>
               <p className="mt-5 bg-gradient-to-r from-white to-[#9db8ff] bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl tabular-nums">
                 <CountUp value={item.metric} />
               </p>
@@ -72,7 +69,7 @@ export function TechCapabilities({ dict }: Props) {
             </motion.div>
           ))}
         </div>
-        <p className="mt-8 text-xs text-white/35">* {dict.tech.disclaimer}</p>
+        <p className="mt-8 text-xs text-white/50">* {dict.tech.disclaimer}</p>
         </div>
       </div>
     </section>

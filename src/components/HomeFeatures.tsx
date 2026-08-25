@@ -15,35 +15,32 @@ const stroke = {
   strokeLinejoin: "round" as const,
 };
 
-// Indexed icons match the order of dict.hero.features:
-// 0 - IoT platform, 1 - millisecond telemetry, 2 - remote ops, 3 - product matrix
+// Indexed icons match dict.hero.features order:
+// 0 full-stack in-house, 1 rapid prototyping, 2 BOM cost, 3 SZTU partnership
 const featureIcons = [
-  // Cloud + nodes
-  <svg key="iot" viewBox="0 0 28 28" {...stroke}>
-    <path d="M7 18a4 4 0 010-8 6 6 0 0111.3-1.5A5 5 0 0121 18H7z" />
-    <circle cx="9" cy="22" r="1.2" />
-    <circle cx="14" cy="24" r="1.2" />
-    <circle cx="19" cy="22" r="1.2" />
-    <path d="M9 21l5 2 5-2" opacity="0.55" />
+  <svg key="stack" viewBox="0 0 32 32" {...stroke}>
+    <rect x="5" y="5" width="22" height="5" rx="1" />
+    <rect x="5" y="13.5" width="22" height="5" rx="1" />
+    <rect x="5" y="22" width="22" height="5" rx="1" />
+    <circle cx="9" cy="7.5" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="9" cy="16" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="9" cy="24.5" r="0.9" fill="currentColor" stroke="none" />
   </svg>,
-  // Bolt with pulse
-  <svg key="bolt" viewBox="0 0 28 28" {...stroke}>
-    <path d="M15 3l-7 12h5l-1 10 8-13h-5l0-9z" />
+  <svg key="proto" viewBox="0 0 32 32" {...stroke}>
+    <path d="M6 8h20l-3 6H9z" />
+    <path d="M11 14v3a5 5 0 0010 0v-3" />
+    <path d="M17 22l-3 5h3l-1 3 4-5h-3l0-3z" />
   </svg>,
-  // Cursor / cross-platform control
-  <svg key="ops" viewBox="0 0 28 28" {...stroke}>
-    <rect x="4" y="5" width="20" height="13" rx="2" />
-    <path d="M4 10h20" />
-    <path d="M10 22h8M14 18v4" />
-    <circle cx="8" cy="7.5" r="0.6" fill="currentColor" stroke="none" />
-    <circle cx="10.5" cy="7.5" r="0.6" fill="currentColor" stroke="none" />
+  <svg key="cost" viewBox="0 0 32 32" {...stroke}>
+    <circle cx="16" cy="16" r="11" />
+    <path d="M11 12h10M11 16h10" />
+    <path d="M13 8l3 14 3-14" />
   </svg>,
-  // Grid / product matrix
-  <svg key="grid" viewBox="0 0 28 28" {...stroke}>
-    <rect x="4" y="4" width="8" height="8" rx="1.5" />
-    <rect x="16" y="4" width="8" height="8" rx="1.5" />
-    <rect x="4" y="16" width="8" height="8" rx="1.5" />
-    <rect x="16" y="16" width="8" height="8" rx="1.5" />
+  <svg key="research" viewBox="0 0 32 32" {...stroke}>
+    <path d="M3 12l13-6 13 6-13 6z" />
+    <path d="M8 14v6c0 2 4 4 8 4s8-2 8-4v-6" />
+    <path d="M26 12v6" />
+    <circle cx="26" cy="20" r="1.2" fill="currentColor" stroke="none" />
   </svg>,
 ];
 

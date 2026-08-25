@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
 import { ProductMatrix } from "@/components/ProductMatrix";
-import { HomeCapabilities } from "@/components/HomeCapabilities";
+import { HomeFeatures } from "@/components/HomeFeatures";
 import { HomeCTA } from "@/components/HomeCTA";
 
 export async function generateMetadata({
@@ -33,7 +33,7 @@ export default async function ProductsPage({ params }: PageProps<"/[lang]/produc
         meta={dict.pages.products.meta}
       />
       <ProductMatrix dict={dict} lang={lang as Locale} compactTop theme="dark" />
-      <HomeCapabilities dict={dict} theme="dark" />
+      <HomeFeatures dict={dict} />
       <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
     </>
   );

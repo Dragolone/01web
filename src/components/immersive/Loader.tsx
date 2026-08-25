@@ -12,19 +12,17 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
  */
 export function Loader() {
   const reduce = useReducedMotion();
-  const [done, setDone] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const done = Boolean(reduce) || finished;
 
   useEffect(() => {
-    if (reduce) {
-      setDone(true);
-      return;
-    }
-    const MIN = 850; // keep the curtain up long enough to feel intentional
+    if (reduce) return;
+    const MIN = 500; // keep the curtain up long enough to feel intentional
     const t0 = performance.now();
     let timer: ReturnType<typeof setTimeout>;
     const finish = () => {
       const wait = Math.max(0, MIN - (performance.now() - t0));
-      timer = setTimeout(() => setDone(true), wait);
+      timer = setTimeout(() => setFinished(true), wait);
     };
     if (document.readyState === "complete") finish();
     else window.addEventListener("load", finish, { once: true });
