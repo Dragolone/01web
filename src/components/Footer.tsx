@@ -57,10 +57,10 @@ export function Footer({ lang, dict }: Props) {
         <div>
           <p className="text-xs uppercase tracking-widest text-muted mb-4">{dict.footer.contactLabel}</p>
           <a
-            href="mailto:810170966qq@gmail.com"
+            href="mailto:dravenzhong27@gmail.com"
             className="group inline-flex items-center gap-1 text-sm text-foreground/80 hover:text-brand transition-colors"
           >
-            810170966qq@gmail.com
+            dravenzhong27@gmail.com
             <svg
               width="11"
               height="11"

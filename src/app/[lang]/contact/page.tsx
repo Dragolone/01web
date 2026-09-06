@@ -63,7 +63,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
           ].map((card) => (
             <a
               key={card.subject}
-              href={`mailto:810170966qq@gmail.com?subject=${card.subject}`}
+              href={`mailto:dravenzhong27@gmail.com?subject=${card.subject}`}
               className="group flex flex-col rounded-3xl border border-border p-8 hover:border-brand/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/5 transition-all"
             >
               <div className="w-12 h-12 rounded-2xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-colors">
@@ -72,7 +72,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
               <p className="mt-5 text-lg font-semibold tracking-tight">{card.label}</p>
               <p className="mt-2 text-sm text-muted leading-relaxed">{card.desc}</p>
               <div className="mt-6 pt-5 border-t border-border/70 flex items-center gap-1.5 text-sm font-medium text-foreground group-hover:text-brand transition-colors">
-                <span className="break-all">810170966qq@gmail.com</span>
+                <span className="break-all">dravenzhong27@gmail.com</span>
                 <svg
                   width="11"
                   height="11"

@@ -15,7 +15,7 @@
   > 深圳零一唯创科技有限公司成立于 2026 年，由深圳技术大学人工智能学院与香港高校青年团队联合创办，是一家专注于智能机器人与特种无人机研发、制造和销售的科技型企业。
   >
   > ⚠️ PDF 原文写的是「与香港大学毕业生联合创办」，用户 2026-06-01 要求**全站不点名香港大学**，统一改为「香港高校青年团队」（meta 里「港大背景」→「港校背景」，en 用 `Hong Kong universities`）。改产品/公司文案做「按 PDF 还原」时**不要**把这句改回去。
-- **联系邮箱**：810170966qq@gmail.com
+- **联系邮箱**：dravenzhong27@gmail.com
 - **完整 VI 资料**：`static_style/` 目录（mood board + VI 规范图，已 commit 进仓库以备重裁）
 - **官方设计稿参考**：`public/products/_design-reference.jpg`（公司 mood board 里截出来的目标 layout，不要上线）
 

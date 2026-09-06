@@ -7,7 +7,7 @@ import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 type Props = { lang: Locale; dict: Dictionary };
 type Status = "idle" | "sending" | "success" | "error" | "unconfigured";
 
-const CONTACT_EMAIL = "810170966qq@gmail.com";
+const CONTACT_EMAIL = "dravenzhong27@gmail.com";
 
 const field =
   "w-full rounded-xl border border-border bg-surface px-4 py-3 text-[15px] text-foreground placeholder:text-muted/70 outline-none transition-colors focus:border-[#5cf0ff]/50";

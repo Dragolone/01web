@@ -240,10 +240,10 @@ export default async function ProductDetailPage({
           <div className="mt-14 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
             <span>{dict.productDetail.specsTBD}</span>
             <a
-              href="mailto:810170966qq@gmail.com"
+              href="mailto:dravenzhong27@gmail.com"
               className="group inline-flex items-center gap-1 text-brand hover:text-brand-strong font-medium"
             >
-              810170966qq@gmail.com
+              dravenzhong27@gmail.com
               <svg
                 width="11"
                 height="11"
