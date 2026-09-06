@@ -631,7 +631,7 @@
       "lead": "We only collect what we need to reply to you. No advertising trackers.",
       "eyebrow": "Privacy",
       "meta": [
-        "Last updated: 25 August 2026"
+        "Last updated: 6 September 2026"
       ],
       "sections": [
         {
@@ -644,7 +644,7 @@
         },
         {
           "h": "Cookies and analytics",
-          "p": "This website uses no advertising cookies and no third-party analytics. Browser storage is only used to remember page preferences such as language."
+          "p": "This website uses Google Analytics 4 to measure traffic and page usage (such as pages visited, time on page, approximate region and device type) so we can improve the site. The data is aggregated and anonymised and is not used for advertising or personalisation; Google Signals and ad personalisation are disabled. Google Analytics sets analytics cookies for this purpose. Apart from that, browser storage is only used to remember page preferences such as language."
         },
         {
           "h": "Storage and protection",
@@ -652,7 +652,7 @@
         },
         {
           "h": "Third parties",
-          "p": "We do not sell, rent or share your personal information with third parties, except where required by law or strictly necessary for email delivery."
+          "p": "We do not sell, rent or share your personal information with third parties, except where required by law, strictly necessary for email delivery, or with Google as the analytics provider described above."
         },
         {
           "h": "Your rights",

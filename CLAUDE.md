@@ -134,6 +134,7 @@
 | 样式 | Tailwind CSS v4 | `@import "tailwindcss"` + `@theme inline` 注入品牌 token |
 | 动效 | framer-motion 12 | client components only |
 | 发信 | nodemailer | 仅 `api/contact` 用，SMTP 走 env |
+| 统计 | GA4（`next/script` 手写） | 仅生产 + `NEXT_PUBLIC_GA_ID`；见待办节 |
 | 3D / WebGL | three ^0.184 + @react-three/fiber ^9 + drei ^10 + postprocessing ^3 + @pmndrs/assets | 仅首页 Hero3D 用；client-only 动态加载(ssr:false)；见《沉浸式深色改版》 |
 | 字体 | + Playfair Display | 仅英文点缀；正文仍 Geist |
 | i18n | Next.js 16 原生 i18n routing | 不依赖 next-intl 等第三方库 |
@@ -348,12 +349,13 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - ✅ **2026-06-01 大轮**（详见上面各「关键设计决策」）：创办方脱敏 / 背景→科技图标矩阵 + TechBackdrop / `/technology`→`/solutions`(+redirect) / 产品详情真实规格表 + Charge&VTOL 商业价值 / 关于页市场规模表 / 从 PDF 抽 4 张实景图填解决方案场景卡 + 升级产品详情 hero / 统一节奏 py-20 md:py-28 / eyebrow 圆点 / Hero VTOL 双赛道迷你卡 / 联系页图标卡 / a11y(focus-visible + reduced-motion + 汉堡 aria) / JSON-LD / 三语品牌化 404 / 「查看技术规格」锚点滚动
 - ✅ **域名 + 备案 + 上线**：www.01weichuang.com 已备案（粤ICP备2026041942号-2）+ HTTPS，部署在腾讯云广州（43.139.159.234）。`site.ts` 默认域名已改成真实域名
 - ⚠️ **公安联网备案已超期**（截止 ~2026-07-18，2026-08-25 提醒过用户尚未确认办理），数据码 `b2a747a66b31b0ea4206454ec634e1`。办完拿到公安备案号加到 footer（链全国互联网安全管理服务平台）
-- ⏸ 部署细节（服务器进程守护方式/nginx 配置）：本仓库无记录，需在服务器上现查（`git pull` → `npm ci` → `npm run build` → 重启服务）
+- ✅ **部署方式（2026-08-25 现查）**：腾讯云轻量 Ubuntu，项目在 **`/var/www/01web`**，**pm2 进程名 `01web`**（用户 ubuntu，fork 模式，`next start` 监听 3000），nginx 反代 80/443 → 3000。更新流程：`cd /var/www/01web && git pull origin main && npm ci && npm run build && pm2 restart 01web`。SMTP 等环境变量放 `/var/www/01web/.env.local`（改了 env 要 `pm2 restart 01web --update-env`）。服务器终端：腾讯云控制台 OrcaTerm（自带的 AI Agent 用户嫌笨，手动敲命令）
 - ⏸ Cloudflare CDN：可选
 - 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
 - ✅ 视觉素材：8 个场景全部有图。4 张 PDF 抽图（充电特斯拉/音乐节/巡航）+ 4 张 ChatGPT 生成（drone-security 城市夜景 / drone-rescue 洪水 / drone-farmland 农田 / charge-residential 住宅 / charge-campus 园区 —— 共 5 张，含替换旧 drone-alley）。生成手法：纪实摄影措辞压 AI 味，充电小车造型靠传 robot-hero.jpg 当参考图锁形态（2026-06-04）
 - ✅ **2026-06-19 视觉/性能/PWA 轮**（详见《沉浸式深色改版》末条）：CardFx 卡片光斑+流光边框 / CountUp 数字滚动计数 / film-grain 噪点 / PWA manifest / 导航按钮白底 / HomeTech 标题中文化 / 删脚手架 svg + 启用 turbopack / Hero3D 性能微调（dpr 1.8、粒子 ~960）
+- ✅ **GA4 访问统计（2026-09-06）**：`components/GoogleAnalytics.tsx`（`next/script` afterInteractive 手写，**没用** `@next/third-parties`，因为它不能传 gtag 配置）挂在 `[lang]/layout.tsx` `</body>` 前。只在 `NODE_ENV=production` 且 `NEXT_PUBLIC_GA_ID` 非空时渲染；`config` 里显式 `allow_google_signals:false` + `allow_ad_personalization_signals:false`。**不手动发 page_view**，客户端导航靠 GA4 增强型衡量（后台要开「基于浏览器历史记录事件的网页变化」），别再加 usePathname 监听，会重复计数。ID 只放 `.env.local`（本地 + 服务器），**变量在 build 时内联，改了要重新 build**。隐私政策三语已如实写明使用 GA4。大陆访客基本收不到（GA 域名不可达），百度统计另议。
 - ⏳ **表单 SMTP 待配置**：服务器 `.env.local` 填 `SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASS/CONTACT_TO` 后 `/api/contact` 即生效；不配则表单退回 mailto
 - 💡 **访问统计**：评估过，用户暂不做（腾讯云 CVM 后台只有服务器/带宽监控，看不到 PV/UV/来源；要真统计得埋 JS 或服务器侧 GoAccess）。需要时再上。
 - 💡 图片转 WebP：评估过线上已由 next/image 自动优化，手动转只瘦仓库、要改路径有破图风险，**暂不做**。

@@ -10,6 +10,7 @@ import { TechBackdrop } from "@/components/TechBackdrop";
 import { MotionProvider } from "@/components/MotionProvider";
 import { Loader } from "@/components/immersive/Loader";
 import { ScrollProgress } from "@/components/immersive/ScrollProgress";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -131,6 +132,7 @@ export default async function RootLayout({
           <Footer lang={lang as Locale} dict={dict} />
         </MotionProvider>
         <div className="film-grain" aria-hidden />
+        <GoogleAnalytics />
       </body>
     </html>
   );
