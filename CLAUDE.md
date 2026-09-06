@@ -23,7 +23,7 @@
 
 | 项 | 状态 | 含义 |
 |---|---|---|
-| 公司主体 | **✅ 已注册（2026-03-03）** | 深圳零一唯创科技有限公司 / 统一社会信用代码 `91440300MAK7XEPD58` / 法人 龙俊洁 / 注册地址 深圳市坪山区马峦街道沙坣社区沙新路（南延伸段）2-49号。已写进 `[lang]/layout.tsx` 的 Organization JSON-LD（taxID + address）+ 联系页地址卡（三语 `pages.contact.{addrLabel,company,addr,creditLabel,creditCode}`）。**地址是真的，已上墙公开**（旧版「联系页不能加地址」的红线已解除） |
+| 公司主体 | **✅ 已注册（2026-03-03）** | 深圳零一唯创科技有限公司 / 统一社会信用代码 `91440300MAK7XEPD38` / 法人 龙俊洁 / 注册地址 深圳市坪山区龙田街道竹坑社区翠景路33号3栋坪山工匠园402（2026-09-06 按开票资料更新，旧址马峦街道沙新路 2-49 号作废）。已写进 `[lang]/layout.tsx` 的 Organization JSON-LD（taxID + address）+ 联系页地址卡（三语 `pages.contact.{addrLabel,company,addr,creditLabel,creditCode}`）。**地址是真的，已上墙公开**（旧版「联系页不能加地址」的红线已解除） |
 | 付费/试用客户 | **0** | **不要**做客户 logo 墙、案例区、"已部署 X 台"数字 —— 全是假的 |
 | 专利 | 已有但未公开授权号 | 只能用「多项发明专利申请中」占位（zh.json `pages.about.patents`），不写数字 |
 | 域名 | **✅ www.01weichuang.com（已备案上线）** | ICP：粤ICP备2026041942号-2（footer 已挂，链 beian.miit.gov.cn）。腾讯云广州托管。`site.ts` 默认值已改成真实域名，仍可被 `NEXT_PUBLIC_SITE_URL` 覆盖。⏳ 公安联网备案待办（服务开通起 30 天内，~2026-07-18） |

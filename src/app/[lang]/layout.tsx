@@ -99,7 +99,7 @@ export default async function RootLayout({
     logo: `${SITE_URL}/icon.png`,
     email: "dravenzhong27@gmail.com",
     foundingDate: "2026-03-03",
-    taxID: "91440300MAK7XEPD58",
+    taxID: "91440300MAK7XEPD38",
     address: {
       "@type": "PostalAddress",
       addressCountry: "CN",
