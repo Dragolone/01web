@@ -28,7 +28,7 @@
 | 专利 | 已有但未公开授权号 | 只能用「多项发明专利申请中」占位（zh.json `pages.about.patents`），不写数字 |
 | 域名 | **✅ www.01weichuang.com（已备案上线）** | ICP：粤ICP备2026041942号-2（footer 已挂，链 beian.miit.gov.cn）。腾讯云广州托管。`site.ts` 默认值已改成真实域名，仍可被 `NEXT_PUBLIC_SITE_URL` 覆盖。⏳ 公安联网备案待办（服务开通起 30 天内，~2026-07-18） |
 | 企业邮箱 | 未启用 | 全站用 gmail。联系页用「商务合作 / 技术支持」两栏分流卡片伪装专业感 |
-| 产品成熟度 | **⚠️ 2026-08-25 用户确认：两条产品线都还没有实体样机、没有实测数据** | 网站只写手册里的设计规格和应用场景（仍从「真实产品信息」节取），**不写**「已交付 / 量产 / 部署数量 / 客户数」——`products.items[vtol].tag` 已由「已交付」改「低空装备」，`pages.products.meta` 里的「已交付」改「多项专利申请中」。商业价值区保留手册测算值但带 disclaimer。也**不要**写成「敬请期待 / 概念产品」（两头都别偏） |
+| 产品成熟度 | **⚠️ 2026-08-25 用户确认：两条产品线都还没有实体样机、没有实测数据**。**2026-09-08 补充**：用户提供了一批实拍（园区 + 无人机总装车间、CNC、储能充电桩产线、充电桩给车充电）。**汤总（老板）2026-09-08 微信确认：「自产自销」，照片是公司自有生产基地；视频里的是「储能充电桩，咱们机器人充电桩的上面部分」**——即 LingYI-Charge 的上部储能充电模块。网站口径：「自有生产基地」「储能充电桩」「自产自销」（曾一度按「合作制造基地/代工厂」写过，已全部改正，**别再写代工**）；**仍不写量产数量/交付数/客户数**。营业执照用户明确**不上网** | 网站只写手册里的设计规格和应用场景（仍从「真实产品信息」节取），**不写**「已交付 / 量产 / 部署数量 / 客户数」——`products.items[vtol].tag` 已由「已交付」改「低空装备」，`pages.products.meta` 里的「已交付」改「多项专利申请中」。商业价值区保留手册测算值但带 disclaimer。也**不要**写成「敬请期待 / 概念产品」（两头都别偏） |
 
 ## 真实产品信息（来自 PDF 产品手册）
 
@@ -94,7 +94,7 @@
 - **新依赖（已装，React 19 兼容）**：`three` ^0.184 / `@react-three/fiber` ^9 / `@react-three/drei` ^10 / `@react-three/postprocessing` ^3 / `@pmndrs/assets`（CC0 HDRI，本地打包离线用）。→ 「不引入重型 3D 库」这条**已被用户明确要求推翻**。
 - **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。配色青/品红/蓝/紫赛博霓虹。**性能旋钮 + 用户偏好（2026-06-19，重要）**：可调的有 `dpr`（当前 `[1,1.8]`）/ Sparkles 粒子数（当前 ~960 = 520+280+160）/ EffectComposer 后处理 pass（Bloom+色散+Vignette+Noise 全开）。但用户**明确要效果优先**，**已否过「滚动时暂停渲染」和「降画质/大幅减粒子」**——别再为性能去停涡轮或砍画质，最多按用户口令微调一档；离屏暂停只保留 `IntersectionObserver threshold:0`（完全看不见才 `never`，不要再加「滚动手势中暂停」那套）。
 - **immersive 组件目录** `components/immersive/`：`ImmersiveHero` / `Hero3D` / `Loader`（开场幕布，挂 layout）/ `ScrollProgress`（顶部霓虹进度条，挂 layout）。`[lang]/template.tsx` = 路由切换淡入转场。（历史上还做过 ParticleField/TerrainField/ShaderField/HoloDrone，均被否后删除——别找。）
-- **首页叙事 section（顺序，2026-08-25 后）**：ImmersiveHero → HomeFeatures(4 张具体文案卡) → ProductMatrix → **HomeSolutions(实景图 + 8 场景列表)** → **HomeAbout(关于我们预览)** → TechCapabilities(商业价值) → HomeCTA。~~HomeCapabilities~~ / ~~HomeTech~~ 已删。首页内容包在 `<div bg-[#070a18]>` 暗场容器里。
+- **首页叙事 section（顺序，2026-09-08 后）**：ImmersiveHero → HomeFeatures(4 张具体文案卡) → ProductMatrix → **HomeSolutions(实景图 + 8 场景列表)** → **HomeAbout(关于我们预览)** → **HomeGalleryStrip(实景胶片带)** → TechCapabilities(商业价值) → HomeCTA。~~HomeCapabilities~~ / ~~HomeTech~~ 已删。首页内容包在 `<div bg-[#070a18]>` 暗场容器里。
 - **`theme="dark"` 变体**：`ProductMatrix`/`HomeCapabilities`/`HomeCTA` 有 `theme?:"dark"` prop；首页与产品页都传 `dark`（玻璃卡+霓虹）。它们的浅色分支基本已不用（全站深色）。
 - **新增字典 key（三语已同步）**：`heroImmersive`（title1/title2/subtitle/tags/ctaPrimary/ctaSecondary）、`homeSolutions`、`tech` 增 `metric/note/disclaimer`。**新增产品定位已拓宽**到「机器人 / 无人机 / AIoT / 智能硬件 / 自动化解决方案 / 智慧园区 / 远程运维平台」（用户亲自定的对外定位，非编造；与那个机器人小程序的真实 IoT/控制台能力一致）。
 - **导航栏**：始终白字白 logo（`brightness-0 invert`），滚动后变**深色玻璃**（不再白条）。
@@ -166,9 +166,9 @@ src/
 │   │   ├── dictionaries.ts        ← i18n 字典加载器 + locale 常量
 │   │   │                            （⚠️ 这层**不要**建 not-found.tsx —— 动态根布局下不组合，404 走根 app/not-found.tsx）
 │   │   ├── products/page.tsx
-│   │   ├── products/[key]/page.tsx ← 产品详情（key: **charge|vtol**；非法 key → `redirect('/products')` 不是 notFound，见 404 架构）。含 features+specs 表+value 对比+Product JSON-LD
+│   │   ├── products/[key]/page.tsx ← 产品详情（key: **charge|vtol**；非法 key → `redirect('/products')` 不是 notFound，见 404 架构）。含 features+specs 表+value 对比+Product JSON-LD+制造实拍画廊（productGallery）
 │   │   ├── solutions/page.tsx     ← 解决方案页（旧 /technology 改名，dict 仍用 pages.technology）。SolutionScenarios + TechCapabilities
-│   │   ├── about/page.tsx         ← 公司简介 + 双产品图 + 研发/专利 + 市场规模表
+│   │   ├── about/page.tsx         ← 公司简介 + 双产品图 + 公司实景画廊 + 自有生产基地画廊 + 研发/专利 + 市场规模表
 │   │   ├── contact/page.tsx       ← ContactForm + 商务/技术两卡 + 地址卡
 │   │   ├── privacy/page.tsx       ← 隐私政策（pages.privacy）
 │   │   └── error.tsx              ← 路由级错误边界（三语）
@@ -185,7 +185,10 @@ src/
 │   ├── TechBackdrop.tsx (server)  ← 全局 fixed 背景层（角落辉光 + 左右 blueprint 网格/电路带，mask 横向渐隐）
 │   ├── HomeFeatures.tsx (client)  ← Hero 下方 4 张具体卖点卡（dict.hero.features）；产品页也用它
 │   ├── HomeSolutions.tsx (client) ← 首页应用场景：实景图 + 8 场景行，链 /solutions#key
-│   ├── HomeAbout.tsx (client)     ← 首页关于我们预览（复用 pages.about + brand.vision）
+│   ├── HomeAbout.tsx (client)     ← 首页关于我们预览（复用 pages.about + brand.vision），配图 /company/park-entrance.jpg
+│   ├── HomeGalleryStrip.tsx (client) ← 首页全宽实景胶片带（CSS 无限漂移，homeStrip）
+│   ├── PhotoGallery.tsx (client)  ← 实景画廊 + Lightbox（关于页 / 产品详情共用）
+│   ├── galleryImages.ts           ← 实景图数据源（company/factory/product/homeStrip），caption 走字典 gallery.captions
 │   ├── HomeCTA.tsx (client)
 │   ├── ContactForm.tsx (client)   ← 联系表单，POST /api/contact，503 时退回 mailto
 │   ├── scenarioImages.ts          ← 8 场景实景图 map（HomeSolutions + SolutionScenarios 共用）
@@ -205,6 +208,8 @@ next.config.ts                     ← redirects 308（/products/robot|station �
 
 public/
 ├── brand/                         ← logo.png（透明 1710×439）/ logo-white.png / logo-512.png（header/favicon 512×131）
+├── company/                       ← 坪山工匠园总部实拍（5 张，2026-09-08，已去 EXIF）
+├── factory/                       ← 公司自有生产基地实拍（9 张 + charge-demo.mp4 储能充电桩视频 + poster）——汤总确认自产自销
 └── products/                      ← ⚠️ 文件名易误导，认这里：
     ├── robot-hero.jpg             ← LingYI-Charge 白色机型（ProductMatrix 卡 + HomeHero 主图）
     ├── drone-hero.jpg             ← LingYI-1 飞行视角（HomeHero VTOL 迷你卡）
@@ -356,6 +361,21 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - ✅ 视觉素材：8 个场景全部有图。4 张 PDF 抽图（充电特斯拉/音乐节/巡航）+ 4 张 ChatGPT 生成（drone-security 城市夜景 / drone-rescue 洪水 / drone-farmland 农田 / charge-residential 住宅 / charge-campus 园区 —— 共 5 张，含替换旧 drone-alley）。生成手法：纪实摄影措辞压 AI 味，充电小车造型靠传 robot-hero.jpg 当参考图锁形态（2026-06-04）
 - ✅ **2026-06-19 视觉/性能/PWA 轮**（详见《沉浸式深色改版》末条）：CardFx 卡片光斑+流光边框 / CountUp 数字滚动计数 / film-grain 噪点 / PWA manifest / 导航按钮白底 / HomeTech 标题中文化 / 删脚手架 svg + 启用 turbopack / Hero3D 性能微调（dpr 1.8、粒子 ~960）
 - ✅ **GA4 访问统计（2026-09-06）**：`components/GoogleAnalytics.tsx`（`next/script` afterInteractive 手写，**没用** `@next/third-parties`，因为它不能传 gtag 配置）挂在 `[lang]/layout.tsx` `</body>` 前。只在 `NODE_ENV=production` 且 `NEXT_PUBLIC_GA_ID` 非空时渲染；`config` 里显式 `allow_google_signals:false` + `allow_ad_personalization_signals:false`。**不手动发 page_view**，客户端导航靠 GA4 增强型衡量（后台要开「基于浏览器历史记录事件的网页变化」），别再加 usePathname 监听，会重复计数。ID 只放 `.env.local`（本地 + 服务器），**变量在 build 时内联，改了要重新 build**。隐私政策三语已如实写明使用 GA4。大陆访客基本收不到（GA 域名不可达），百度统计另议。
+- ✅ **实景图轮（2026-09-08）**：用户给了 51 张微信原图 + 1 段视频（`picture/`，**已 gitignore**，115MB 原图不入库）。经用户 + 汤总确认：园区照片是公司总部（坪山工匠园），车间/充电桩照片是**公司自有生产基地、自产自销**（用户最初猜是代工厂，后汤总纠正）；营业执照不上网；个人合影/园区展品/来源不明宣传拼图不用。选了 15 张用 ImageIO 缩到 ≤2400px、**烤入 EXIF 方向、去全部元数据（含 GPS）**，落到 `public/company/`（park-entrance/park-gate/lobby/office/canteen）和 `public/factory/`（uav-assembly/uav-vtol/uav-fuselage/uav-helicopter/cnc/charge-vehicle/charge-units/charge-pallets/charge-site + charge-demo.mp4 1.7MB + poster）。
+  - **数据源** `components/galleryImages.ts`：`companyGallery`(5) / `factoryGallery`(5) / `productGallery.{charge,vtol}`(各 5，charge 含视频 tile) / `homeStrip`(8)。caption 在字典 `gallery.captions[id]`（`GalleryId = keyof captions`，加图必须三语同步加 caption 否则 tsc 报错）。**画廊张数用 5 或 9**（1 大 2×2 + 4 小刚好铺满 4 列；4 或 6 张会留空格）。
+  - **`components/PhotoGallery.tsx`**（client）：不对称网格（首张 2×2）+ Lightbox（ESC/←→/焦点管理/锁滚动，AnimatePresence）；视频 item 静音自动循环、不进 lightbox；揭示用 variants 传播（同 ProductMatrix 教训）。用在关于页「公司实景」「自有生产基地」两节 + 产品详情「制造实拍」节（specs 之前）。
+  - **`components/HomeGalleryStrip.tsx`**（client）：首页全宽胶片带，纯 CSS 无限横向漂移（`globals.css .gallery-strip*`，70s，hover 暂停，reduced-motion 全局规则会冻结），`id="site-gallery"`。位置 HomeAbout 之后、TechCapabilities 之前。HomeAbout 配图换成园区门头实景。
+  - **字典新增**：顶层 `gallery`(close/prev/next/open/captions) / `homeGallery`(eyebrow/title/subtitle/more)；`pages.about.{techEyebrow,gallery,factory}`（关于页原硬编码 `R&D` eyebrow 已改走字典）；`productDetail.galleryTitle` + `items.{charge,vtol}.galleryNote`。
+  - 工具：本机无 ffmpeg/ImageMagick/PIL，图片处理用了一个临时 Swift 脚本（ImageIO `CGImageSourceCreateThumbnailAtIndex` + `kCGImageSourceCreateThumbnailWithTransform`），视频抽帧用 `qlmanage -t`。**zsh 里别用 `path` 当变量名**（它是 PATH 的数组别名，赋值会把 PATH 清掉）。
+- ✅ **专业审视修复轮（2026-09-08）**：
+  - **SEO 大坑已修：`src/app/site.ts` 的 `pageMeta()`**。Next 对 metadata 是**浅合并**：页面写了 `openGraph` 就整个覆盖 layout 的（子页曾丢 og:image/og:url/site_name）；页面不写 `alternates` 就继承 layout 的 canonical = 语言首页（所有子页 canonical 曾都指向 `/zh`）。现在**每个页面的 `generateMetadata` 都 `return pageMeta({lang, path, title, description, siteName})`**（layout 传 `path:""` 再 spread 覆盖 title template 等）。**新增页面必须走 pageMeta，别手写 openGraph**。
+  - `[lang]/template.tsx` 首屏**不做淡入**（`initial=false`，模块级 client 标记 `navigated`，只有客户端导航才动画）：之前 SSR HTML 带 `opacity:0`，水合前整页不可见，关于页移动 LCP 5.4s → 2.7s。**别改回无条件 `initial={{opacity:0}}`**。
+  - 产品列表页 `ProductMatrix` 加 `hideHeader`（hero 已有标题，去重）+ `PageHero` 加 `compactBottom`（产品页 hero 底部 pb-16/20）。
+  - 产品详情 hero 小标走 `productDetail.eyebrow`（原硬编码 `Product`）；Product JSON-LD 加 `image`。
+  - 无障碍：layout 加「跳到主内容」skip link（`a11y.skipToContent`，`<main id="main">`）；画廊 tile 的 `<Image alt="">`（button 的 aria-label 承担描述，caption 可见，避免读屏读两遍）。
+  - 微信分享隐藏图换成 `public/brand/share-300.png`（300px，47KB；原来 512 icon 81KB 且被 Lighthouse 记 offscreen）。
+  - `pages.technology.lead` 去掉「可量化的部署数据」（没有部署），改「产品手册测算数据」。
+  - Lighthouse（本地生产构建）：首页桌面 性能 99 / 关于页移动 96，a11y/最佳实践/SEO 全 100。首页 TBT 由 three.js 决定，波动大（59→99 两次跑差异来自 WebGL 初始化时机），别据此调画质。
 - ⏳ **表单 SMTP 待配置**：服务器 `.env.local` 填 `SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASS/CONTACT_TO` 后 `/api/contact` 即生效；不配则表单退回 mailto
 - 💡 **访问统计**：评估过，用户暂不做（腾讯云 CVM 后台只有服务器/带宽监控，看不到 PV/UV/来源；要真统计得埋 JS 或服务器侧 GoAccess）。需要时再上。
 - 💡 图片转 WebP：评估过线上已由 next/image 自动优化，手动转只瘦仓库、要改路径有破图风险，**暂不做**。

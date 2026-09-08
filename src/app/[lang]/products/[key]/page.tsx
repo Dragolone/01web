@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta, SITE_URL } from "@/app/site";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getDictionary, hasLocale, locales, type Locale } from "../../dictionaries";
+import { PhotoGallery } from "@/components/PhotoGallery";
+import { productGallery } from "@/components/galleryImages";
 
 const PRODUCT_KEYS = ["charge", "vtol"] as const;
 type ProductKey = (typeof PRODUCT_KEYS)[number];
@@ -30,11 +33,13 @@ export async function generateMetadata({
   const dict = await getDictionary(lang as Locale);
   const item = dict.products.items.find((i) => i.key === key);
   if (!item) return {};
-  return {
+  return pageMeta({
+    lang,
+    path: `/products/${key}`,
     title: item.name,
     description: item.desc,
-    openGraph: { title: item.name, description: item.desc },
-  };
+    siteName: dict.brand.name,
+  });
 }
 
 export default async function ProductDetailPage({
@@ -57,6 +62,7 @@ export default async function ProductDetailPage({
     name: item.name,
     description: item.desc,
     category: item.tag,
+    image: `${SITE_URL}${visual.img}`,
     brand: { "@type": "Brand", name: dict.brand.name },
     manufacturer: { "@type": "Organization", name: dict.brand.name },
   };
@@ -103,7 +109,7 @@ export default async function ProductDetailPage({
             <div className="lg:col-span-6">
               <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#9db8ff] mb-3">
                 <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-[#5cf0ff]" />
-                Product
+                {dict.productDetail.eyebrow}
               </p>
               <h1 className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
                 {item.name}
@@ -204,6 +210,19 @@ export default async function ProductDetailPage({
           <p className="mt-6 max-w-3xl text-sm text-muted leading-relaxed">
             {detail.value.note}
           </p>
+        </div>
+      </section>
+
+      {/* Real footage from the company production base */}
+      <section className="pb-20 md:pb-28">
+        <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            {dict.productDetail.galleryTitle}
+          </h2>
+          <p className="mt-4 max-w-3xl text-muted leading-relaxed">{detail.galleryNote}</p>
+          <div className="mt-10">
+            <PhotoGallery items={productGallery[key]} captions={dict.gallery.captions} labels={dict.gallery} />
+          </div>
         </div>
       </section>
 

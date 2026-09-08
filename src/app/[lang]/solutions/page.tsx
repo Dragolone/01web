@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
@@ -13,11 +14,13 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang as Locale);
-  return {
+  return pageMeta({
+    lang,
+    path: "/solutions",
     title: dict.pages.technology.title,
     description: dict.pages.technology.lead,
-    openGraph: { title: dict.pages.technology.title, description: dict.pages.technology.lead },
-  };
+    siteName: dict.brand.name,
+  });
 }
 
 export default async function SolutionsPage({ params }: PageProps<"/[lang]/solutions">) {

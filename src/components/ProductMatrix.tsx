@@ -8,7 +8,9 @@ import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
 
 // compactTop: trim the top padding when this sits directly under a PageHero.
 // theme="dark": cyber-dark variant used on the immersive home page.
-type Props = { dict: Dictionary; lang: Locale; compactTop?: boolean; theme?: "dark" };
+type Props = { dict: Dictionary; lang: Locale; compactTop?: boolean; theme?: "dark"   /** Skip the eyebrow/title block (the products page hero already says it). */
+  hideHeader?: boolean;
+};
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -20,11 +22,12 @@ const visuals: Record<string, { img: string; alt: string }> = {
   vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
-export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
+export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Props) {
   const dark = theme === "dark";
   return (
-    <section className={compactTop ? "pt-4 md:pt-6 pb-20 md:pb-28" : "py-20 md:py-28"}>
+    <section className={compactTop ? "pt-0 pb-20 md:pb-28" : "py-20 md:py-28"}>
       <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
+        {!hideHeader && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -41,9 +44,10 @@ export function ProductMatrix({ dict, lang, compactTop, theme }: Props) {
           </h2>
           <p className={`mt-4 text-lg ${dark ? "text-white/60" : "text-muted"}`}>{dict.products.subtitle}</p>
         </motion.div>
+        )}
 
         <div
-          className={`mt-16 grid gap-8 md:grid-cols-2 ${
+          className={`${hideHeader ? "" : "mt-16"} grid gap-8 md:grid-cols-2 ${
             dict.products.items.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
           }`}
         >

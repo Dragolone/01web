@@ -9,13 +9,15 @@ type Props = {
   lead: string;
   eyebrow?: string;
   meta?: string[];
+  /** Tighter bottom padding when the next section carries its own header (e.g. products list). */
+  compactBottom?: boolean;
 };
 
-export function PageHero({ title, lead, eyebrow, meta }: Props) {
+export function PageHero({ title, lead, eyebrow, meta, compactBottom }: Props) {
   return (
     // Dark cyber opening shared by every inner page, then dissolving into the
     // light, readable content below.
-    <section className="relative isolate overflow-hidden pt-32 pb-28 text-white md:pt-40 md:pb-32">
+    <section className={`relative isolate overflow-hidden pt-32 text-white md:pt-40 ${compactBottom ? "pb-16 md:pb-20" : "pb-28 md:pb-32"}`}>
       {/* dark base */}
       <div
         aria-hidden

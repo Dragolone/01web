@@ -5,6 +5,7 @@ import { HomeFeatures } from "@/components/HomeFeatures";
 import { ProductMatrix } from "@/components/ProductMatrix";
 import { HomeSolutions } from "@/components/HomeSolutions";
 import { HomeAbout } from "@/components/HomeAbout";
+import { HomeGalleryStrip } from "@/components/HomeGalleryStrip";
 import { TechCapabilities } from "@/components/TechCapabilities";
 import { HomeCTA } from "@/components/HomeCTA";
 
@@ -41,6 +42,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         <ProductMatrix dict={dict} lang={lang as Locale} theme="dark" />
         <HomeSolutions dict={dict} lang={lang as Locale} />
         <HomeAbout dict={dict} lang={lang as Locale} />
+        <HomeGalleryStrip dict={dict} lang={lang as Locale} />
         <TechCapabilities dict={dict} />
         <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
       </div>

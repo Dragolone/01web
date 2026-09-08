@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
@@ -12,11 +13,13 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang as Locale);
-  return {
+  return pageMeta({
+    lang,
+    path: "/products",
     title: dict.pages.products.title,
     description: dict.pages.products.lead,
-    openGraph: { title: dict.pages.products.title, description: dict.pages.products.lead },
-  };
+    siteName: dict.brand.name,
+  });
 }
 
 export default async function ProductsPage({ params }: PageProps<"/[lang]/products">) {
@@ -31,8 +34,9 @@ export default async function ProductsPage({ params }: PageProps<"/[lang]/produc
         lead={dict.pages.products.lead}
         eyebrow={dict.pages.products.eyebrow}
         meta={dict.pages.products.meta}
+        compactBottom
       />
-      <ProductMatrix dict={dict} lang={lang as Locale} compactTop theme="dark" />
+      <ProductMatrix dict={dict} lang={lang as Locale} compactTop hideHeader theme="dark" />
       <HomeFeatures dict={dict} />
       <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
     </>

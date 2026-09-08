@@ -67,15 +67,15 @@ export function HomeAbout({ dict, lang }: Props) {
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
               <Image
-                src="/products/drone-cruise.jpg"
-                alt={dict.products.items.find((p) => p.key === "vtol")?.name ?? "LingYI-1"}
+                src="/company/park-entrance.jpg"
+                alt={dict.gallery.captions["park-entrance"]}
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
               />
               <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#070a18]/70 via-transparent to-transparent" />
-              <p className="absolute bottom-5 left-6 text-xs uppercase tracking-[0.18em] text-white/80">
-                {dict.brand.nameEn}
+              <p className="absolute bottom-5 left-6 text-xs tracking-[0.08em] text-white/85">
+                {dict.gallery.captions["park-entrance"]}
               </p>
             </div>
           </motion.div>

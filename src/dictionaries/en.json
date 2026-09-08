@@ -203,6 +203,7 @@
     "eyebrow": "Applications"
   },
   "productDetail": {
+    "eyebrow": "Product",
     "backToProducts": "Back to products",
     "featuresTitle": "Key features",
     "specsTitle": "Technical specifications",
@@ -349,7 +350,8 @@
             }
           ],
           "note": "Reference ROI: two units at a 200-bay complex serve 12–16 cars/day at ¥60 avg — ¥22k–29k/month, payback ~8–12 months."
-        }
+        },
+        "galleryNote": "Taken at our own production base: the energy-storage charging pile line and real-world charging deployments. The energy-storage charging pile is the upper storage-and-charging module of the LingYI-Charge robot pile, built and sold in-house."
       },
       "vtol": {
         "features": [
@@ -483,12 +485,14 @@
             }
           ],
           "note": "For pipeline inspection, one LingYI-1 replaces a 3–5 person crew, cuts per-sortie cost by 95%+, saves ¥0.5–0.8M/year in O&M, payback 8–16 months."
-        }
+        },
+        "galleryNote": "Taken at our own production base: the UAV assembly hall and CNC machining centre where composite fuselages, final assembly and flight platforms are completed."
       }
     },
     "valueTitle": "Business value",
     "valueColOld": "Traditional",
-    "valueColNew": "Zero-One"
+    "valueColNew": "Zero-One",
+    "galleryTitle": "On the production floor"
   },
   "cta": {
     "title": "Want a deeper look at the products or scenarios?",
@@ -521,7 +525,7 @@
     },
     "technology": {
       "title": "Applications & Value",
-      "lead": "Real business scenarios across energy, emergency, security and EV mobility — backed by measurable deployment data.",
+      "lead": "Real business scenarios across energy, emergency, security and EV mobility — backed by figures from the product manual.",
       "eyebrow": "Solutions",
       "meta": [
         "8 real scenarios",
@@ -577,6 +581,18 @@
             "growth": "25% CAGR"
           }
         ]
+      },
+      "techEyebrow": "R&D",
+      "gallery": {
+        "eyebrow": "Our base",
+        "title": "Headquartered at Pingshan Artisan Park, Shenzhen",
+        "desc": "The company is based at Pingshan Artisan Park, Room 402, Building 3, No. 33 Cuijing Road, Pingshan District, Shenzhen — a hub for skilled talent and smart manufacturing in the Greater Bay Area. R&D and operations are run from here."
+      },
+      "factory": {
+        "eyebrow": "Manufacturing",
+        "title": "In-house production base",
+        "desc": "UAV final assembly, composite moulding, CNC precision machining and the energy-storage charging pile line are all completed at our own production base, covering everything from structural parts to complete units. Products are built and sold in-house.",
+        "note": "Photos taken at our production base."
       }
     },
     "contact": {
@@ -707,5 +723,37 @@
       }
     ],
     "more": "See all scenarios"
+  },
+  "gallery": {
+    "close": "Close",
+    "prev": "Previous",
+    "next": "Next",
+    "open": "View full size",
+    "captions": {
+      "park-entrance": "Pingshan Artisan Park, Shenzhen · company base",
+      "park-gate": "Park main entrance",
+      "lobby": "Park lobby",
+      "office": "Office area",
+      "canteen": "Park canteen",
+      "uav-assembly": "UAV final assembly hall",
+      "uav-vtol": "VTOL fixed-wing airframe",
+      "uav-fuselage": "Composite fuselage components",
+      "uav-helicopter": "Unmanned helicopter platforms",
+      "cnc": "CNC machining centres",
+      "charge-vehicle": "Energy-storage charging pile charging an EV",
+      "charge-units": "Energy-storage charging piles",
+      "charge-pallets": "Energy-storage charging pile production line",
+      "charge-site": "Emergency charging at a construction yard",
+      "charge-demo": "Energy-storage charging pile control panel"
+    }
+  },
+  "homeGallery": {
+    "eyebrow": "On site",
+    "title": "From campus to workshop",
+    "subtitle": "Our Shenzhen Pingshan headquarters and production base",
+    "more": "Learn more"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content"
   }
 }

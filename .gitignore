@@ -42,3 +42,6 @@ next-env.d.ts
 
 # codegraph 工具源码仓库（与本项目无关，勿提交进 01web）
 /codegraph/
+
+# 原始素材（微信原图，115MB，已裁切压缩进 public/company + public/factory）
+/picture/

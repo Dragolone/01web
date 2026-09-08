@@ -158,6 +158,24 @@ body {
 
 /* Respect "reduce motion": collapse animations/transitions to near-instant.
    Pairs with <MotionConfig reducedMotion="user"> which disables framer-motion transforms. */
+/* Home real-photo film strip: seamless loop (track = 2× items, slides -50%).
+   Pauses on hover; the global reduced-motion rule below freezes it to a static row. */
+.gallery-strip {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+.gallery-strip__track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  padding-inline: 1rem;
+  animation: gallery-strip 70s linear infinite;
+  will-change: transform;
+}
+.gallery-strip:hover .gallery-strip__track { animation-play-state: paused; }
+@keyframes gallery-strip { to { transform: translateX(calc(-50% - 0.5rem)); } }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

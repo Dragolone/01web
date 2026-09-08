@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
 import { CountUp } from "@/components/CountUp";
+import { PhotoGallery } from "@/components/PhotoGallery";
+import { companyGallery, factoryGallery } from "@/components/galleryImages";
 
 export async function generateMetadata({
   params,
@@ -11,11 +14,13 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang as Locale);
-  return {
+  return pageMeta({
+    lang,
+    path: "/about",
     title: dict.pages.about.title,
     description: dict.pages.about.lead,
-    openGraph: { title: dict.pages.about.title, description: dict.pages.about.lead },
-  };
+    siteName: dict.brand.name,
+  });
 }
 
 export default async function AboutPage({ params }: PageProps<"/[lang]/about">) {
@@ -63,13 +68,52 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
         </div>
       </section>
 
+      {/* Company campus — real photos of the Pingshan Artisan Park base */}
+      <section className="pb-20 md:pb-28">
+        <div className="mx-auto max-w-5xl px-6 lg:px-10">
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+            {dict.pages.about.gallery.eyebrow}
+          </p>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            {dict.pages.about.gallery.title}
+          </h2>
+          <p className="mt-4 max-w-2xl text-foreground/70 leading-relaxed">
+            {dict.pages.about.gallery.desc}
+          </p>
+          <div className="mt-10">
+            <PhotoGallery items={companyGallery} captions={dict.gallery.captions} labels={dict.gallery} />
+          </div>
+        </div>
+      </section>
+
+      {/* In-house production base — UAV assembly, CNC, energy-storage charging pile line */}
+      <section className="pb-20 md:pb-28">
+        <div className="mx-auto max-w-5xl px-6 lg:px-10">
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+            {dict.pages.about.factory.eyebrow}
+          </p>
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            {dict.pages.about.factory.title}
+          </h2>
+          <p className="mt-4 max-w-2xl text-foreground/70 leading-relaxed">
+            {dict.pages.about.factory.desc}
+          </p>
+          <div className="mt-10">
+            <PhotoGallery items={factoryGallery} captions={dict.gallery.captions} labels={dict.gallery} />
+          </div>
+          <p className="mt-5 text-xs text-muted">{dict.pages.about.factory.note}</p>
+        </div>
+      </section>
+
       {/* Tech / patents section */}
       <section className="pb-20 md:pb-28">
         <div className="mx-auto max-w-5xl px-6 lg:px-10">
           <div className="rounded-3xl border border-border p-8 md:p-12">
             <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
               <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
-              R&amp;D
+              {dict.pages.about.techEyebrow}
             </p>
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
               {dict.pages.about.techTitle}

@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { hasLocale, htmlLang, locales, getDictionary, type Locale } from "./dictionaries";
-import { SITE_URL } from "../site";
+import { SITE_URL, pageMeta } from "../site";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TechBackdrop } from "@/components/TechBackdrop";
@@ -26,54 +26,19 @@ export async function generateMetadata({
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang);
   const title = `${dict.brand.name} | ${dict.brand.tagline}${dict.brand.tagline2}`;
-  const url = `${SITE_URL}/${lang}`;
-  const ogLocale =
-    lang === "zh" ? "zh_CN" : lang === "tw" ? "zh_TW" : "en_US";
   return {
     metadataBase: new URL(SITE_URL),
+    ...pageMeta({ lang, path: "", title, description: dict.brand.lead, siteName: dict.brand.name }),
     title: {
       default: title,
       template: `%s | ${dict.brand.name}`,
     },
-    description: dict.brand.lead,
     applicationName: dict.brand.name,
     keywords:
       lang === "en"
         ? ["mobile EV charging robot", "VTOL fixed-wing UAV", "LingYI-Charge", "LingYI-1", "Zero-One Innovation"]
         : ["移动充电机器人", "垂起固定翼无人机", "LingYI-Charge", "LingYI-1", "低空经济", "零一唯创"],
     authors: [{ name: dict.brand.name }],
-    alternates: {
-      canonical: url,
-      languages: {
-        "zh-Hans": `${SITE_URL}/zh`,
-        "zh-Hant": `${SITE_URL}/tw`,
-        en: `${SITE_URL}/en`,
-        "x-default": `${SITE_URL}/zh`,
-      },
-    },
-    openGraph: {
-      type: "website",
-      url,
-      siteName: dict.brand.name,
-      title,
-      description: dict.brand.lead,
-      locale: ogLocale,
-      alternateLocale: ["zh_CN", "zh_TW", "en_US"].filter((l) => l !== ogLocale),
-      images: [
-        {
-          url: `${SITE_URL}/opengraph-image`,
-          width: 1200,
-          height: 630,
-          alt: "Zero-One Innovation",
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: dict.brand.lead,
-      images: [`${SITE_URL}/opengraph-image`],
-    },
     robots: { index: true, follow: true },
     // 动态根布局不会自动注入根级 manifest 路由的 link（同 opengraph-image 的坑），显式声明：
     manifest: "/manifest.webmanifest",
@@ -120,15 +85,21 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#0a1024]"
+        >
+          {dict.a11y.skipToContent}
+        </a>
         {/* WeChat/QQ share thumbnail: they ignore og:image and grab the first ≥300px <img> in the HTML. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icon.png" alt="" width={512} height={512} aria-hidden style={{ display: "none" }} />
+        <img src="/brand/share-300.png" alt="" width={300} height={300} aria-hidden loading="lazy" style={{ display: "none" }} />
         <Loader />
         <ScrollProgress />
         <TechBackdrop />
         <MotionProvider>
           <Navbar lang={lang as Locale} dict={dict} />
-          <main className="flex-1">{children}</main>
+          <main id="main" className="flex-1">{children}</main>
           <Footer lang={lang as Locale} dict={dict} />
         </MotionProvider>
         <div className="film-grain" aria-hidden />

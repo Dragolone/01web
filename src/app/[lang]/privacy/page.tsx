@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { PageHero } from "@/components/PageHero";
@@ -9,11 +10,13 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang as Locale);
-  return {
+  return pageMeta({
+    lang,
+    path: "/privacy",
     title: dict.pages.privacy.title,
     description: dict.pages.privacy.lead,
-    openGraph: { title: dict.pages.privacy.title, description: dict.pages.privacy.lead },
-  };
+    siteName: dict.brand.name,
+  });
 }
 
 export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy">) {
