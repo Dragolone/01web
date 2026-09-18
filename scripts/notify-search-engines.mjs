@@ -16,10 +16,18 @@ const dryRun = args.includes("--dry-run");
 const given = args.filter((a) => a.startsWith("http"));
 
 async function sitemapUrls() {
-  const res = await fetch(`${SITE}/sitemap.xml`);
-  if (!res.ok) throw new Error(`sitemap.xml → HTTP ${res.status}`);
-  const xml = await res.text();
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+  // Right after a restart the site can 502 for a few seconds: retry briefly.
+  let last = "";
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    const res = await fetch(`${SITE}/sitemap.xml`).catch((e) => ({ ok: false, status: e.message }));
+    if (res.ok) {
+      const xml = await res.text();
+      return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+    }
+    last = String(res.status);
+    await new Promise((r) => setTimeout(r, 3000));
+  }
+  throw new Error(`sitemap.xml → ${last} after 5 attempts`);
 }
 
 async function indexNow(urls) {

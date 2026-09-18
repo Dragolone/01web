@@ -33,9 +33,16 @@ ssh "$HOST" "set -e; cd $DIR
   fi
   npm run build
   pm2 restart 01web --update-env
+  echo '  等待新进程就绪 …'
+  for i in \$(seq 1 30); do
+    code=\$(curl -s -o /dev/null -m 5 -w '%{http_code}' http://127.0.0.1:3000/zh)
+    [ \"\$code\" = 200 ] && break
+    sleep 1
+  done
+  [ \"\$code\" = 200 ] || { echo \"  ✗ 新进程 30s 内未就绪（\$code），看 pm2 logs 01web\"; exit 1; }
+  echo \"  ✓ 就绪（\${i}s）\"
   npm run notify || echo '  ⚠ 通知搜索引擎失败（不影响上线）'"
 
 echo "▶ 线上自检"
-sleep 2
 code=$(curl -s -o /dev/null -m 30 -w '%{http_code}' https://www.01weichuang.com/zh)
 [ "$code" = "200" ] && echo "✓ https://www.01weichuang.com/zh → 200" || { echo "✗ 首页返回 $code"; exit 1; }
