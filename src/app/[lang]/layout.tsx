@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { hasLocale, htmlLang, locales, getDictionary, type Locale } from "./dictionaries";
-import { SITE_URL, pageMeta } from "../site";
+import { SITE_URL, pageMeta, siteVerification } from "../site";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TechBackdrop } from "@/components/TechBackdrop";
@@ -25,10 +25,10 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  const title = `${dict.brand.name} | ${dict.brand.tagline}${dict.brand.tagline2}`;
+  const title = `${dict.brand.name} | ${dict.brand.seoTitle}`;
   return {
     metadataBase: new URL(SITE_URL),
-    ...pageMeta({ lang, path: "", title, description: dict.brand.lead, siteName: dict.brand.name }),
+    ...pageMeta({ lang, path: "", title, description: dict.brand.seoDescription, siteName: dict.brand.name }),
     title: {
       default: title,
       template: `%s | ${dict.brand.name}`,
@@ -40,6 +40,7 @@ export async function generateMetadata({
         : ["移动充电机器人", "垂起固定翼无人机", "LingYI-Charge", "LingYI-1", "低空经济", "零一唯创"],
     authors: [{ name: dict.brand.name }],
     robots: { index: true, follow: true },
+    verification: siteVerification(),
     // 动态根布局不会自动注入根级 manifest 路由的 link（同 opengraph-image 的坑），显式声明：
     manifest: "/manifest.webmanifest",
     // icons are auto-injected from src/app/icon.png + src/app/apple-icon.png

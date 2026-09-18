@@ -17,8 +17,8 @@ export async function generateMetadata({
   return pageMeta({
     lang,
     path: "/solutions",
-    title: dict.pages.technology.title,
-    description: dict.pages.technology.lead,
+    title: dict.pages.technology.seoTitle,
+    description: dict.pages.technology.seoDescription,
     siteName: dict.brand.name,
   });
 }

@@ -56,3 +56,15 @@ export function pageMeta(opts: {
     twitter: { card: "summary_large_image" as const, title, description, images: [ogImage.url] },
   };
 }
+
+// Search-engine ownership verification (Google Search Console / Bing Webmaster
+// Tools / 百度站长平台). Read at build time from the server's .env.local; a tag
+// is only emitted when its variable is set, so local builds stay clean.
+export function siteVerification() {
+  const google = process.env.GOOGLE_SITE_VERIFICATION;
+  const other: Record<string, string> = {};
+  if (process.env.BING_SITE_VERIFICATION) other["msvalidate.01"] = process.env.BING_SITE_VERIFICATION;
+  if (process.env.BAIDU_SITE_VERIFICATION) other["baidu-site-verification"] = process.env.BAIDU_SITE_VERIFICATION;
+  if (!google && Object.keys(other).length === 0) return undefined;
+  return { ...(google ? { google } : {}), ...(Object.keys(other).length ? { other } : {}) };
+}

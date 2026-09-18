@@ -17,7 +17,7 @@ export async function generateMetadata({
   return pageMeta({
     lang,
     path: "/about",
-    title: dict.pages.about.title,
+    title: dict.pages.about.seoTitle,
     description: dict.pages.about.lead,
     siteName: dict.brand.name,
   });

@@ -376,6 +376,11 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
   - 微信分享隐藏图换成 `public/brand/share-300.png`（300px，47KB；原来 512 icon 81KB 且被 Lighthouse 记 offscreen）。
   - `pages.technology.lead` 去掉「可量化的部署数据」（没有部署），改「产品手册测算数据」。
   - Lighthouse（本地生产构建）：首页桌面 性能 99 / 关于页移动 96，a11y/最佳实践/SEO 全 100。首页 TBT 由 three.js 决定，波动大（59→99 两次跑差异来自 WebGL 初始化时机），别据此调画质。
+- ✅ **SEO 推广轮（2026-09-18）**：用户想让 Google/Edge(Bing)/百度 搜「机器人 / 无人机 / 太阳能充电桩」能找到。已告知大词排不上，只做长尾（移动充电机器人 / 储能充电桩 / 垂起固定翼无人机 / mobile EV charging robot / VTOL fixed-wing UAV）。**「太阳能充电桩」全站无内容，排不了；视频里设备印有「PV」字样，若储能充电桩真支持光伏输入需汤总确认后再写，不编**。
+  - **标题/描述带关键词**：字典新增 `brand.{seoTitle,seoDescription}`（layout 用，`brand.tagline/lead` 保留给 hero/footer/JSON-LD）、`pages.products.seoDescription`、`pages.technology.{seoTitle,seoDescription}`、`pages.about.seoTitle`、`pages.contact.seoDescription`。**可见改动只有两处**：产品页 H1 `pages.products.title` 由「产品」改「移动充电机器人与垂起固定翼无人机」；关于页 lead 加了「深圳无人机与移动充电设备研发制造商」。解决方案页 H1「应用场景与价值」不动（只改 tab 标题）。
+  - **站长验证标签**：`site.ts` `siteVerification()` 读 `GOOGLE_SITE_VERIFICATION / BING_SITE_VERIFICATION / BAIDU_SITE_VERIFICATION`（build 时读，只在设了时输出 meta），layout `verification:` 挂上。用户需自己注册 Google Search Console / Bing Webmaster / 百度站长平台，把码填进服务器 `.env.local` 再 build，并提交 `sitemap.xml`。
+  - **www 归一**：线上曾发现 `https://01weichuang.com`（无 www）直接 200 且服务器 `.env.local` 的 `NEXT_PUBLIC_SITE_URL` 是无 www → canonical/sitemap 全指向无 www。`proxy.ts` 加了 apex→www 301（按 `SITE_URL` 的 host 推导，`host` 头等于去掉 `www.` 的 canonical host 才跳；localhost/其他 host 不受影响；matcher 仍不含静态文件）。**服务器还要**：① `.env.local` 改 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com` 再 build；② nginx 最好也加 apex→www 301（两层保险）。
+  - 未做（需用户）：外链（阿里国际站/1688/领英/深技大/工匠园名录/无人机协会）、Google 商家资料、公众号引流、百度推广/Google Ads、「公司动态」内容页（会给导航加一项，用户未拍板）。
 - ⏳ **表单 SMTP 待配置**：服务器 `.env.local` 填 `SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASS/CONTACT_TO` 后 `/api/contact` 即生效；不配则表单退回 mailto
 - 💡 **访问统计**：评估过，用户暂不做（腾讯云 CVM 后台只有服务器/带宽监控，看不到 PV/UV/来源；要真统计得埋 JS 或服务器侧 GoAccess）。需要时再上。
 - 💡 图片转 WebP：评估过线上已由 next/image 自动优化，手动转只瘦仓库、要改路径有破图风险，**暂不做**。

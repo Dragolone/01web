@@ -17,7 +17,7 @@ export async function generateMetadata({
     lang,
     path: "/products",
     title: dict.pages.products.title,
-    description: dict.pages.products.lead,
+    description: dict.pages.products.seoDescription,
     siteName: dict.brand.name,
   });
 }

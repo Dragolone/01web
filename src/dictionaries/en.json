@@ -4,6 +4,8 @@
     "nameEn": "ZERO-ONE INNOVATION",
     "tagline": "Forward · Innovate",
     "tagline2": "Push the Boundary",
+    "seoTitle": "Mobile EV Charging Robot & VTOL Fixed-Wing UAV Manufacturer, Shenzhen",
+    "seoDescription": "Shenzhen Zero-One Innovation Technology Co., Ltd. designs and manufactures mobile EV charging robots, energy-storage charging piles and VTOL fixed-wing industrial UAVs for parking-lot charging, industrial inspection and emergency response.",
     "lead": "Focused on China's two national-strategy tracks — low-altitude economy and clean-mobility infrastructure. Full-stack in-house R&D across mechanics, embedded systems, AI algorithms and cloud — delivering two product lines: LingYI-Charge mobile EV-charging robot and LingYI-1 VTOL fixed-wing aircraft.",
     "vision": "Bringing intelligent robots and aircraft into real industry use, with measurable commercial value for every customer."
   },
@@ -514,14 +516,15 @@
   },
   "pages": {
     "products": {
-      "title": "Products",
+      "title": "Mobile EV Charging Robot & VTOL Fixed-Wing UAV",
       "lead": "Two strategic tracks — low-altitude systems (LingYI-1) and clean-mobility infrastructure (LingYI-Charge).",
       "eyebrow": "Products",
       "meta": [
         "2 product lines",
         "Full-stack in-house",
         "Patents pending"
-      ]
+      ],
+      "seoDescription": "Two product lines: LingYI-Charge mobile EV charging robot (100 kWh energy-storage charging pile, robot-to-vehicle charging) and LingYI-1 VTOL fixed-wing UAV (2,000 km range, 40 kg payload) for industrial inspection and search and rescue."
     },
     "technology": {
       "title": "Applications & Value",
@@ -531,11 +534,13 @@
         "8 real scenarios",
         "95% cost reduction vs helicopter",
         "8-16 month payback"
-      ]
+      ],
+      "seoTitle": "UAV Inspection & Mobile EV Charging Applications",
+      "seoDescription": "VTOL fixed-wing UAV for pipeline inspection, search and rescue, security patrol and remote sensing; mobile charging robot for malls, residential estates, industrial parks and events. Eight real scenarios with modelled value."
     },
     "about": {
       "title": "About Zero-One Innovation",
-      "lead": "Shenzhen Zero-One Innovation Technology Co., Ltd. — focused on China's low-altitude economy and clean-mobility tracks.",
+      "lead": "Shenzhen Zero-One Innovation Technology Co., Ltd. — a Shenzhen-based developer and manufacturer of industrial UAVs and mobile EV charging equipment, focused on the low-altitude economy and clean mobility.",
       "body": "Shenzhen Zero-One Innovation Technology Co., Ltd. was founded in 2026, co-established by a young team from the AI School of Shenzhen Technology University and Hong Kong universities. We're a technology company focused on the R&D, manufacturing and sale of intelligent robots and specialty UAVs.\n\nWe focus on two core tracks:\n· Clean-mobility infrastructure — LingYI-Charge mobile EV-charging robot, solving the 'last mile' of EV charging\n· Low-altitude economy systems — LingYI-1 VTOL fixed-wing UAV, serving industrial inspection, security reconnaissance and emergency response\n\nOur core team brings together expertise in robot motion control, UAV aerodynamics, AI vision, and embedded systems — capable of delivering end-to-end from product definition through prototyping to low-volume production.\n\nWe operate by the principle of 'fearless and meticulous' — bringing intelligent robotics into real industry use to create measurable commercial value for our customers.",
       "techTitle": "Core R&D capabilities",
       "techDesc": "Full-stack in-house: mechanics, embedded firmware, AI algorithms and cloud all owned end-to-end. 3D printing + composites + CNC compress prototype cycles to 4 weeks. Domestic-sourced sensors + in-house control algorithms lower BOM by 40%+ versus peers.",
@@ -593,7 +598,8 @@
         "title": "In-house production base",
         "desc": "UAV final assembly, composite moulding, CNC precision machining and the energy-storage charging pile line are all completed at our own production base, covering everything from structural parts to complete units. Products are built and sold in-house.",
         "note": "Photos taken at our production base."
-      }
+      },
+      "seoTitle": "About Zero-One Innovation · UAV & Mobile EV Charging Manufacturer, Shenzhen"
     },
     "contact": {
       "title": "Contact us",
@@ -640,7 +646,8 @@
         "privacyTail": " for handling your contact details.",
         "required": "Please fill in the required fields",
         "invalidEmail": "Please enter a valid email address"
-      }
+      },
+      "seoDescription": "Contact Shenzhen Zero-One Innovation for mobile EV charging robots, energy-storage charging piles and VTOL fixed-wing UAV datasheets and partnerships. Headquartered at Pingshan Artisan Park, Shenzhen."
     },
     "privacy": {
       "title": "Privacy Policy",
