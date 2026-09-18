@@ -12,6 +12,10 @@ type Props = {
   labels: Pick<Dictionary["gallery"], "close" | "prev" | "next" | "open">;
   /** First item spans 2×2 for an asymmetric, editorial layout. */
   featured?: boolean;
+  /** Prefixed to the caption for the image alt (e.g. the brand name), so the
+   *  alt describes the photo for search engines without exactly repeating the
+   *  visible caption (screen readers then do not read it twice). */
+  altPrefix?: string;
 };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
@@ -30,7 +34,7 @@ const tile = {
  * video items play inline, muted, and are not enlarged. Uses semantic tokens
  * so it sits correctly on both the dark home act and the dark page body.
  */
-export function PhotoGallery({ items, captions, labels, featured = true }: Props) {
+export function PhotoGallery({ items, captions, labels, featured = true, altPrefix }: Props) {
   const [open, setOpen] = useState<number | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const stills = items.map((it, i) => (it.video ? -1 : i)).filter((i) => i >= 0);
@@ -117,7 +121,7 @@ export function PhotoGallery({ items, captions, labels, featured = true }: Props
             >
               <Image
                 src={it.src}
-                alt=""
+                alt={altPrefix ? `${altPrefix} · ${caption}` : caption}
                 fill
                 sizes={big ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"

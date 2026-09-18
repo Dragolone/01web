@@ -50,7 +50,7 @@ export function Loader() {
           >
             <Image
               src="/brand/logo-512.png"
-              alt=""
+              alt="零一唯创 Zero-One Innovation"
               width={180}
               height={46}
               priority

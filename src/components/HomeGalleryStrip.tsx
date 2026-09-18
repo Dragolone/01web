@@ -58,7 +58,7 @@ export function HomeGalleryStrip({ dict, lang }: Props) {
             >
               <Image
                 src={it.src}
-                alt=""
+                alt={`${dict.brand.name} · ${captions[it.id]}`}
                 fill
                 sizes="(min-width: 768px) 26rem, 18rem"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"

@@ -18,7 +18,7 @@ export async function generateMetadata({
     lang,
     path: "/about",
     title: dict.pages.about.seoTitle,
-    description: dict.pages.about.lead,
+    description: dict.pages.about.seoDescription,
     siteName: dict.brand.name,
   });
 }
@@ -82,7 +82,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             {dict.pages.about.gallery.desc}
           </p>
           <div className="mt-10">
-            <PhotoGallery items={companyGallery} captions={dict.gallery.captions} labels={dict.gallery} />
+            <PhotoGallery items={companyGallery} captions={dict.gallery.captions} labels={dict.gallery} altPrefix={dict.brand.name} />
           </div>
         </div>
       </section>
@@ -101,7 +101,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             {dict.pages.about.factory.desc}
           </p>
           <div className="mt-10">
-            <PhotoGallery items={factoryGallery} captions={dict.gallery.captions} labels={dict.gallery} />
+            <PhotoGallery items={factoryGallery} captions={dict.gallery.captions} labels={dict.gallery} altPrefix={dict.brand.name} />
           </div>
           <p className="mt-5 text-xs text-muted">{dict.pages.about.factory.note}</p>
         </div>

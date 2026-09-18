@@ -94,7 +94,7 @@ export function HomeSolutions({ dict, lang }: Props) {
                         <span className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-white/10">
                           <Image
                             src={scenarioImages[sc.key]}
-                            alt=""
+                            alt={sc.name}
                             fill
                             sizes="96px"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"

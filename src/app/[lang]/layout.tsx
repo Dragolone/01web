@@ -94,7 +94,7 @@ export default async function RootLayout({
         </a>
         {/* WeChat/QQ share thumbnail: they ignore og:image and grab the first ≥300px <img> in the HTML. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/brand/share-300.png" alt="" width={300} height={300} aria-hidden loading="lazy" style={{ display: "none" }} />
+        <img src="/brand/share-300.png" alt={dict.brand.name} width={300} height={300} aria-hidden loading="lazy" style={{ display: "none" }} />
         <Loader />
         <ScrollProgress />
         <TechBackdrop />

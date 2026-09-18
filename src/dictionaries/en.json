@@ -5,7 +5,7 @@
     "tagline": "Forward · Innovate",
     "tagline2": "Push the Boundary",
     "seoTitle": "Mobile EV Charging Robot & VTOL Fixed-Wing UAV Manufacturer, Shenzhen",
-    "seoDescription": "Shenzhen Zero-One Innovation Technology Co., Ltd. designs and manufactures mobile EV charging robots, energy-storage charging piles and VTOL fixed-wing industrial UAVs for parking-lot charging, industrial inspection and emergency response.",
+    "seoDescription": "Shenzhen Zero-One Innovation designs and manufactures mobile EV charging robots, energy-storage charging piles and VTOL fixed-wing industrial UAVs.",
     "lead": "Focused on China's two national-strategy tracks — low-altitude economy and clean-mobility infrastructure. Full-stack in-house R&D across mechanics, embedded systems, AI algorithms and cloud — delivering two product lines: LingYI-Charge mobile EV-charging robot and LingYI-1 VTOL fixed-wing aircraft.",
     "vision": "Bringing intelligent robots and aircraft into real industry use, with measurable commercial value for every customer."
   },
@@ -18,7 +18,7 @@
     "cta": "Contact us"
   },
   "hero": {
-    "cta": "Learn more",
+    "cta": "About Zero-One Innovation",
     "secondaryCta": "Our products",
     "statusBadges": [
       "LingYI-Charge",
@@ -353,7 +353,8 @@
           ],
           "note": "Reference ROI: two units at a 200-bay complex serve 12–16 cars/day at ¥60 avg — ¥22k–29k/month, payback ~8–12 months."
         },
-        "galleryNote": "Taken at our own production base: the energy-storage charging pile line and real-world charging deployments. The energy-storage charging pile is the upper storage-and-charging module of the LingYI-Charge robot pile, built and sold in-house."
+        "galleryNote": "Taken at our own production base: the energy-storage charging pile line and real-world charging deployments. The energy-storage charging pile is the upper storage-and-charging module of the LingYI-Charge robot pile, built and sold in-house.",
+        "seoDescription": "LingYI-Charge autonomous mobile EV charging robot: 100 kWh storage, app booking, laser SLAM navigation and robotic-arm plug-in for car parks."
       },
       "vtol": {
         "features": [
@@ -488,7 +489,8 @@
           ],
           "note": "For pipeline inspection, one LingYI-1 replaces a 3–5 person crew, cuts per-sortie cost by 95%+, saves ¥0.5–0.8M/year in O&M, payback 8–16 months."
         },
-        "galleryNote": "Taken at our own production base: the UAV assembly hall and CNC machining centre where composite fuselages, final assembly and flight platforms are completed."
+        "galleryNote": "Taken at our own production base: the UAV assembly hall and CNC machining centre where composite fuselages, final assembly and flight platforms are completed.",
+        "seoDescription": "LingYI-1 VTOL fixed-wing UAV: 3 m wingspan, 180 km/h cruise, 2,000 km range, 40 kg payload, for pipeline inspection, security and rescue."
       }
     },
     "valueTitle": "Business value",
@@ -524,7 +526,7 @@
         "Full-stack in-house",
         "Patents pending"
       ],
-      "seoDescription": "Two product lines: LingYI-Charge mobile EV charging robot (100 kWh energy-storage charging pile, robot-to-vehicle charging) and LingYI-1 VTOL fixed-wing UAV (2,000 km range, 40 kg payload) for industrial inspection and search and rescue."
+      "seoDescription": "LingYI-Charge mobile EV charging robot with 100 kWh energy storage, and LingYI-1 VTOL fixed-wing UAV with 2,000 km range and 40 kg payload."
     },
     "technology": {
       "title": "Applications & Value",
@@ -536,7 +538,7 @@
         "8-16 month payback"
       ],
       "seoTitle": "UAV Inspection & Mobile EV Charging Applications",
-      "seoDescription": "VTOL fixed-wing UAV for pipeline inspection, search and rescue, security patrol and remote sensing; mobile charging robot for malls, residential estates, industrial parks and events. Eight real scenarios with modelled value."
+      "seoDescription": "VTOL UAV for pipeline inspection, search and rescue, security and remote sensing; mobile EV charging for malls, homes, industrial parks and events."
     },
     "about": {
       "title": "About Zero-One Innovation",
@@ -599,7 +601,8 @@
         "desc": "UAV final assembly, composite moulding, CNC precision machining and the energy-storage charging pile line are all completed at our own production base, covering everything from structural parts to complete units. Products are built and sold in-house.",
         "note": "Photos taken at our production base."
       },
-      "seoTitle": "About Zero-One Innovation · UAV & Mobile EV Charging Manufacturer, Shenzhen"
+      "seoTitle": "About Zero-One Innovation · UAV & Mobile EV Charging Manufacturer, Shenzhen",
+      "seoDescription": "Zero-One Innovation is a Shenzhen developer and manufacturer of industrial UAVs and mobile EV charging equipment, based at Pingshan Artisan Park."
     },
     "contact": {
       "title": "Contact us",
@@ -647,7 +650,7 @@
         "required": "Please fill in the required fields",
         "invalidEmail": "Please enter a valid email address"
       },
-      "seoDescription": "Contact Shenzhen Zero-One Innovation for mobile EV charging robots, energy-storage charging piles and VTOL fixed-wing UAV datasheets and partnerships. Headquartered at Pingshan Artisan Park, Shenzhen."
+      "seoDescription": "Contact Zero-One Innovation in Shenzhen for mobile EV charging robot, energy-storage charging pile and VTOL fixed-wing UAV datasheets and partnerships."
     },
     "privacy": {
       "title": "Privacy Policy",
@@ -685,7 +688,8 @@
           "h": "Contact",
           "p": "Shenzhen Zero-One Innovation Technology Co., Ltd. · dravenzhong27@gmail.com · Room 402, Building 3, Pingshan Craftsman Park, No. 33 Cuijing Road, Zhukeng Community, Longtian Sub-district, Pingshan District, Shenzhen, Guangdong, China"
         }
-      ]
+      ],
+      "seoDescription": "Privacy policy of Shenzhen Zero-One Innovation: what the contact form, access logs and Google Analytics collect, how it is used and your rights."
     }
   },
   "heroImmersive": {
@@ -758,7 +762,7 @@
     "eyebrow": "On site",
     "title": "From campus to workshop",
     "subtitle": "Our Shenzhen Pingshan headquarters and production base",
-    "more": "Learn more"
+    "more": "See all photos"
   },
   "a11y": {
     "skipToContent": "Skip to main content"

@@ -54,7 +54,7 @@ export default function NotFound() {
           <p className="mt-3 text-muted leading-relaxed">{t.desc}</p>
           <Link
             href={`/${locale}`}
-            className="group mt-8 inline-flex items-center gap-2 h-12 px-6 rounded-full bg-brand text-white font-medium hover:bg-brand-strong transition-all hover:shadow-lg hover:shadow-brand/30"
+            className="group mt-8 inline-flex items-center gap-2 h-12 px-6 rounded-full bg-brand-strong text-white font-medium hover:bg-brand transition-all hover:shadow-lg hover:shadow-brand/30"
           >
             {t.home}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">

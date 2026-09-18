@@ -14,7 +14,7 @@ export async function generateMetadata({
     lang,
     path: "/privacy",
     title: dict.pages.privacy.title,
-    description: dict.pages.privacy.lead,
+    description: dict.pages.privacy.seoDescription,
     siteName: dict.brand.name,
   });
 }

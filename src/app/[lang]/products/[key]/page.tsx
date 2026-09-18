@@ -37,7 +37,7 @@ export async function generateMetadata({
     lang,
     path: `/products/${key}`,
     title: item.name,
-    description: item.desc,
+    description: dict.productDetail.items[key].seoDescription,
     siteName: dict.brand.name,
   });
 }
@@ -126,7 +126,7 @@ export default async function ProductDetailPage({
               <div className="mt-8">
                 <a
                   href="#specs"
-                  className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-brand text-white font-medium hover:bg-brand-strong transition-all hover:shadow-lg hover:shadow-brand/30"
+                  className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-brand-strong text-white font-medium hover:bg-brand transition-all hover:shadow-lg hover:shadow-brand/30"
                 >
                   {dict.productDetail.ctaText}
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-y-0.5">
@@ -221,7 +221,7 @@ export default async function ProductDetailPage({
           </h2>
           <p className="mt-4 max-w-3xl text-muted leading-relaxed">{detail.galleryNote}</p>
           <div className="mt-10">
-            <PhotoGallery items={productGallery[key]} captions={dict.gallery.captions} labels={dict.gallery} />
+            <PhotoGallery items={productGallery[key]} captions={dict.gallery.captions} labels={dict.gallery} altPrefix={dict.brand.name} />
           </div>
         </div>
       </section>
