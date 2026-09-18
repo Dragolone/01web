@@ -36,18 +36,18 @@ const tile = {
  */
 function LazyVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [on, setOn] = useState(false);
+  // Browsers without IntersectionObserver just load immediately.
+  const [on, setOn] = useState(() => typeof window !== "undefined" && !("IntersectionObserver" in window));
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    if (!("IntersectionObserver" in window)) { setOn(true); return; }
+    if (!el || on) return;
     const io = new IntersectionObserver(
       (entries) => { if (entries.some((e) => e.isIntersecting)) { setOn(true); io.disconnect(); } },
       { rootMargin: "300px 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [on]);
   useEffect(() => {
     if (on) ref.current?.play().catch(() => {});
   }, [on]);

@@ -355,6 +355,12 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - ✅ **域名 + 备案 + 上线**：www.01weichuang.com 已备案（粤ICP备2026041942号-2）+ HTTPS，部署在腾讯云广州（43.139.159.234）。`site.ts` 默认域名已改成真实域名
 - ⚠️ **公安联网备案已超期**（截止 ~2026-07-18，2026-08-25 提醒过用户尚未确认办理），数据码 `b2a747a66b31b0ea4206454ec634e1`。办完拿到公安备案号加到 footer（链全国互联网安全管理服务平台）
 - ✅ **部署方式（2026-08-25 现查）**：腾讯云轻量 Ubuntu，项目在 **`/var/www/01web`**，**pm2 进程名 `01web`**（用户 ubuntu，fork 模式，`next start` 监听 3000），nginx 反代 80/443 → 3000。更新流程：`cd /var/www/01web && git pull origin main && npm ci && npm run build && pm2 restart 01web`。SMTP 等环境变量放 `/var/www/01web/.env.local`（改了 env 要 `pm2 restart 01web --update-env`）。服务器终端：腾讯云控制台 OrcaTerm（自带的 AI Agent 用户嫌笨，手动敲命令）
+- ✅ **专业审视第二轮（2026-09-19）**：
+  - **产品主图改实拍**：ProductMatrix / 产品详情 hero / 关于页双图 → `/factory/charge-vehicle.jpg` + `/factory/uav-vtol.jpg`（渲染图 `/products/robot-hero.jpg`、`drone-hero.jpg`、`charge-station.jpg`、`drone-cruise.jpg` 仍留在仓库，场景图/HomeSolutions 还在用后两张）。产品页画廊**刻意不含该页 hero 那张**（`productGallery` 注释），新增实拍 `charge-unit-front.jpg`、`uav-hangar.jpg`（caption 三语已加）。用户明确**首页 hero 大标题不改**、AI 场景图不换、联系页不加电话/微信。
+  - **字典切片** `src/app/[lang]/dictSlices.ts`：每个 client 组件的 `dict` prop 改成 `forXxx(dict)` 返回的最小切片（同形状，组件体不动）。原因：传给 client 组件的 props 会整份序列化进 RSC payload，之前每页都带整本字典。HTML 原始体积 首页 147→132KB、产品详情 110→86KB、联系页 80→56KB。**新建 client 组件别再传整个 `dict`**，去 dictSlices 加一个选择器。
+  - **产品页视频懒加载**：`PhotoGallery` 里 `LazyVideo`（IntersectionObserver，`preload="none"`，进视口才设 src 并 play）。此前 autoplay+metadata 让 Chrome 在页面加载就拉完 1.7MB，手机端 LCP 4.7s。**注意 react-hooks 新规则**：effect 里不能同步 setState，初值用 `useState(() => …)` 处理无 IO 的浏览器。
+  - `next.config.ts` `poweredByHeader:false`；`sitemap.ts` 去掉 `lastModified`（原来全是构建时间，对搜索引擎是假信号）。
+  - 遗留观察：favicon `icon.png` 512px 80KB 每页被拉两次（favicon + manifest），可换小图；GA gtag 172KB 是第二大资源，接受。
 - ⏸ Cloudflare CDN：可选
 - 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
