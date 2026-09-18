@@ -30,6 +30,43 @@ const tile = {
 };
 
 /**
+ * Muted looping clip that only starts downloading once its tile is near the
+ * viewport. With autoplay + preload="metadata" Chrome fetched the whole 1.7 MB
+ * file on page load, competing with the hero image (mobile LCP 4.7 s).
+ */
+function LazyVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) { setOn(true); return; }
+    const io = new IntersectionObserver(
+      (entries) => { if (entries.some((e) => e.isIntersecting)) { setOn(true); io.disconnect(); } },
+      { rootMargin: "300px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  useEffect(() => {
+    if (on) ref.current?.play().catch(() => {});
+  }, [on]);
+  return (
+    <video
+      ref={ref}
+      className="absolute inset-0 h-full w-full object-cover"
+      src={on ? src : undefined}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="none"
+      aria-label={label}
+    />
+  );
+}
+
+/**
  * Real-photo grid with a lightbox. Tiles are buttons (keyboard reachable);
  * video items play inline, muted, and are not enlarged. Uses semantic tokens
  * so it sits correctly on both the dark home act and the dark page body.
@@ -95,17 +132,7 @@ export function PhotoGallery({ items, captions, labels, featured = true, altPref
           if (it.video) {
             return (
               <motion.figure key={it.id} variants={tile} className={frame}>
-                <video
-                  className="absolute inset-0 h-full w-full object-cover"
-                  src={it.video}
-                  poster={it.src}
-                  muted
-                  autoPlay
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label={caption}
-                />
+                <LazyVideo src={it.video} poster={it.src} label={caption} />
                 {overlay}
               </motion.figure>
             );
