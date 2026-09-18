@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { forImmersiveHero, forHomeFeatures, forProductMatrix, forHomeSolutions, forHomeAbout, forHomeGalleryStrip, forTechCapabilities, forHomeCTA } from "./dictSlices";
 import { getDictionary, hasLocale, type Locale } from "./dictionaries";
 import { ImmersiveHero } from "@/components/immersive/ImmersiveHero";
 import { HomeFeatures } from "@/components/HomeFeatures";
@@ -16,7 +17,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
-      <ImmersiveHero lang={lang as Locale} dict={dict} />
+      <ImmersiveHero lang={lang as Locale} dict={forImmersiveHero(dict)} />
       {/* Dark immersive act — sits over the off-white body so the whole home
           flows as one cohesive cyber-dark experience. */}
       <div className="relative isolate bg-[#070a18] text-white">
@@ -38,13 +39,13 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
               "radial-gradient(50% 30% at 85% 8%, rgba(0,150,220,0.10) 0%, transparent 60%), radial-gradient(45% 30% at 10% 55%, rgba(124,92,255,0.08) 0%, transparent 60%), radial-gradient(50% 30% at 70% 95%, rgba(0,150,220,0.08) 0%, transparent 60%)",
           }}
         />
-        <HomeFeatures dict={dict} />
-        <ProductMatrix dict={dict} lang={lang as Locale} theme="dark" />
-        <HomeSolutions dict={dict} lang={lang as Locale} />
-        <HomeAbout dict={dict} lang={lang as Locale} />
-        <HomeGalleryStrip dict={dict} lang={lang as Locale} />
-        <TechCapabilities dict={dict} />
-        <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
+        <HomeFeatures dict={forHomeFeatures(dict)} />
+        <ProductMatrix dict={forProductMatrix(dict)} lang={lang as Locale} theme="dark" />
+        <HomeSolutions dict={forHomeSolutions(dict)} lang={lang as Locale} />
+        <HomeAbout dict={forHomeAbout(dict)} lang={lang as Locale} />
+        <HomeGalleryStrip dict={forHomeGalleryStrip(dict)} lang={lang as Locale} />
+        <TechCapabilities dict={forTechCapabilities(dict)} />
+        <HomeCTA lang={lang as Locale} dict={forHomeCTA(dict)} theme="dark" />
       </div>
     </>
   );

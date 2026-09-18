@@ -9,6 +9,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   async headers() {
     // No CSP yet: three.js / framer / inline JSON-LD would need nonces — add deliberately, not blind.
     return [{ source: "/(.*)", headers: securityHeaders }];

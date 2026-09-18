@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import type { HomeSolutionsDict } from "@/app/[lang]/dictSlices";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { scenarioImages } from "@/components/scenarioImages";
-import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
+import type { Locale } from "@/app/[lang]/dictionaries";
 
-type Props = { dict: Dictionary; lang: Locale };
+type Props = { dict: HomeSolutionsDict; lang: Locale };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 

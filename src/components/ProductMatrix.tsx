@@ -1,25 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import type { ProductMatrixDict } from "@/app/[lang]/dictSlices";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CardFx } from "@/components/CardFx";
-import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
+import type { Locale } from "@/app/[lang]/dictionaries";
 
 // compactTop: trim the top padding when this sits directly under a PageHero.
 // theme="dark": cyber-dark variant used on the immersive home page.
-type Props = { dict: Dictionary; lang: Locale; compactTop?: boolean; theme?: "dark"   /** Skip the eyebrow/title block (the products page hero already says it). */
+type Props = { dict: ProductMatrixDict; lang: Locale; compactTop?: boolean; theme?: "dark"   /** Skip the eyebrow/title block (the products page hero already says it). */
   hideHeader?: boolean;
 };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
 // Visual mapping — image file names are legacy and don't reflect contents:
-//   robot-hero.jpg  → LingYI-Charge mobile EV charging robot
-//   drone-hero.jpg  → LingYI-1 VTOL fixed-wing UAV
+//   Real photos from the company production base (2026-09-19; the earlier
+//   /products/robot-hero.jpg + drone-hero.jpg renders looked nothing like the real units).
 const visuals: Record<string, { img: string; alt: string }> = {
-  charge: { img: "/products/robot-hero.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
-  vtol: { img: "/products/drone-hero.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
+  charge: { img: "/factory/charge-vehicle.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
+  vtol: { img: "/factory/uav-vtol.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
 export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Props) {

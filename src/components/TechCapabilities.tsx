@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { TechCapabilitiesDict } from "@/app/[lang]/dictSlices";
 import { CardFx } from "@/components/CardFx";
 import { CountUp } from "@/components/CountUp";
-import type { Dictionary } from "@/app/[lang]/dictionaries";
 
-type Props = { dict: Dictionary };
+type Props = { dict: TechCapabilitiesDict };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 

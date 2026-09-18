@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { NavbarDict } from "@/app/[lang]/dictSlices";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,11 +9,10 @@ import clsx from "clsx";
 import {
   locales,
   localeLabels,
-  type Dictionary,
   type Locale,
 } from "@/app/[lang]/dictionaries";
 
-type Props = { lang: Locale; dict: Dictionary };
+type Props = { lang: Locale; dict: NavbarDict };
 
 const navKeys = ["home", "products", "technology", "about"] as const;
 const navHrefMap: Record<(typeof navKeys)[number], string> = {

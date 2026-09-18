@@ -32,18 +32,20 @@ export const factoryGallery: GalleryItem[] = [
   img("uav-vtol", "/factory/uav-vtol.jpg", 1919, 1080),
 ];
 
+// Product-page galleries deliberately leave out the photo used as that page's
+// hero (charge-vehicle / uav-vtol) so no picture appears twice on one page.
 export const productGallery: Record<"charge" | "vtol", GalleryItem[]> = {
   vtol: [
     img("uav-assembly", "/factory/uav-assembly.jpg", 1919, 1080),
-    img("uav-vtol", "/factory/uav-vtol.jpg", 1919, 1080),
+    img("uav-hangar", "/factory/uav-hangar.jpg", 1919, 1080),
     img("uav-fuselage", "/factory/uav-fuselage.jpg", 1919, 1080),
     img("uav-helicopter", "/factory/uav-helicopter.jpg", 1919, 1080),
     img("cnc", "/factory/cnc.jpg", 1919, 1080),
   ],
   charge: [
-    img("charge-vehicle", "/factory/charge-vehicle.jpg", 1920, 1080),
-    { ...img("charge-demo", "/factory/charge-demo-poster.jpg", 1000, 421), video: "/factory/charge-demo.mp4" },
     img("charge-units", "/factory/charge-units.jpg", 1532, 1080),
+    { ...img("charge-demo", "/factory/charge-demo-poster.jpg", 1000, 421), video: "/factory/charge-demo.mp4" },
+    img("charge-unit-front", "/factory/charge-unit-front.jpg", 1438, 1080),
     img("charge-site", "/factory/charge-site.jpg", 1440, 810),
     img("charge-pallets", "/factory/charge-pallets.jpg", 1440, 1080),
   ],

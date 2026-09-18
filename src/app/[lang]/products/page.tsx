@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forProductMatrix, forHomeFeatures, forHomeCTA } from "../dictSlices";
 import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
@@ -36,9 +37,9 @@ export default async function ProductsPage({ params }: PageProps<"/[lang]/produc
         meta={dict.pages.products.meta}
         compactBottom
       />
-      <ProductMatrix dict={dict} lang={lang as Locale} compactTop hideHeader theme="dark" />
-      <HomeFeatures dict={dict} />
-      <HomeCTA lang={lang as Locale} dict={dict} theme="dark" />
+      <ProductMatrix dict={forProductMatrix(dict)} lang={lang as Locale} compactTop hideHeader theme="dark" />
+      <HomeFeatures dict={forHomeFeatures(dict)} />
+      <HomeCTA lang={lang as Locale} dict={forHomeCTA(dict)} theme="dark" />
     </>
   );
 }

@@ -750,9 +750,11 @@
       "uav-vtol": "垂起固定翼整機",
       "uav-fuselage": "複合材料機身部件",
       "uav-helicopter": "無人直升機平台",
+      "uav-hangar": "無人機機身總裝線",
       "cnc": "CNC 加工中心",
       "charge-vehicle": "儲能充電樁為電動汽車充電",
       "charge-units": "儲能充電樁整機",
+      "charge-unit-front": "儲能充電樁整機正面",
       "charge-pallets": "儲能充電樁產線",
       "charge-site": "工地場景應急補電",
       "charge-demo": "儲能充電樁操作面板"

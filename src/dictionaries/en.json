@@ -750,9 +750,11 @@
       "uav-vtol": "VTOL fixed-wing airframe",
       "uav-fuselage": "Composite fuselage components",
       "uav-helicopter": "Unmanned helicopter platforms",
+      "uav-hangar": "UAV fuselage assembly line",
       "cnc": "CNC machining centres",
       "charge-vehicle": "Energy-storage charging pile charging an EV",
       "charge-units": "Energy-storage charging piles",
+      "charge-unit-front": "Energy-storage charging pile, front view",
       "charge-pallets": "Energy-storage charging pile production line",
       "charge-site": "Emergency charging at a construction yard",
       "charge-demo": "Energy-storage charging pile control panel"

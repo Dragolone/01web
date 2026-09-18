@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { Dictionary } from "@/app/[lang]/dictionaries";
+import type { HomeFeaturesDict } from "@/app/[lang]/dictSlices";
 
-type Props = { dict: Dictionary };
+type Props = { dict: HomeFeaturesDict };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 

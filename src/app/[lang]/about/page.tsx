@@ -49,8 +49,8 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
           <div className="lg:col-span-5">
             <div className="grid gap-5">
               {[
-                { img: "/products/robot-hero.jpg", key: "charge" as const },
-                { img: "/products/drone-hero.jpg", key: "vtol" as const },
+                { img: "/factory/charge-vehicle.jpg", key: "charge" as const },
+                { img: "/factory/uav-vtol.jpg", key: "vtol" as const },
               ].map(({ img, key }) => (
                 <div key={key} className="rounded-3xl overflow-hidden bg-surface">
                   <Image

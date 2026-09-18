@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import type { ImmersiveHeroDict } from "@/app/[lang]/dictSlices";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
-import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
+import type { Locale } from "@/app/[lang]/dictionaries";
 
-type Props = { lang: Locale; dict: Dictionary };
+type Props = { lang: Locale; dict: ImmersiveHeroDict };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 

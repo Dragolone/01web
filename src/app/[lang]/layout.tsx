@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forNavbar } from "./dictSlices";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
@@ -99,7 +100,7 @@ export default async function RootLayout({
         <ScrollProgress />
         <TechBackdrop />
         <MotionProvider>
-          <Navbar lang={lang as Locale} dict={dict} />
+          <Navbar lang={lang as Locale} dict={forNavbar(dict)} />
           <main id="main" className="flex-1">{children}</main>
           <Footer lang={lang as Locale} dict={dict} />
         </MotionProvider>

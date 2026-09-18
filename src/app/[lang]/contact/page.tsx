@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forContactForm } from "../dictSlices";
 import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
@@ -35,7 +36,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
       />
       <section className="pb-20 md:pb-28">
         <div className="mx-auto max-w-4xl px-6 lg:px-10">
-          <ContactForm lang={lang as Locale} dict={dict} />
+          <ContactForm lang={lang as Locale} dict={forContactForm(dict)} />
           <div className="mt-5 grid gap-5 md:grid-cols-2">
           {[
             {

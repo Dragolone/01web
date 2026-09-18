@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forSolutionScenarios, forTechCapabilities } from "../dictSlices";
 import { pageMeta } from "@/app/site";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
@@ -36,8 +37,8 @@ export default async function SolutionsPage({ params }: PageProps<"/[lang]/solut
         eyebrow={dict.pages.technology.eyebrow}
         meta={dict.pages.technology.meta}
       />
-      <SolutionScenarios dict={dict} />
-      <TechCapabilities dict={dict} />
+      <SolutionScenarios dict={forSolutionScenarios(dict)} />
+      <TechCapabilities dict={forTechCapabilities(dict)} />
     </>
   );
 }

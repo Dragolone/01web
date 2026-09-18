@@ -11,8 +11,8 @@ const PRODUCT_KEYS = ["charge", "vtol"] as const;
 type ProductKey = (typeof PRODUCT_KEYS)[number];
 
 const productImages: Record<ProductKey, { img: string; alt: string }> = {
-  charge: { img: "/products/charge-station.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
-  vtol: { img: "/products/drone-cruise.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
+  charge: { img: "/factory/charge-vehicle.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
+  vtol: { img: "/factory/uav-vtol.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
 };
 
 function isProductKey(k: string): k is ProductKey {

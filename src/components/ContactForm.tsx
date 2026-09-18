@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import type { ContactFormDict } from "@/app/[lang]/dictSlices";
 import { useState } from "react";
-import type { Dictionary, Locale } from "@/app/[lang]/dictionaries";
+import type { Locale } from "@/app/[lang]/dictionaries";
 
-type Props = { lang: Locale; dict: Dictionary };
+type Props = { lang: Locale; dict: ContactFormDict };
 type Status = "idle" | "sending" | "success" | "error" | "unconfigured";
 
 const CONTACT_EMAIL = "zhongqilong@01weichuang.com";
