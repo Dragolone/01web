@@ -35,7 +35,7 @@ ssh "$HOST" "set -e; cd $DIR
   pm2 restart 01web --update-env
   echo '  等待新进程就绪 …'
   for i in \$(seq 1 30); do
-    code=\$(curl -s -o /dev/null -m 5 -w '%{http_code}' http://127.0.0.1:3000/zh)
+    code=\$(curl -s -o /dev/null -m 5 -w '%{http_code}' http://127.0.0.1:3000/zh || true)
     [ \"\$code\" = 200 ] && break
     sleep 1
   done
