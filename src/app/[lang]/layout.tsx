@@ -63,7 +63,7 @@ export default async function RootLayout({
     alternateName: "Shenzhen Zero-One Innovation Technology Co., Ltd.",
     url: `${SITE_URL}/${lang}`,
     logo: `${SITE_URL}/icon.png`,
-    email: "dravenzhong27@gmail.com",
+    email: "zhongqilong@01weichuang.com",
     foundingDate: "2026-03-03",
     taxID: "91440300MAK7XEPD38",
     address: {
