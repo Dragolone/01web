@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "notify": "node --env-file=.env.local scripts/notify-search-engines.mjs",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.8",
