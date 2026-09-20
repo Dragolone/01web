@@ -50,13 +50,16 @@ async function baidu(urls) {
   // Baidu serves Chinese search: only push the zh pages, the daily quota is small.
   const zh = urls.filter((u) => u === `${SITE}/zh` || u.startsWith(`${SITE}/zh/`));
   if (dryRun) return `dry-run: would POST ${zh.length} zh urls to data.zz.baidu.com`;
-  const res = await fetch(`http://data.zz.baidu.com/urls?site=${encodeURIComponent(SITE)}&token=${token}`, {
+  // NB: the `site` value must go in RAW — percent-encoding it makes Baidu answer
+  // `400 site init fail`, which reads like the site is not ready but is not.
+  const res = await fetch(`http://data.zz.baidu.com/urls?site=${SITE}&token=${token}`, {
     method: "POST",
     headers: { "content-type": "text/plain" },
     body: zh.join("\n"),
   });
   const text = await res.text();
-  return `${res.status} ${text.slice(0, 200)}`;
+  // Daily quota is small (10 URLs/day for a new site); "remain" says what is left.
+  return `${res.status} pushed ${zh.length} → ${text.slice(0, 200)}`;
 }
 
 const urls = given.length ? given : await sitemapUrls();
