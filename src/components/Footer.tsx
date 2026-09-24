@@ -80,6 +80,16 @@ export function Footer({ lang, dict }: Props) {
           >
             {dict.footer.icp}
           </a>
+          {/* 公安联网备案：官方要求图标在前、编号在后，链接到备案查询页 */}
+          <a
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002017453"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1.5 inline-flex items-center gap-1.5 text-xs text-muted hover:text-brand transition-colors"
+          >
+            <Image src="/brand/gongan.png" alt="" width={14} height={15} className="h-[15px] w-[14px]" />
+            {dict.footer.psb}
+          </a>
         </div>
       </div>
       <div className="border-t border-border">
