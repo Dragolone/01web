@@ -21,7 +21,16 @@ const BOLTS = 28;
 
 /** Refined industrial turbine: clearcoat-chrome housing, bolt ring, stator
  *  vanes, spinning fan + nose spinner, pulsing neon core. Tilts to the cursor. */
-function Turbine({ reduce }: { reduce: boolean | null }) {
+// Light theme: mid-tone steel — bright chrome would vanish into the pale
+// background, graphite reads too heavy; the neon accents stay but glow less.
+const METAL = {
+  dark: { housing: "#cdd6f2", lip: "#93a2d8", bolt: "#aab6e4", vane: "#9aa8d8", blade: "#e3eaff", hub: "#c2cdff" },
+  light: { housing: "#7f8bb4", lip: "#6c78a4", bolt: "#8a96c0", vane: "#7581ad", blade: "#8f9bcc", hub: "#6f7bab" },
+};
+
+function Turbine({ reduce, light }: { reduce: boolean | null; light: boolean }) {
+  const m = METAL[light ? "light" : "dark"];
+  const glow = light ? 0.55 : 1;
   const root = useRef<THREE.Group>(null);
   const fan = useRef<THREE.Group>(null);
   const bolts = useRef<THREE.Group>(null);
@@ -33,8 +42,8 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
     if (!reduce) {
       if (fan.current) fan.current.rotation.z += dt * 2.6;
       if (bolts.current) bolts.current.rotation.z -= dt * 0.25;
-      if (core.current) core.current.emissiveIntensity = 3 + Math.sin(t * 2.2) * 1.4;
-      if (accent.current) accent.current.emissiveIntensity = 2.4 + Math.sin(t * 1.6 + 1) * 1;
+      if (core.current) core.current.emissiveIntensity = (3 + Math.sin(t * 2.2) * 1.4) * glow;
+      if (accent.current) accent.current.emissiveIntensity = (2.4 + Math.sin(t * 1.6 + 1) * 1) * glow;
     }
     if (root.current) {
       const ty = state.pointer.x * 0.5;
@@ -51,12 +60,12 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
       {/* main housing */}
       <mesh>
         <torusGeometry args={[1.95, 0.13, 32, 120]} />
-        <meshPhysicalMaterial color="#cdd6f2" {...chrome} />
+        <meshPhysicalMaterial color={m.housing} {...chrome} />
       </mesh>
       {/* inner lip */}
       <mesh>
         <torusGeometry args={[1.68, 0.05, 20, 120]} />
-        <meshPhysicalMaterial color="#93a2d8" {...chrome} />
+        <meshPhysicalMaterial color={m.lip} {...chrome} />
       </mesh>
       {/* outer emissive accent ring */}
       <mesh>
@@ -70,7 +79,7 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
           <mesh key={i} rotation={[0, 0, (i / BOLTS) * Math.PI * 2]}>
             <mesh position={[0, 1.95, 0.14]} rotation={[Math.PI / 2, 0, 0]}>
               <cylinderGeometry args={[0.035, 0.035, 0.08, 12]} />
-              <meshPhysicalMaterial color="#aab6e4" {...chrome} />
+              <meshPhysicalMaterial color={m.bolt} {...chrome} />
             </mesh>
           </mesh>
         ))}
@@ -81,7 +90,7 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
         <mesh key={i} rotation={[0, 0, (i / 12) * Math.PI * 2]}>
           <mesh position={[0, 1.35, -0.04]} rotation={[0, 0.5, 0]}>
             <boxGeometry args={[0.045, 0.52, 0.05]} />
-            <meshPhysicalMaterial color="#9aa8d8" {...chrome} />
+            <meshPhysicalMaterial color={m.vane} {...chrome} />
           </mesh>
         </mesh>
       ))}
@@ -92,18 +101,26 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
           <group key={i} rotation={[0, 0, (i / BLADES) * Math.PI * 2]}>
             <mesh position={[0, 0.92, 0.05]} rotation={[0.6, 0, 0.12]}>
               <boxGeometry args={[0.15, 1.02, 0.022]} />
-              <meshPhysicalMaterial color="#e3eaff" metalness={0.95} roughness={0.1} clearcoat={1} envMapIntensity={1.9} />
+              {/* Light: rougher + dimmer reflections, else blades facing the white key light
+                  blow out to the page colour and look missing. */}
+              <meshPhysicalMaterial
+                color={m.blade}
+                metalness={light ? 0.8 : 0.95}
+                roughness={light ? 0.34 : 0.1}
+                clearcoat={1}
+                envMapIntensity={light ? 1.1 : 1.9}
+              />
             </mesh>
           </group>
         ))}
         <mesh>
           <sphereGeometry args={[0.32, 32, 32]} />
-          <meshPhysicalMaterial color="#c2cdff" {...chrome} />
+          <meshPhysicalMaterial color={m.hub} {...chrome} />
         </mesh>
         {/* nose cone spinner */}
         <mesh position={[0, 0, 0.34]} rotation={[Math.PI / 2, 0, 0]}>
           <coneGeometry args={[0.3, 0.5, 32]} />
-          <meshPhysicalMaterial color="#cdd6f2" {...chrome} />
+          <meshPhysicalMaterial color={m.housing} {...chrome} />
         </mesh>
       </group>
 
@@ -121,7 +138,7 @@ function Turbine({ reduce }: { reduce: boolean | null }) {
  * the sparkles, no chromatic aberration / film noise passes. Desktop keeps the
  * full effect — do not lower desktop quality for performance (user decision).
  */
-export function Hero3D({ active = true, lite = false }: { active?: boolean; lite?: boolean }) {
+export function Hero3D({ active = true, lite = false, light = false }: { active?: boolean; lite?: boolean; light?: boolean }) {
   const reduce = useReducedMotion();
   const sparkle = (n: number) => (lite ? Math.round(n / 2) : n);
 
@@ -134,34 +151,47 @@ export function Hero3D({ active = true, lite = false }: { active?: boolean; lite
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >
-      <fog attach="fog" args={["#080619", 8, 22]} />
-      <ambientLight intensity={0.25} />
-      <pointLight position={[6, 3, 4]} intensity={45} color="#00e5ff" distance={32} />
-      <pointLight position={[-6, -2, 3]} intensity={45} color="#ff3df0" distance={32} />
+      <fog attach="fog" args={[light ? "#eef3fd" : "#080619", 8, 22]} />
+      <ambientLight intensity={light ? 0.6 : 0.25} />
+      <pointLight position={[6, 3, 4]} intensity={light ? 25 : 45} color="#00e5ff" distance={32} />
+      <pointLight position={[-6, -2, 3]} intensity={light ? 18 : 45} color={light ? "#7c5cff" : "#ff3df0"} distance={32} />
 
-      <Environment resolution={lite ? 128 : 256}>
-        <Lightformer form="rect" intensity={6} position={[4, 3, 3]} scale={[7, 3, 1]} color="#00e5ff" />
-        <Lightformer form="rect" intensity={5} position={[-5, 1, -1]} scale={[7, 4, 1]} color="#ff3df0" />
-        <Lightformer form="rect" intensity={4} position={[0, 4, -4]} scale={[9, 3, 1]} color="#3b6bff" />
-        <Lightformer form="circle" intensity={3} position={[0, -4, 3]} scale={5} color="#9b6bff" />
-        <Lightformer form="rect" intensity={2.5} position={[3, -3, -2]} scale={[5, 5, 1]} color="#5cf0ff" />
-      </Environment>
+      {light ? (
+        // Studio-style cool whites with a cyan/violet kick for the edge highlights.
+        <Environment resolution={lite ? 128 : 256}>
+          {/* pale sky backdrop: the metal reflects it instead of black */}
+          <color attach="background" args={["#c9d6f5"]} />
+          <Lightformer form="rect" intensity={3} position={[4, 3, 3]} scale={[7, 3, 1]} color="#ffffff" />
+          <Lightformer form="rect" intensity={3} position={[-5, 1, -1]} scale={[7, 4, 1]} color="#5cd6ff" />
+          <Lightformer form="rect" intensity={3} position={[0, 4, -4]} scale={[9, 3, 1]} color="#dbe6ff" />
+          <Lightformer form="circle" intensity={2} position={[0, -4, 3]} scale={5} color="#9b8bff" />
+          <Lightformer form="rect" intensity={2} position={[3, -3, -2]} scale={[5, 5, 1]} color="#ffffff" />
+        </Environment>
+      ) : (
+        <Environment resolution={lite ? 128 : 256}>
+          <Lightformer form="rect" intensity={6} position={[4, 3, 3]} scale={[7, 3, 1]} color="#00e5ff" />
+          <Lightformer form="rect" intensity={5} position={[-5, 1, -1]} scale={[7, 4, 1]} color="#ff3df0" />
+          <Lightformer form="rect" intensity={4} position={[0, 4, -4]} scale={[9, 3, 1]} color="#3b6bff" />
+          <Lightformer form="circle" intensity={3} position={[0, -4, 3]} scale={5} color="#9b6bff" />
+          <Lightformer form="rect" intensity={2.5} position={[3, -3, -2]} scale={[5, 5, 1]} color="#5cf0ff" />
+        </Environment>
+      )}
 
       {/* fine, dense sparkle layers */}
-      <Sparkles count={sparkle(520)} scale={[22, 12, 12]} size={1} speed={reduce ? 0 : 0.3} color="#7fe9ff" opacity={0.7} />
-      <Sparkles count={sparkle(280)} scale={[16, 10, 9]} size={1.5} speed={reduce ? 0 : 0.18} color="#ff9bf2" opacity={0.5} />
-      <Sparkles count={sparkle(160)} scale={[11, 8, 6]} size={2.1} speed={reduce ? 0 : 0.1} color="#ffffff" opacity={0.55} />
+      <Sparkles count={sparkle(520)} scale={[22, 12, 12]} size={1} speed={reduce ? 0 : 0.3} color={light ? "#2f6bff" : "#7fe9ff"} opacity={light ? 0.45 : 0.7} />
+      <Sparkles count={sparkle(280)} scale={[16, 10, 9]} size={1.5} speed={reduce ? 0 : 0.18} color={light ? "#7c5cff" : "#ff9bf2"} opacity={light ? 0.35 : 0.5} />
+      <Sparkles count={sparkle(160)} scale={[11, 8, 6]} size={2.1} speed={reduce ? 0 : 0.1} color={light ? "#00a8d6" : "#ffffff"} opacity={light ? 0.4 : 0.55} />
 
       <mesh scale={4}>
         <icosahedronGeometry args={[1, 3]} />
-        <meshBasicMaterial wireframe color="#3b6bff" transparent opacity={0.06} />
+        <meshBasicMaterial wireframe color="#3b6bff" transparent opacity={light ? 0.035 : 0.06} />
       </mesh>
 
       {SHARDS.map((sh, i) => (
         <Float key={i} speed={reduce ? 0 : 1 + i * 0.2} rotationIntensity={reduce ? 0 : 1.3} floatIntensity={reduce ? 0 : 1.6}>
           <mesh position={sh.p}>
             <octahedronGeometry args={[sh.s]} />
-            <meshStandardMaterial color={sh.c} emissive={sh.c} emissiveIntensity={2.4} toneMapped={false} />
+            <meshStandardMaterial color={sh.c} emissive={sh.c} emissiveIntensity={light ? 1.2 : 2.4} toneMapped={false} />
           </mesh>
         </Float>
       ))}
@@ -169,7 +199,7 @@ export function Hero3D({ active = true, lite = false }: { active?: boolean; lite
       {/* shifted right so it doesn't sit behind the headline */}
       <Float speed={reduce ? 0 : 1} rotationIntensity={0} floatIntensity={reduce ? 0 : 0.7}>
         <group position={[1.6, 0.15, 0]}>
-          <Turbine reduce={reduce} />
+          <Turbine reduce={reduce} light={light} />
         </group>
       </Float>
 
@@ -177,10 +207,12 @@ export function Hero3D({ active = true, lite = false }: { active?: boolean; lite
 
       <EffectComposer>
         {[
-          <Bloom key="bloom" intensity={1.15} luminanceThreshold={0.16} luminanceSmoothing={0.4} mipmapBlur />,
-          ...(lite ? [] : [<ChromaticAberration key="ca" offset={[0.0007, 0.0007]} radialModulation={false} modulationOffset={0} />]),
-          <Vignette key="vig" eskil={false} offset={0.22} darkness={0.92} />,
-          ...(lite ? [] : [<Noise key="noise" opacity={0.028} />]),
+          // Light: only the emissive neon should bloom (high threshold), and no
+          // aberration/vignette/noise — they read as fringing and grime on a pale background.
+          <Bloom key="bloom" intensity={light ? 0.7 : 1.15} luminanceThreshold={light ? 0.85 : 0.16} luminanceSmoothing={0.4} mipmapBlur />,
+          ...(lite || light ? [] : [<ChromaticAberration key="ca" offset={[0.0007, 0.0007]} radialModulation={false} modulationOffset={0} />]),
+          ...(light ? [] : [<Vignette key="vig" eskil={false} offset={0.22} darkness={0.92} />]),
+          ...(lite || light ? [] : [<Noise key="noise" opacity={0.028} />]),
         ]}
       </EffectComposer>
     </Canvas>

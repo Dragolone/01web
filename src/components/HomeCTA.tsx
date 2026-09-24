@@ -21,7 +21,7 @@ export function HomeCTA({ lang, dict, theme }: Props) {
           transition={{ duration: 0.8, ease: easeOut }}
           className={`relative overflow-hidden rounded-[2rem] px-8 py-20 text-center md:px-16 md:py-24 ${
             dark
-              ? "border border-white/10 bg-[#0a0f20] text-white"
+              ? "border border-foreground/10 bg-elevated text-foreground light:shadow-[0_30px_80px_-50px_rgba(24,73,220,0.35)]"
               : "bg-gradient-to-br from-brand to-brand-strong text-white"
           }`}
         >
@@ -62,14 +62,14 @@ export function HomeCTA({ lang, dict, theme }: Props) {
           <h2 className="relative text-3xl md:text-5xl font-semibold tracking-tight">
             {dict.cta.title}
           </h2>
-          <p className={`relative mt-4 text-lg max-w-2xl mx-auto ${dark ? "text-white/70" : "text-white/85"}`}>
+          <p className={`relative mt-4 text-lg max-w-2xl mx-auto ${dark ? "text-foreground/70" : "text-white/85"}`}>
             {dict.cta.subtitle}
           </p>
           <Link
             href={`/${lang}/contact`}
             className={`relative mt-10 inline-flex items-center gap-2 h-12 px-7 rounded-full font-medium transition-all ${
               dark
-                ? "bg-white text-[#0a1024] hover:shadow-[0_0_40px_-6px_rgba(150,180,255,0.7)]"
+                ? "bg-btn text-btn-fg hover:shadow-[0_0_40px_-6px_rgba(150,180,255,0.7)] light:hover:shadow-[0_12px_36px_-12px_rgba(11,18,38,0.45)]"
                 : "bg-white text-brand hover:bg-white/95"
             }`}
           >

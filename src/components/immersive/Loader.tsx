@@ -40,7 +40,7 @@ export function Loader() {
           initial={{ opacity: 1 }}
           exit={{ y: "-100%" }}
           transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#060b18]"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
         >
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -54,11 +54,11 @@ export function Loader() {
               width={180}
               height={46}
               priority
-              className="h-9 w-auto brightness-0 invert"
+              className="h-9 w-auto brightness-0 invert light:invert-0"
             />
-            <div className="h-px w-40 overflow-hidden bg-white/15">
+            <div className="h-px w-40 overflow-hidden bg-foreground/15">
               <motion.div
-                className="h-full bg-white/70"
+                className="h-full bg-foreground/70"
                 initial={{ x: "-100%" }}
                 animate={{ x: "0%" }}
                 transition={{ duration: 0.9, ease: "easeInOut" }}

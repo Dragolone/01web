@@ -11,7 +11,7 @@ type Status = "idle" | "sending" | "success" | "error" | "unconfigured";
 const CONTACT_EMAIL = "zhongqilong@01weichuang.com";
 
 const field =
-  "w-full rounded-xl border border-border bg-surface px-4 py-3 text-[15px] text-foreground placeholder:text-muted/70 outline-none transition-colors focus:border-[#5cf0ff]/50";
+  "w-full rounded-xl border border-border bg-surface px-4 py-3 text-[15px] text-foreground placeholder:text-muted/70 outline-none transition-colors focus:border-accent/50";
 
 export function ContactForm({ lang, dict }: Props) {
   const t = dict.pages.contact.form;
@@ -66,7 +66,7 @@ export function ContactForm({ lang, dict }: Props) {
 
   if (status === "success") {
     return (
-      <div role="status" className="rounded-3xl border border-[#5cf0ff]/30 bg-[#5cf0ff]/[0.06] p-8 text-center">
+      <div role="status" className="rounded-3xl border border-accent/30 bg-accent/[0.06] p-8 text-center">
         <p className="text-lg font-semibold tracking-tight">{t.success}</p>
       </div>
     );
@@ -94,7 +94,7 @@ export function ContactForm({ lang, dict }: Props) {
           <span className="mb-1.5 block text-xs text-muted">{t.type}</span>
           <select name="type" value={form.type} onChange={set("type")} className={`${field} appearance-none`}>
             {t.types.map((o) => (
-              <option key={o} value={o} className="bg-[#0a0f20]">
+              <option key={o} value={o} className="bg-elevated">
                 {o}
               </option>
             ))}

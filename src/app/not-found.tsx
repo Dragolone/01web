@@ -11,18 +11,21 @@ import "./globals.css";
 const copy = {
   zh: {
     htmlLang: "zh-Hans",
+    brand: "零一唯创",
     title: "页面不存在",
     desc: "抱歉，你访问的页面可能已移动或不存在。",
     home: "返回首页",
   },
   tw: {
     htmlLang: "zh-Hant",
+    brand: "零一唯創",
     title: "頁面不存在",
     desc: "抱歉，你造訪的頁面可能已移動或不存在。",
     home: "返回首頁",
   },
   en: {
     htmlLang: "en",
+    brand: "Zero-One Innovation",
     title: "Page not found",
     desc: "Sorry, the page you’re looking for may have moved or no longer exists.",
     home: "Back to home",
@@ -35,15 +38,22 @@ export default function NotFound() {
   const t = copy[locale];
 
   return (
-    <html lang={t.htmlLang} className="h-full antialiased">
+    <html lang={t.htmlLang} className="h-full antialiased" data-theme="light" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full bg-background text-foreground flex items-center justify-center px-6 py-24">
         <div className="max-w-md text-center">
           <img
             src="/brand/logo-512.png"
-            alt="零一唯创"
+            alt={t.brand}
             width={140}
             height={36}
-            className="h-7 w-auto mx-auto mb-10 opacity-80 brightness-0 invert"
+            className="h-7 w-auto mx-auto mb-10 opacity-80 brightness-0 invert light:invert-0"
           />
           <p className="text-7xl md:text-8xl font-semibold tracking-tight text-brand">
             404

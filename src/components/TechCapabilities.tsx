@@ -12,7 +12,7 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 export function TechCapabilities({ dict }: Props) {
   return (
     <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-10">
-      <div className="relative rounded-[2rem] bg-[#0a0d14] text-white py-24 md:py-32 overflow-hidden shadow-[0_30px_80px_-40px_rgba(10,13,30,0.5)]">
+      <div className="relative rounded-[2rem] bg-[#0a0d14] text-foreground py-24 md:py-32 overflow-hidden shadow-[0_30px_80px_-40px_rgba(10,13,30,0.5)] light:bg-card light:border light:border-border light:shadow-[0_30px_80px_-50px_rgba(24,73,220,0.35)]">
         <div
           aria-hidden
           className="absolute inset-0 opacity-40"
@@ -40,14 +40,14 @@ export function TechCapabilities({ dict }: Props) {
           transition={{ duration: 0.7, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#5cf0ff] mb-3">
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-[#5cf0ff]" />
+          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-accent mb-3">
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-accent" />
             {dict.tech.eyebrow}
           </p>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
             {dict.tech.title}
           </h2>
-          <p className="mt-4 text-lg text-white/60">{dict.tech.subtitle}</p>
+          <p className="mt-4 text-lg text-foreground/60">{dict.tech.subtitle}</p>
         </motion.div>
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -58,18 +58,18 @@ export function TechCapabilities({ dict }: Props) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.06 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all hover:border-[#5cf0ff]/40 hover:bg-white/[0.06] hover:shadow-[0_0_40px_-12px_rgba(0,229,255,0.5)]"
+              className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-card p-6 transition-all hover:border-accent/40 hover:bg-card-hover hover:shadow-[0_0_40px_-12px_rgba(0,229,255,0.5)] light:bg-background/60 light:hover:shadow-[0_16px_40px_-20px_rgba(24,73,220,0.35)]"
             >
-              <p className="text-[11px] uppercase tracking-[0.18em] text-white/60">{item.label}</p>
-              <p className="mt-5 bg-gradient-to-r from-white to-[#9db8ff] bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl tabular-nums">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-foreground/60">{item.label}</p>
+              <p className="mt-5 bg-gradient-to-r from-foreground to-accent-soft bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl tabular-nums">
                 <CountUp value={item.metric} />
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-white/55">{item.note}</p>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/55">{item.note}</p>
               <CardFx />
             </motion.div>
           ))}
         </div>
-        <p className="mt-8 text-xs text-white/50">* {dict.tech.disclaimer}</p>
+        <p className="mt-8 text-xs text-foreground/50">* {dict.tech.disclaimer}</p>
         </div>
       </div>
     </section>

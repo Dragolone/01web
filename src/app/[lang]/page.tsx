@@ -20,7 +20,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <ImmersiveHero lang={lang as Locale} dict={forImmersiveHero(dict)} />
       {/* Dark immersive act — sits over the off-white body so the whole home
           flows as one cohesive cyber-dark experience. */}
-      <div className="relative isolate bg-[#070a18] text-white">
+      <div className="relative isolate bg-background text-foreground">
         {/* unified ambient backdrop so sections never feel empty/disconnected */}
         <div
           aria-hidden

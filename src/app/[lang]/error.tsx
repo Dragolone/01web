@@ -7,9 +7,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const copy = {
-  zh: { title: "页面出了点问题", desc: "这个页面加载时发生了错误，我们已记录。你可以重试或返回首页。", retry: "重试", home: "返回首页" },
-  tw: { title: "頁面出了點問題", desc: "這個頁面載入時發生了錯誤，我們已記錄。你可以重試或返回首頁。", retry: "重試", home: "返回首頁" },
-  en: { title: "Something went wrong", desc: "This page hit an error while loading. You can retry or head back home.", retry: "Retry", home: "Back to home" },
+  zh: { title: "页面出了点问题", desc: "这个页面加载时发生了错误，我们已记录。你可以重试或返回首页。", retry: "重试", home: "返回首页", eyebrow: "出错了" },
+  tw: { title: "頁面出了點問題", desc: "這個頁面載入時發生了錯誤，我們已記錄。你可以重試或返回首頁。", retry: "重試", home: "返回首頁", eyebrow: "出錯了" },
+  en: { title: "Something went wrong", desc: "This page hit an error while loading. You can retry or head back home.", retry: "Retry", home: "Back to home", eyebrow: "Error" },
 } as const;
 
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -24,9 +24,9 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
   return (
     <section className="flex min-h-[70svh] items-center px-6 pt-32 pb-20">
       <div className="mx-auto max-w-md text-center">
-        <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-[#5cf0ff]">
-          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
-          Error
+        <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-accent">
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+          {t.eyebrow}
         </p>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{t.title}</h1>
         <p className="mt-4 text-muted">{t.desc}</p>
@@ -39,7 +39,7 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
           </button>
           <Link
             href={`/${locale}`}
-            className="inline-flex h-11 items-center rounded-full border border-white/30 px-6 text-sm font-medium text-foreground hover:border-white/70"
+            className="inline-flex h-11 items-center rounded-full border border-foreground/30 px-6 text-sm font-medium text-foreground hover:border-foreground/70"
           >
             {t.home}
           </Link>

@@ -31,16 +31,16 @@ export function HomeSolutions({ dict, lang }: Props) {
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <div className="max-w-2xl">
-            <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-[#5cf0ff]">
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
+            <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-accent">
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
               {s.eyebrow}
             </p>
-            <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">{s.title}</h2>
-            <p className="mt-4 text-lg text-white/60">{s.subtitle}</p>
+            <h2 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">{s.title}</h2>
+            <p className="mt-4 text-lg text-foreground/60">{s.subtitle}</p>
           </div>
           <Link
             href={`/${lang}/solutions`}
-            className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-white/80 transition-colors hover:text-[#5cf0ff]"
+            className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors hover:text-accent"
           >
             {s.more}
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
@@ -66,7 +66,7 @@ export function HomeSolutions({ dict, lang }: Props) {
                 {/* product-line hero photo */}
                 <Link
                   href={`/${lang}/products/${g.key}`}
-                  className="group relative block overflow-hidden rounded-2xl border border-white/10 lg:col-span-5"
+                  className="group relative block overflow-hidden rounded-2xl border border-foreground/10 lg:col-span-5"
                 >
                   <div className="relative aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[26rem]">
                     <Image
@@ -85,14 +85,14 @@ export function HomeSolutions({ dict, lang }: Props) {
                 </Link>
 
                 {/* scenario list */}
-                <ul className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0f20] lg:col-span-7">
+                <ul className="divide-y divide-foreground/[0.07] overflow-hidden rounded-2xl border border-foreground/10 bg-elevated lg:col-span-7">
                   {scenarios.map((sc) => (
                     <li key={sc.key}>
                       <Link
                         href={`/${lang}/solutions#${sc.key}`}
-                        className="group flex items-center gap-5 px-5 py-4 transition-colors hover:bg-white/[0.04] md:px-7 md:py-5"
+                        className="group flex items-center gap-5 px-5 py-4 transition-colors hover:bg-card md:px-7 md:py-5"
                       >
-                        <span className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-white/10">
+                        <span className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-foreground/10">
                           <Image
                             src={scenarioImages[sc.key]}
                             alt={sc.name}
@@ -102,8 +102,8 @@ export function HomeSolutions({ dict, lang }: Props) {
                           />
                         </span>
                         <span className="min-w-0 flex-1">
-                          <span className="block text-base font-semibold tracking-tight text-white md:text-lg">{sc.name}</span>
-                          <span className="mt-1 block truncate text-sm text-white/55">{sc.highlights.join(" · ")}</span>
+                          <span className="block text-base font-semibold tracking-tight text-foreground md:text-lg">{sc.name}</span>
+                          <span className="mt-1 block truncate text-sm text-foreground/55">{sc.highlights.join(" · ")}</span>
                         </span>
                         <svg
                           width="14"
@@ -111,7 +111,7 @@ export function HomeSolutions({ dict, lang }: Props) {
                           viewBox="0 0 14 14"
                           fill="none"
                           aria-hidden
-                          className="shrink-0 text-white/40 transition-all group-hover:translate-x-1 group-hover:text-[#5cf0ff]"
+                          className="shrink-0 text-foreground/40 transition-all group-hover:translate-x-1 group-hover:text-accent"
                         >
                           <path d="M1 7h12m0 0L8 2m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>

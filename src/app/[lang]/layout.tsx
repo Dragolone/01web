@@ -38,7 +38,9 @@ export async function generateMetadata({
     keywords:
       lang === "en"
         ? ["mobile EV charging robot", "VTOL fixed-wing UAV", "LingYI-Charge", "LingYI-1", "Zero-One Innovation"]
-        : ["移动充电机器人", "垂起固定翼无人机", "LingYI-Charge", "LingYI-1", "低空经济", "零一唯创"],
+        : lang === "tw"
+          ? ["移動充電機器人", "垂起固定翼無人機", "LingYI-Charge", "LingYI-1", "低空經濟", "零一唯創"]
+          : ["移动充电机器人", "垂起固定翼无人机", "LingYI-Charge", "LingYI-1", "低空经济", "零一唯创"],
     authors: [{ name: dict.brand.name }],
     robots: { index: true, follow: true },
     verification: siteVerification(),
@@ -70,7 +72,7 @@ export default async function RootLayout({
     address: {
       "@type": "PostalAddress",
       addressCountry: "CN",
-      addressRegion: lang === "en" ? "Guangdong" : "广东省",
+      addressRegion: lang === "en" ? "Guangdong" : lang === "tw" ? "廣東省" : "广东省",
       addressLocality: lang === "en" ? "Shenzhen" : "深圳市",
       streetAddress: dict.pages.contact.addr,
     },
@@ -81,7 +83,18 @@ export default async function RootLayout({
     <html
       lang={htmlLang[lang as Locale]}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      // Light by default; the script below may flip it to dark before hydration.
+      data-theme="light"
+      suppressHydrationWarning
     >
+      <head>
+        {/* Apply a saved dark preference before first paint (no light→dark flash). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <script
           type="application/ld+json"

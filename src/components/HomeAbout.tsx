@@ -30,19 +30,19 @@ export function HomeAbout({ dict, lang }: Props) {
             transition={{ duration: 0.7, ease: easeOut }}
             className="lg:col-span-6"
           >
-            <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-[#5cf0ff]">
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
+            <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-accent">
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
               {about.eyebrow}
             </p>
-            <h2 className="text-4xl font-semibold leading-[1.15] tracking-tight text-white md:text-5xl">
+            <h2 className="text-4xl font-semibold leading-[1.15] tracking-tight text-foreground md:text-5xl">
               {dict.brand.vision}
             </h2>
-            <p className="mt-6 max-w-xl text-base leading-[1.9] text-white/65 md:text-lg">{intro}</p>
+            <p className="mt-6 max-w-xl text-base leading-[1.9] text-foreground/65 md:text-lg">{intro}</p>
 
-            <ul className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
+            <ul className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-foreground/75">
               {about.meta.map((m, i) => (
                 <li key={m} className="flex items-center gap-5">
-                  {i > 0 && <span aria-hidden className="h-3.5 w-px bg-white/20" />}
+                  {i > 0 && <span aria-hidden className="h-3.5 w-px bg-foreground/20" />}
                   {m}
                 </li>
               ))}
@@ -50,7 +50,7 @@ export function HomeAbout({ dict, lang }: Props) {
 
             <Link
               href={`/${lang}/about`}
-              className="group mt-10 inline-flex h-12 items-center gap-2 rounded-full border border-white/30 px-7 font-medium text-white/90 transition-colors hover:border-white/70 hover:bg-white/5"
+              className="group mt-10 inline-flex h-12 items-center gap-2 rounded-full border border-foreground/30 px-7 font-medium text-foreground/90 transition-colors hover:border-foreground/70 hover:bg-foreground/5"
             >
               {dict.hero.cta}
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden className="transition-transform group-hover:translate-x-1">
@@ -66,7 +66,7 @@ export function HomeAbout({ dict, lang }: Props) {
             transition={{ duration: 0.8, ease: easeOut, delay: 0.1 }}
             className="lg:col-span-6"
           >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-foreground/10">
               <Image
                 src="/company/park-entrance.jpg"
                 alt={dict.gallery.captions["park-entrance"]}

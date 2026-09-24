@@ -116,7 +116,7 @@
       {
         "key": "pipeline",
         "name": "能源管線巡檢",
-        "headline": "VTOL · Pipeline Inspection",
+        "headline": "無人機 · 管線巡檢",
         "desc": "用於石油管道、電力線路、光伏電站等長距離線性設施巡檢。180 km/h 巡航 + 2000 km 續航，單架次覆蓋百公里級管廊；機載視覺自動辨識施工侵佔、植被過密、設備異常等隱患；40 kg 酬載可同時掛載可見光相機與熱成像儀，一次飛行完成多維度檢測。",
         "highlights": [
           "180 km/h 巡航 · 2000 km 續航",
@@ -127,7 +127,7 @@
       {
         "key": "rescue",
         "name": "應急搜救與災情評估",
-        "headline": "VTOL · Emergency Response",
+        "headline": "無人機 · 應急響應",
         "desc": "地震、洪水、山火等災害發生後，垂直起飛無需跑道，快速飛抵災區上空，回傳即時影像輔助指揮決策。搭載熱成像儀可自動搜索被困人員、評估建築物損毀程度；喊話器遠端播報引導群眾疏散；2000 km 續航保障長時間災區駐留。",
         "highlights": [
           "垂直起降即刻響應",
@@ -138,7 +138,7 @@
       {
         "key": "security",
         "name": "戰術偵察與警用安防",
-        "headline": "VTOL · Tactical & Public Security",
+        "headline": "無人機 · 戰術與公共安全",
         "desc": "3 m 翼展飛翼布局、200 km/h 最高速度，適合快速抵近偵察與區域巡邏。可掛載光電吊艙實現晝夜全天候偵察、搭配喊話器執行治安管控與人群疏導任務。地面站支援多機協同組網，構建區域空中感知體系。",
         "highlights": [
           "3 m 翼展飛翼布局",
@@ -149,7 +149,7 @@
       {
         "key": "remote-sensing",
         "name": "農業與林業遙感",
-        "headline": "VTOL · Agro-forestry Sensing",
+        "headline": "無人機 · 農林遙感",
         "desc": "搭載多光譜相機對農田、林地進行大面積航拍測繪，產生植被指數（NDVI）分布圖，輔助精準施肥、病蟲害監測、蓄積量估算。180 km/h 巡航速度下單架次即可覆蓋數千畝。",
         "highlights": [
           "多光譜 NDVI 分布圖",
@@ -160,7 +160,7 @@
       {
         "key": "commercial",
         "name": "商業綜合體與辦公樓",
-        "headline": "Charge · Commercial Complex",
+        "headline": "充電機器人 · 商業綜合體",
         "desc": "商場、辦公樓停車場通常充電樁配比不足，車主在充電位排隊等待體驗差。部署 LingYI-Charge 後，車主在任意車位停車、APP 預約即可充電，提升停車場服務品質與客戶滿意度；物業方透過充電服務費分成獲取持續收入。",
         "highlights": [
           "任意車位 APP 預約",
@@ -171,7 +171,7 @@
       {
         "key": "residential",
         "name": "住宅社區",
-        "headline": "Charge · Residential",
+        "headline": "充電機器人 · 住宅社區",
         "desc": "老舊社區電容有限、改造成本高，難以大規模安裝固定充電樁。行動充電機器人在夜間低谷電價時段充電儲能，白天為業主提供充電服務，無需電力增容改造。",
         "highlights": [
           "免電力增容改造",
@@ -182,7 +182,7 @@
       {
         "key": "campus",
         "name": "產業園區與科技園區",
-        "headline": "Charge · Industrial Park",
+        "headline": "充電機器人 · 產業園區",
         "desc": "園區內辦公樓分散、固定充電樁覆蓋率低。行動充電機器人可全天候在園區內巡航待命，員工隨時預約充電，提升園區配套服務水平。",
         "highlights": [
           "園區全天候巡航待命",
@@ -193,7 +193,7 @@
       {
         "key": "event",
         "name": "大型活動與展會",
-        "headline": "Charge · Events",
+        "headline": "充電機器人 · 活動展會",
         "desc": "車展、賽事、音樂節等臨時性大型活動場地不具備固定充電設施。LingYI-Charge 可按需彈性部署，活動結束後撤走，零基建投入。",
         "highlights": [
           "按需彈性部署",
@@ -767,6 +767,9 @@
     "more": "查看全部實景"
   },
   "a11y": {
-    "skipToContent": "跳到主內容"
+    "skipToContent": "跳到主內容",
+    "themeToLight": "切換到淺色模式",
+    "themeToDark": "切換到深色模式",
+    "menu": "選單"
   }
 }

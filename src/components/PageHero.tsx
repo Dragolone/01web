@@ -15,15 +15,11 @@ type Props = {
 
 export function PageHero({ title, lead, eyebrow, meta, compactBottom }: Props) {
   return (
-    // Dark cyber opening shared by every inner page, then dissolving into the
-    // light, readable content below.
-    <section className={`relative isolate overflow-hidden pt-32 text-white md:pt-40 ${compactBottom ? "pb-16 md:pb-20" : "pb-28 md:pb-32"}`}>
+    // Cyber opening shared by every inner page (dark, or pale blue in the light
+    // theme — see .page-hero-bg), dissolving into the content below.
+    <section className={`relative isolate overflow-hidden pt-32 text-foreground md:pt-40 ${compactBottom ? "pb-16 md:pb-20" : "pb-28 md:pb-32"}`}>
       {/* dark base */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        style={{ background: "radial-gradient(120% 100% at 50% -10%, #0e1c4a 0%, #09122a 45%, #060912 100%)" }}
-      />
+      <div aria-hidden className="page-hero-bg absolute inset-0 -z-10" />
       {/* blueprint grid */}
       <div
         aria-hidden
@@ -52,9 +48,9 @@ export function PageHero({ title, lead, eyebrow, meta, compactBottom }: Props) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: easeOut }}
-            className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#9db8ff] mb-5"
+            className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-accent-soft mb-5"
           >
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-[#5cf0ff]" />
+            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-accent" />
             {eyebrow}
           </motion.p>
         )}
@@ -70,7 +66,7 @@ export function PageHero({ title, lead, eyebrow, meta, compactBottom }: Props) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: easeOut, delay: 0.12 }}
-          className="mt-5 text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed"
+          className="mt-5 text-lg md:text-xl text-foreground/70 max-w-2xl leading-relaxed"
         >
           {lead}
         </motion.p>
@@ -79,11 +75,11 @@ export function PageHero({ title, lead, eyebrow, meta, compactBottom }: Props) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: easeOut, delay: 0.2 }}
-            className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/70"
+            className="mt-10 pt-6 border-t border-foreground/15 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-foreground/70"
           >
             {meta.map((item, i) => (
               <li key={item} className="flex items-center gap-3">
-                {i > 0 && <span aria-hidden className="w-1 h-1 rounded-full bg-white/30" />}
+                {i > 0 && <span aria-hidden className="w-1 h-1 rounded-full bg-foreground/30" />}
                 <span>{item}</span>
               </li>
             ))}
@@ -95,7 +91,7 @@ export function PageHero({ title, lead, eyebrow, meta, compactBottom }: Props) {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 h-24 -z-10"
-        style={{ background: "linear-gradient(180deg, transparent 0%, #070a18 96%)" }}
+        style={{ background: "linear-gradient(180deg, transparent 0%, var(--background) 96%)" }}
       />
     </section>
   );

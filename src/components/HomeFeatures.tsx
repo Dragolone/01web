@@ -47,7 +47,7 @@ const featureIcons = [
 export function HomeFeatures({ dict }: Props) {
   return (
     // Dark "act one" band — continues seamlessly from the immersive hero.
-    <section className="relative overflow-hidden pt-24 pb-20 text-white md:pt-28 md:pb-28">
+    <section className="relative overflow-hidden pt-24 pb-20 text-foreground md:pt-28 md:pb-28">
       {/* ambient brand glow */}
       <div
         aria-hidden
@@ -66,13 +66,13 @@ export function HomeFeatures({ dict }: Props) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.1 }}
-              className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.08] md:p-6"
+              className="group rounded-2xl border border-foreground/10 bg-card p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-foreground/25 hover:bg-card-hover md:p-6"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#9db8ff]/15 text-[#9db8ff] transition-colors group-hover:bg-[#9db8ff] group-hover:text-[#05080f]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft/15 text-accent-soft transition-colors group-hover:bg-accent-soft group-hover:text-background">
                 <span className="block h-5 w-5">{featureIcons[idx]}</span>
               </div>
               <p className="mt-4 text-[15px] font-semibold tracking-tight">{f.title}</p>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-white/55">{f.desc}</p>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-foreground/55">{f.desc}</p>
             </motion.div>
           ))}
         </div>

@@ -5,6 +5,7 @@ import type { NavbarDict } from "@/app/[lang]/dictSlices";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { setTheme, useTheme } from "@/components/useTheme";
 import clsx from "clsx";
 import {
   locales,
@@ -32,6 +33,7 @@ export function Navbar({ lang, dict }: Props) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -59,11 +61,13 @@ export function Navbar({ lang, dict }: Props) {
 
   return (
     <header
+      // Own view-transition layer: stays pinned above the page cross-fade.
+      style={{ viewTransitionName: "site-header" }}
       className={clsx(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-[#070a18]/80 backdrop-blur-xl border-b border-white/10"
-          : "bg-transparent"
+          ? "bg-background/80 backdrop-blur-xl border-b border-foreground/10"
+          : "bg-transparent light:bg-background/60 light:backdrop-blur-md"
       )}
     >
       <div className="mx-auto max-w-[96rem] px-6 lg:px-10 h-16 flex items-center justify-between">
@@ -74,7 +78,7 @@ export function Navbar({ lang, dict }: Props) {
             width={140}
             height={36}
             priority
-            className="h-8 w-auto brightness-0 invert"
+            className="h-8 w-auto brightness-0 invert light:invert-0"
           />
         </Link>
 
@@ -89,7 +93,7 @@ export function Navbar({ lang, dict }: Props) {
                 href={href}
                 className={clsx(
                   "px-4 py-2 text-[15px] rounded-full transition-colors",
-                  active ? "text-white" : "text-white/70 hover:text-white hover:bg-white/10"
+                  active ? "text-foreground" : "text-foreground/70 hover:text-foreground hover:bg-foreground/10"
                 )}
               >
                 {dict.nav[k]}
@@ -101,7 +105,7 @@ export function Navbar({ lang, dict }: Props) {
         <div className="flex items-center gap-2">
           {/* 3-segment language pill: 简 / 繁 / EN */}
           <div
-            className="inline-flex items-center rounded-full border border-white/20 bg-white/10 p-0.5 backdrop-blur-sm"
+            className="inline-flex items-center rounded-full border border-foreground/20 bg-foreground/10 p-0.5 backdrop-blur-sm"
           >
             {locales.map((loc) => {
               const isActive = loc === lang;
@@ -113,7 +117,7 @@ export function Navbar({ lang, dict }: Props) {
                   aria-current={isActive ? "page" : undefined}
                   className={clsx(
                     "min-w-[2.25rem] h-7 px-2.5 inline-flex items-center justify-center text-xs font-medium rounded-full transition-colors",
-                    isActive ? "bg-white text-[#0a1024]" : "text-white/70 hover:text-white"
+                    isActive ? "bg-btn text-btn-fg" : "text-foreground/70 hover:text-foreground"
                   )}
                 >
                   {localeLabels[loc]}
@@ -122,19 +126,38 @@ export function Navbar({ lang, dict }: Props) {
             })}
           </div>
 
+          <button
+            type="button"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            aria-label={theme === "light" ? dict.a11y.themeToDark : dict.a11y.themeToLight}
+            title={theme === "light" ? dict.a11y.themeToDark : dict.a11y.themeToLight}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-foreground/20 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
+          >
+            {theme === "light" ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+                <path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+                <circle cx="8" cy="8" r="3" />
+                <path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9" />
+              </svg>
+            )}
+          </button>
+
           <Link
             href={`/${lang}/contact`}
-            className="hidden sm:inline-flex items-center justify-center h-10 px-6 rounded-full bg-white text-[#0a1024] text-[15px] font-medium transition-all hover:bg-white/90 hover:shadow-[0_0_28px_-6px_rgba(150,180,255,0.7)] shadow-sm shadow-black/10"
+            className="hidden sm:inline-flex items-center justify-center h-10 px-6 rounded-full bg-btn text-btn-fg text-[15px] font-medium transition-all hover:bg-btn/90 hover:shadow-[0_0_28px_-6px_rgba(150,180,255,0.7)] shadow-sm shadow-black/10"
           >
             {dict.nav.cta}
           </Link>
           <button
             type="button"
-            aria-label="Menu"
+            aria-label={dict.a11y.menu}
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/40 text-white"
+            className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border border-foreground/40 text-foreground"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -149,14 +172,14 @@ export function Navbar({ lang, dict }: Props) {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="md:hidden border-t border-white/10 bg-[#070a18]/95 backdrop-blur-xl">
+        <div id="mobile-menu" className="md:hidden border-t border-foreground/10 bg-background/95 backdrop-blur-xl">
           <nav className="px-6 py-4 flex flex-col gap-1">
             {navKeys.map((k) => (
               <Link
                 key={k}
                 href={`/${lang}${navHrefMap[k]}`}
                 onClick={() => setOpen(false)}
-                className="py-3 text-base text-white/85 hover:text-white"
+                className="py-3 text-base text-foreground/85 hover:text-foreground"
               >
                 {dict.nav[k]}
               </Link>
@@ -164,7 +187,7 @@ export function Navbar({ lang, dict }: Props) {
             <Link
               href={`/${lang}/contact`}
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center justify-center h-11 rounded-full bg-white text-[#0a1024] font-medium transition-all hover:bg-white/90"
+              className="mt-2 inline-flex items-center justify-center h-11 rounded-full bg-btn text-btn-fg font-medium transition-all hover:bg-btn/90"
             >
               {dict.nav.cta}
             </Link>

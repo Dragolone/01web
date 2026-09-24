@@ -10,6 +10,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Route cross-fades via React <ViewTransition> (see [lang]/template.tsx).
+  experimental: { viewTransition: true },
   async headers() {
     // No CSP yet: three.js / framer / inline JSON-LD would need nonces — add deliberately, not blind.
     return [{ source: "/(.*)", headers: securityHeaders }];

@@ -116,7 +116,7 @@
       {
         "key": "pipeline",
         "name": "能源管线巡检",
-        "headline": "VTOL · Pipeline Inspection",
+        "headline": "无人机 · 管线巡检",
         "desc": "用于石油管道、电力线路、光伏电站等长距离线性设施巡检。180 km/h 巡航 + 2000 km 续航，单架次覆盖百公里级管廊；机载视觉自动识别施工侵占、植被过密、设备异常等隐患；40 kg 载荷可同时挂载可见光相机与热成像仪，一次飞行完成多维度检测。",
         "highlights": [
           "180 km/h 巡航 · 2000 km 续航",
@@ -127,7 +127,7 @@
       {
         "key": "rescue",
         "name": "应急搜救与灾情评估",
-        "headline": "VTOL · Emergency Response",
+        "headline": "无人机 · 应急响应",
         "desc": "地震、洪水、山火等灾害发生后，垂直起飞无需跑道，快速飞抵灾区上空，回传实时影像辅助指挥决策。搭载热成像仪可自动搜索被困人员、评估建筑物损毁程度；喊话器远程播报引导群众疏散；2000 km 续航保障长时间灾区驻留。",
         "highlights": [
           "垂直起降即刻响应",
@@ -138,7 +138,7 @@
       {
         "key": "security",
         "name": "战术侦察与警用安防",
-        "headline": "VTOL · Tactical & Public Security",
+        "headline": "无人机 · 战术与公共安全",
         "desc": "3 m 翼展飞翼布局、200 km/h 最高速度，适合快速抵近侦察与区域巡逻。可挂载光电吊舱实现昼夜全天候侦察、搭配喊话器执行治安管控与人群疏导任务。地面站支持多机协同组网，构建区域空中感知体系。",
         "highlights": [
           "3 m 翼展飞翼布局",
@@ -149,7 +149,7 @@
       {
         "key": "remote-sensing",
         "name": "农业与林业遥感",
-        "headline": "VTOL · Agro-forestry Sensing",
+        "headline": "无人机 · 农林遥感",
         "desc": "搭载多光谱相机对农田、林地进行大面积航拍测绘，生成植被指数（NDVI）分布图，辅助精准施肥、病虫害监测、蓄积量估算。180 km/h 巡航速度下单架次即可覆盖数千亩。",
         "highlights": [
           "多光谱 NDVI 分布图",
@@ -160,7 +160,7 @@
       {
         "key": "commercial",
         "name": "商业综合体与写字楼",
-        "headline": "Charge · Commercial Complex",
+        "headline": "充电机器人 · 商业综合体",
         "desc": "商场、写字楼停车场通常充电桩配比不足，车主在充电位排队等待体验差。部署 LingYI-Charge 后，车主在任意车位停车、APP 预约即可充电，提升停车场服务品质与客户满意度；物业方通过充电服务费分成获取持续收入。",
         "highlights": [
           "任意车位 APP 预约",
@@ -171,7 +171,7 @@
       {
         "key": "residential",
         "name": "住宅小区",
-        "headline": "Charge · Residential",
+        "headline": "充电机器人 · 住宅小区",
         "desc": "老旧小区电容有限、改造成本高，难以大规模安装固定充电桩。移动充电机器人在夜间低谷电价时段充电储能，白天为业主提供充电服务，无需电力增容改造。",
         "highlights": [
           "免电力增容改造",
@@ -182,7 +182,7 @@
       {
         "key": "campus",
         "name": "产业园区与科技园区",
-        "headline": "Charge · Industrial Park",
+        "headline": "充电机器人 · 产业园区",
         "desc": "园区内办公楼分散、固定充电桩覆盖率低。移动充电机器人可全天候在园区内巡航待命，员工随时预约充电，提升园区配套服务水平。",
         "highlights": [
           "园区全天候巡航待命",
@@ -193,7 +193,7 @@
       {
         "key": "event",
         "name": "大型活动与展会",
-        "headline": "Charge · Events",
+        "headline": "充电机器人 · 活动展会",
         "desc": "车展、赛事、音乐节等临时性大型活动场地不具备固定充电设施。LingYI-Charge 可按需灵活部署，活动结束后撤走，零基建投入。",
         "highlights": [
           "按需灵活部署",
@@ -767,6 +767,9 @@
     "more": "查看全部实景"
   },
   "a11y": {
-    "skipToContent": "跳到主内容"
+    "skipToContent": "跳到主内容",
+    "themeToLight": "切换到浅色模式",
+    "themeToDark": "切换到深色模式",
+    "menu": "菜单"
   }
 }

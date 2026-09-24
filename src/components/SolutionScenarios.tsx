@@ -5,7 +5,12 @@ import type { SolutionScenariosDict } from "@/app/[lang]/dictSlices";
 import { motion } from "framer-motion";
 import { scenarioImages } from "@/components/scenarioImages";
 
-type Props = { dict: SolutionScenariosDict };
+type Props = {
+  dict: SolutionScenariosDict;
+  /** Replace the section header with a photo index of all scenarios, grouped by
+   *  product line (used on /solutions, where PageHero already carries the title). */
+  indexNav?: boolean;
+};
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -81,26 +86,77 @@ const scenarioIcons: Record<string, React.ReactNode> = {
   ),
 };
 
-export function SolutionScenarios({ dict }: Props) {
+export function SolutionScenarios({ dict, indexNav }: Props) {
+  const byKey = Object.fromEntries(dict.solutions.scenarios.map((s, i) => [s.key, { s, i }]));
   return (
     <section className="pt-4 md:pt-6 pb-20 md:pb-28">
       <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: easeOut }}
-          className="max-w-2xl"
-        >
-          <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
-            <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
-            {dict.solutions.eyebrow}
-          </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
-            {dict.solutions.title}
-          </h2>
-          <p className="mt-4 text-lg text-muted">{dict.solutions.subtitle}</p>
-        </motion.div>
+{indexNav ? (
+          <div className="grid gap-5 lg:grid-cols-2">
+            {dict.homeSolutions.groups.map((g, gi) => (
+              <motion.nav
+                key={g.key}
+                aria-label={g.product}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: easeOut, delay: 0.25 + gi * 0.08 }}
+                className="rounded-3xl border border-border bg-surface p-5 md:p-6"
+              >
+                <p className="text-base font-semibold tracking-tight">{g.product}</p>
+                <p className="mt-1 text-sm text-muted">{g.tagline}</p>
+                <ul className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {g.scenarios.map((key) => {
+                    const hit = byKey[key];
+                    if (!hit) return null;
+                    const img = scenarioImages[key];
+                    return (
+                      <li key={key}>
+                        <a href={`#${key}`} className="group block">
+                          <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-surface">
+                            {img && (
+                              <Image
+                                src={img}
+                                alt={hit.s.name}
+                                fill
+                                sizes="(min-width: 1024px) 12vw, (min-width: 640px) 22vw, 45vw"
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                            )}
+                            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                            <span className="absolute left-2.5 top-2 text-[11px] font-medium tracking-widest text-white/80 tabular-nums">
+                              {`0${hit.i + 1}`}
+                            </span>
+                          </div>
+                          <p className="mt-2 flex items-center gap-1 text-sm text-foreground/85 transition-colors group-hover:text-foreground">
+                            {hit.s.name}
+                            <svg aria-hidden viewBox="0 0 12 12" className="h-3 w-3 -translate-y-0.5 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5" /></svg>
+                          </p>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </motion.nav>
+            ))}
+          </div>
+        ) : (
+                  <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: easeOut }}
+            className="max-w-2xl"
+          >
+            <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
+              <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-brand" />
+              {dict.solutions.eyebrow}
+            </p>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
+              {dict.solutions.title}
+            </h2>
+            <p className="mt-4 text-lg text-muted">{dict.solutions.subtitle}</p>
+          </motion.div>
+        )}
 
         <div className="mt-16 md:mt-20 flex flex-col gap-20 md:gap-28">
           {dict.solutions.scenarios.map((s, idx) => {

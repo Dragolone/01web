@@ -36,8 +36,9 @@ export default async function SolutionsPage({ params }: PageProps<"/[lang]/solut
         lead={dict.pages.technology.lead}
         eyebrow={dict.pages.technology.eyebrow}
         meta={dict.pages.technology.meta}
+        compactBottom
       />
-      <SolutionScenarios dict={forSolutionScenarios(dict)} />
+      <SolutionScenarios dict={forSolutionScenarios(dict)} indexNav />
       <TechCapabilities dict={forTechCapabilities(dict)} />
     </>
   );

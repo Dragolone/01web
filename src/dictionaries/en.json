@@ -1,6 +1,6 @@
 {
   "brand": {
-    "name": "ZERO-ONE",
+    "name": "Zero-One Innovation",
     "nameEn": "ZERO-ONE INNOVATION",
     "tagline": "Forward · Innovate",
     "tagline2": "Push the Boundary",
@@ -767,6 +767,9 @@
     "more": "See all photos"
   },
   "a11y": {
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "themeToLight": "Switch to light mode",
+    "themeToDark": "Switch to dark mode",
+    "menu": "Menu"
   }
 }

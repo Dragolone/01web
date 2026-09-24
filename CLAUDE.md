@@ -88,6 +88,8 @@
 
 ## ⚠️ 沉浸式深色改版（2026-06-18，最新现状 —— 覆盖下方多处旧的「极简/浅色」约定）
 
+> **2026-09-24 更新**：现在**默认浅色**，深色是导航栏可切换的备选主题（见待办节「转场 + 浅色主题轮」）。本节描述的是深色主题的设计；颜色一律走 token，两套主题共用组件。
+
 经过多轮迭代，全站从「极简浅色苹果风」**整体改成「高端深色赛博科技风 + 沉浸式 WebGL」**，已合并 main 并 push（线上服务器需 `git pull`+rebuild 才生效）。**下个会话改 UI 前先认这一节，别照旧约定往浅色/极简方向退。**
 
 - **全站深色**：`globals.css` 主题 token 已翻深色（`--background:#070a18` / `--foreground` 浅 / `--surface` 半透明白玻璃 / `--border` 浅）。**所有用语义 token 的组件自动深色**。body 科技图标矩阵 tint 改成浅蓝（`rgba(150,176,255,...)`）。内页（产品/详情/方案/关于/联系/404）也全深色：开场是深色 hero，正文经 token 自动深色但仍可读。
@@ -101,7 +103,7 @@
 - **字体**：新增 Playfair Display（仅英文点缀，如 hero 的 `ZERO-ONE INNOVATION`）；正文仍 Geist。
 - **背景纹理**：全站「直线网格」已统一换成**柔和点阵**（`radial-gradient` 圆点，用户嫌横竖线不自然）。
 - **作废的旧约定**（下方仍能看到，但**以本节为准**）：①「off-white #fafbfe 底色」→ 已深色；②「不要在白→黑加 fade overlay」→ 现到处用深↔浅渐变过渡且 OK；③「max-w-[88rem]」→ 已全站改 **96rem**；④「极简/不过度设计」视觉层面已不适用。
-- **品牌名**：首页文案统一用「零一唯创」，**别写「01唯创」**（用户 2026-06-18 纠正过）。英文 `Zero-One Innovation`。
+- **品牌名**：首页文案统一用「零一唯创」，**别写「01唯创」**（用户 2026-06-18 纠正过）。英文 `Zero-One Innovation`（en.json `brand.name` 曾是 `ZERO-ONE`，9-24 改正；繁体 `零一唯創`）。
 - **2026-06-19 视觉/性能/PWA 轮（已 push main）**：
   - **卡片光效** `components/CardFx.tsx`：鼠标跟随光斑 + 悬停流光渐变边框，作为 overlay drop-in 嵌进各卡片网格（ProductMatrix/TechCapabilities；HomeSolutions/HomeCapabilities/HomeTech 已删或改版不再用）。`pointer-events-none` 不挡 Link；边框动画只在 hover 跑（idle 零开销）。样式在 `globals.css .card-fx*`（含 `@property --fx-angle`）。深色卡用青、浅色分支传 brand 蓝。
   - **数字滚动计数** `components/CountUp.tsx`：滚到视口 0→目标值。**SSR 渲染真实值**（SEO/无 JS 安全），客户端 arm 到 0 再 count；范围/非数字（「百公里级」「8–16 月」「5,000→200」）原样不动。用在关于页市场表 + TechCapabilities metric。⚠️ **正则匹配必须 `useMemo` 缓存**——否则每帧 setState 重渲染产生新数组引用、effect 反复重启、数字永不停（踩过这个 bug）。
@@ -362,6 +364,13 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
   - **产品页视频懒加载**：`PhotoGallery` 里 `LazyVideo`（IntersectionObserver，`preload="none"`，进视口才设 src 并 play）。此前 autoplay+metadata 让 Chrome 在页面加载就拉完 1.7MB，手机端 LCP 4.7s。**注意 react-hooks 新规则**：effect 里不能同步 setState，初值用 `useState(() => …)` 处理无 IO 的浏览器。
   - `next.config.ts` `poweredByHeader:false`；`sitemap.ts` 去掉 `lastModified`（原来全是构建时间，对搜索引擎是假信号）。
   - 遗留观察：favicon `icon.png` 512px 80KB 每页被拉两次（favicon + manifest），可换小图；GA gtag 172KB 是第二大资源，接受。
+- ✅ **转场 + 浅色主题轮（2026-09-24，未 commit）**：
+  - **路由转场**：`[lang]/template.tsx` 改用 React `<ViewTransition enter="page-in" exit="page-out">`（`next.config.ts` `experimental.viewTransition`；类型靠 `src/react-canary.d.ts`）。旧页上移+模糊淡出、新页上浮淡入，CSS 在 globals.css `::view-transition-*`；Navbar `viewTransitionName: site-header` 固定不动。首屏加载不是 transition，LCP 不受影响。原 framer 淡入已删。
+  - **产品图 morph**：ProductMatrix 卡片图与产品详情 hero 图包同名 `<ViewTransition name="product-${key}" share="product-morph">`，点击后照片从卡片飞进详情页（CSS `.product-morph` 保持 cover 不拉伸）。template 的 ViewTransition **按 pathname 做 key**，否则 /products → /products/charge 同一子段不重挂载、没有转场（踩过）。
+  - **三语审计（9-24）**：字典三份 key 完全一致；场景图角标 `solutions.scenarios[].headline` zh/tw 已中文化；汉堡按钮 `a11y.menu`、错误页小标、404 logo alt、产品图 alt（改用 `item.name`）、繁体 SEO keywords / JSON-LD 省份都已按语言输出。审计脚本思路：对比三份 JSON 扁平 key、en 里查 CJK、zh-Hant 里查简体字、组件里 grep 硬编码中英文。
+  - **首页大标题**：`.hero-title-1/.hero-title-2`（globals.css）。深色保持白 / 白→淡蓝；浅色是深蓝→品牌蓝 + 第二行青→蓝→紫缓慢流动渐变。
+  - **解决方案页**：hero `compactBottom`，去掉与 hero 重复的「应用场景」标题，换成按产品线分组的 8 场景缩略图索引（`SolutionScenarios indexNav`，锚点跳到 `#key`，分组复用 `homeSolutions.groups`）。
+  - **浅色主题**：导航栏 ☀/☾ 按钮切换，**默认浅色**（用户 9-24 定；SSR 直接输出 `html data-theme="light"`），存 `localStorage.theme`，layout `<head>` 内联脚本在首帧前按存储值改成 `dark`。PWA manifest 颜色也改成浅色 #f5f7fb。颜色全部走 token（globals.css：`--accent`/`--accent-soft`/`--card`/`--card-hover`/`--elevated`/`--btn`/`--btn-fg` 新增）；**新组件别再写死 `text-white`/`#5cf0ff`/`#9db8ff`/`bg-white text-[#0a1024]`**，用 `text-foreground`/`text-accent`/`text-accent-soft`/`bg-btn text-btn-fg`。**照片上的文字保留 `text-white`**（两种主题都在暗图上）。**首页也跟主题走**（用户 9-24 否掉了「浅色下 3D 首屏保持深色」，嫌深浅对比难看）：`Hero3D` 收 `light` prop（中灰钢材质、Environment 内 `<color attach="background">` 浅天空底让金属反射不发黑、蓝紫粒子、Bloom 阈值 0.85、去色散/暗角/噪点），`ImmersiveHero` 背景/遮罩走 `.hero-base/.hero-scrim/.hero-halo`（globals.css 有 light 覆盖）；TechCapabilities / HomeCTA 深色卡在浅色下变白卡。主题读取统一用 `components/useTheme.ts`（`useTheme()` / `setTheme()`）。`data-theme="dark"` 孤岛机制仍在（token 会在其内重置为深色），目前没有组件用。浅色下导航栏顶部也带半透明玻璃底（盖在涡轮上时要可读）。`light:` 自定义 variant 只用于 token 表达不了的（logo `light:invert-0`）。内页 hero 背景用 `.page-hero-bg`。根 `not-found.tsx` 也接了同样的主题脚本。
 - ⏸ Cloudflare CDN：可选
 - 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）

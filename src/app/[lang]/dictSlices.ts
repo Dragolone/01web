@@ -7,7 +7,7 @@ import type { Dictionary } from "./dictionaries";
 // nested shape so component bodies keep using `dict.xxx` unchanged.
 // (Plain functions must live outside "use client" files to be callable on the server.)
 
-export const forNavbar = (d: Dictionary) => ({ nav: d.nav, brand: { name: d.brand.name } });
+export const forNavbar = (d: Dictionary) => ({ nav: d.nav, brand: { name: d.brand.name }, a11y: d.a11y });
 export type NavbarDict = ReturnType<typeof forNavbar>;
 
 export const forImmersiveHero = (d: Dictionary) => ({ heroImmersive: d.heroImmersive, brand: { nameEn: d.brand.nameEn } });
@@ -42,5 +42,8 @@ export type HomeCTADict = ReturnType<typeof forHomeCTA>;
 export const forContactForm = (d: Dictionary) => ({ pages: { contact: { form: d.pages.contact.form } } });
 export type ContactFormDict = ReturnType<typeof forContactForm>;
 
-export const forSolutionScenarios = (d: Dictionary) => ({ solutions: d.solutions });
+export const forSolutionScenarios = (d: Dictionary) => ({
+  solutions: d.solutions,
+  homeSolutions: { groups: d.homeSolutions.groups },
+});
 export type SolutionScenariosDict = ReturnType<typeof forSolutionScenarios>;

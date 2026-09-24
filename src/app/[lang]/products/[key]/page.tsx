@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta, SITE_URL } from "@/app/site";
 import Image from "next/image";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getDictionary, hasLocale, locales, type Locale } from "../../dictionaries";
 import { PhotoGallery } from "@/components/PhotoGallery";
@@ -10,9 +11,9 @@ import { productGallery } from "@/components/galleryImages";
 const PRODUCT_KEYS = ["charge", "vtol"] as const;
 type ProductKey = (typeof PRODUCT_KEYS)[number];
 
-const productImages: Record<ProductKey, { img: string; alt: string }> = {
-  charge: { img: "/factory/charge-vehicle.jpg", alt: "LingYI-Charge Mobile EV Charging Robot" },
-  vtol: { img: "/factory/uav-vtol.jpg", alt: "LingYI-1 VTOL Fixed-Wing UAV" },
+const productImages: Record<ProductKey, { img: string }> = {
+  charge: { img: "/factory/charge-vehicle.jpg" },
+  vtol: { img: "/factory/uav-vtol.jpg" },
 };
 
 function isProductKey(k: string): k is ProductKey {
@@ -75,8 +76,7 @@ export default async function ProductDetailPage({
       />
       {/* Hero — dark cyber opening, dissolving into light content */}
       <section
-        className="relative isolate overflow-hidden pt-32 pb-24 md:pt-40 md:pb-28 text-white"
-        style={{ background: "radial-gradient(120% 100% at 50% -10%, #0e1c4a 0%, #09122a 45%, #060912 100%)" }}
+        className="page-hero-bg relative isolate overflow-hidden pt-32 pb-24 md:pt-40 md:pb-28 text-foreground"
       >
         <div
           aria-hidden
@@ -92,12 +92,12 @@ export default async function ProductDetailPage({
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24"
-          style={{ background: "linear-gradient(180deg, transparent 0%, #070a18 96%)" }}
+          style={{ background: "linear-gradient(180deg, transparent 0%, var(--background) 96%)" }}
         />
         <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
           <Link
             href={`/${lang}/products`}
-            className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-sm text-foreground/60 hover:text-foreground transition-colors mb-8"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M13 7H1m0 0l5 5M1 7l5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -107,20 +107,20 @@ export default async function ProductDetailPage({
 
           <div className="grid lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6">
-              <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#9db8ff] mb-3">
-                <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-[#5cf0ff]" />
+              <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-accent-soft mb-3">
+                <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-accent" />
                 {dict.productDetail.eyebrow}
               </p>
               <h1 className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
                 {item.name}
               </h1>
               <div className="mt-5 flex items-center gap-3">
-                <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-[#9db8ff] font-medium">
+                <span className="text-xs px-2.5 py-1 rounded-full bg-foreground/10 text-accent-soft font-medium">
                   {item.tag}
                 </span>
-                <p className="text-base text-[#9db8ff] font-medium">{item.summary}</p>
+                <p className="text-base text-accent-soft font-medium">{item.summary}</p>
               </div>
-              <p className="mt-6 text-lg text-white/70 leading-relaxed max-w-xl">
+              <p className="mt-6 text-lg text-foreground/70 leading-relaxed max-w-xl">
                 {item.desc}
               </p>
               <div className="mt-8">
@@ -137,17 +137,20 @@ export default async function ProductDetailPage({
             </div>
 
             <div className="lg:col-span-6">
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl shadow-black/30">
-                <Image
-                  src={visual.img}
-                  alt={visual.alt}
-                  width={1200}
-                  height={900}
-                  priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {/* Same name as the ProductMatrix card image → the photo morphs from the card into this slot. */}
+              <ViewTransition name={`product-${key}`} share="product-morph">
+                <div className="aspect-[4/3] rounded-3xl overflow-hidden border border-foreground/10 bg-foreground/5 shadow-2xl shadow-black/30">
+                  <Image
+                    src={visual.img}
+                    alt={item.name}
+                    width={1200}
+                    height={900}
+                    priority
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </ViewTransition>
             </div>
           </div>
         </div>
@@ -163,11 +166,11 @@ export default async function ProductDetailPage({
             {detail.features.map((f, idx) => (
               <div
                 key={f.title}
-                className="p-7 rounded-3xl border border-white/10 bg-white/[0.04]"
+                className="p-7 rounded-3xl border border-foreground/10 bg-card"
               >
-                <p className="text-xs tracking-widest uppercase text-[#5cf0ff]">{`0${idx + 1}`}</p>
-                <p className="mt-3 text-lg font-medium text-white">{f.title}</p>
-                <p className="mt-2 text-sm text-white/55 leading-relaxed">{f.desc}</p>
+                <p className="text-xs tracking-widest uppercase text-accent">{`0${idx + 1}`}</p>
+                <p className="mt-3 text-lg font-medium text-foreground">{f.title}</p>
+                <p className="mt-2 text-sm text-foreground/55 leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>

@@ -31,16 +31,16 @@ export function HomeGalleryStrip({ dict, lang }: Props) {
         className="mx-auto flex max-w-[96rem] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between lg:px-10"
       >
         <div className="max-w-2xl">
-          <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-[#5cf0ff]">
-            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#5cf0ff]" />
+          <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-accent">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
             {g.eyebrow}
           </p>
-          <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">{g.title}</h2>
-          <p className="mt-4 text-lg text-white/60">{g.subtitle}</p>
+          <h2 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">{g.title}</h2>
+          <p className="mt-4 text-lg text-foreground/60">{g.subtitle}</p>
         </div>
         <Link
           href={`/${lang}/about`}
-          className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-white/80 transition-colors hover:text-[#5cf0ff]"
+          className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors hover:text-accent"
         >
           {g.more}
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
@@ -55,7 +55,7 @@ export function HomeGalleryStrip({ dict, lang }: Props) {
             <li
               key={`${it.id}-${i}`}
               aria-hidden={i >= homeStrip.length || undefined}
-              className="group relative aspect-[3/2] w-[18rem] shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] md:w-[26rem]"
+              className="group relative aspect-[3/2] w-[18rem] shrink-0 overflow-hidden rounded-2xl border border-foreground/10 bg-card md:w-[26rem]"
             >
               <Image
                 src={it.src}
