@@ -10,7 +10,7 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 const stroke = {
   fill: "none",
   stroke: "currentColor",
-  strokeWidth: 1.6,
+  strokeWidth: 1.5,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
 };
@@ -46,19 +46,21 @@ const featureIcons = [
 
 export function HomeFeatures({ dict }: Props) {
   return (
-    // Dark "act one" band — continues seamlessly from the immersive hero.
+    // Open, card-less row: icon + title + copy sit straight on the page
+    // background so the band reads as part of the backdrop, not a widget grid.
     <section className="relative overflow-hidden pt-24 pb-20 text-foreground md:pt-28 md:pb-28">
-      {/* ambient brand glow */}
+      {/* ambient brand glow — kept clear of the section edges so it never
+          shows a hard seam against the neighbouring bands */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(60% 40% at 80% 0%, rgba(40,92,224,0.18) 0%, transparent 60%), radial-gradient(50% 40% at 10% 30%, rgba(40,92,224,0.10) 0%, transparent 60%)",
+            "radial-gradient(45% 35% at 80% 50%, rgba(40,92,224,0.12) 0%, transparent 70%), radial-gradient(40% 35% at 15% 50%, rgba(40,92,224,0.08) 0%, transparent 70%)",
         }}
       />
       <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-4 md:gap-x-10">
           {dict.hero.features.map((f, idx) => (
             <motion.div
               key={f.title}
@@ -66,13 +68,15 @@ export function HomeFeatures({ dict }: Props) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.1 }}
-              className="group rounded-2xl border border-foreground/10 bg-card p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-foreground/25 hover:bg-card-hover md:p-6"
+              className="flex flex-col items-center text-center"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft/15 text-accent-soft transition-colors group-hover:bg-accent-soft group-hover:text-background">
-                <span className="block h-5 w-5">{featureIcons[idx]}</span>
-              </div>
-              <p className="mt-4 text-[15px] font-semibold tracking-tight">{f.title}</p>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-foreground/55">{f.desc}</p>
+              <span aria-hidden className="block h-8 w-8 text-foreground/75 md:h-9 md:w-9">
+                {featureIcons[idx]}
+              </span>
+              <p className="mt-5 text-base font-semibold tracking-tight md:text-[17px]">{f.title}</p>
+              <p className="mt-2 max-w-[18rem] text-balance text-[13px] md:break-keep leading-relaxed text-foreground/60 md:text-[15px]">
+                {f.desc}
+              </p>
             </motion.div>
           ))}
         </div>
