@@ -25,9 +25,11 @@ export function proxy(request: NextRequest) {
   if (pathnameHasLocale) return;
 
   // Always default to Simplified Chinese on first entry; user can switch later.
+  // Permanent (301): there is no language negotiation, so "/" → "/zh" never varies,
+  // and search engines (Baidu especially) treat 307 as temporary and keep the old URL.
   const url = request.nextUrl.clone();
   url.pathname = `/${defaultLocale}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.redirect(url);
+  return NextResponse.redirect(url, 301);
 }
 
 export const config = {

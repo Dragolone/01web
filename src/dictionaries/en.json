@@ -658,7 +658,7 @@
       "lead": "We only collect what we need to reply to you. No advertising trackers.",
       "eyebrow": "Privacy",
       "meta": [
-        "Last updated: 6 September 2026"
+        "Last updated: 30 September 2026"
       ],
       "sections": [
         {
@@ -671,7 +671,7 @@
         },
         {
           "h": "Cookies and analytics",
-          "p": "This website uses Google Analytics 4 to measure traffic and page usage (such as pages visited, time on page, approximate region and device type) so we can improve the site. The data is aggregated and anonymised and is not used for advertising or personalisation; Google Signals and ad personalisation are disabled. Google Analytics sets analytics cookies for this purpose. Apart from that, browser storage is only used to remember page preferences such as language."
+          "p": "This website uses Google Analytics 4 and Baidu Tongji to measure traffic and page usage (such as pages visited, time on page, referral source, approximate region and device type) so we can improve the site. We only look at the data as aggregated reports; it is not used for advertising or personalisation, and Google Signals and ad personalisation are disabled. Both analytics services set analytics cookies for this purpose. Apart from that, browser storage is only used to remember page preferences such as language and light/dark theme."
         },
         {
           "h": "Storage and protection",
@@ -679,7 +679,7 @@
         },
         {
           "h": "Third parties",
-          "p": "We do not sell, rent or share your personal information with third parties, except where required by law, strictly necessary for email delivery, or with Google as the analytics provider described above."
+          "p": "We do not sell, rent or share your personal information with third parties, except where required by law, strictly necessary for email delivery, or with Google and Baidu as the analytics providers described above."
         },
         {
           "h": "Your rights",
@@ -690,7 +690,7 @@
           "p": "Shenzhen Zero-One Innovation Technology Co., Ltd. · zhongqilong@01weichuang.com · Room 402, Building 3, Pingshan Craftsman Park, No. 33 Cuijing Road, Zhukeng Community, Longtian Sub-district, Pingshan District, Shenzhen, Guangdong, China"
         }
       ],
-      "seoDescription": "Privacy policy of Shenzhen Zero-One Innovation: what the contact form, access logs and Google Analytics collect, how it is used and your rights."
+      "seoDescription": "Privacy policy of Shenzhen Zero-One Innovation: what the contact form, access logs, Google Analytics and Baidu Tongji collect, and your rights."
     }
   },
   "heroImmersive": {

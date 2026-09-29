@@ -12,6 +12,7 @@ import { MotionProvider } from "@/components/MotionProvider";
 import { Loader } from "@/components/immersive/Loader";
 import { ScrollProgress } from "@/components/immersive/ScrollProgress";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { BaiduTongji } from "@/components/BaiduTongji";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -88,6 +89,11 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Baidu: one responsive page serves PC + mobile (移动适配), and Baidu must not
+            transcode it into its own mobile copy. */}
+        <meta name="applicable-device" content="pc,mobile" />
+        <meta httpEquiv="Cache-Control" content="no-transform" />
+        <meta httpEquiv="Cache-Control" content="no-siteapp" />
         {/* Apply a saved dark preference before first paint (no light→dark flash). */}
         <script
           dangerouslySetInnerHTML={{
@@ -119,6 +125,7 @@ export default async function RootLayout({
         </MotionProvider>
         <div className="film-grain" aria-hidden />
         <GoogleAnalytics />
+        <BaiduTongji />
       </body>
     </html>
   );
