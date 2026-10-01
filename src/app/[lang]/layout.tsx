@@ -13,6 +13,7 @@ import { Loader } from "@/components/immersive/Loader";
 import { ScrollProgress } from "@/components/immersive/ScrollProgress";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { BaiduTongji } from "@/components/BaiduTongji";
+import { BAIDU_TONGJI_ID } from "@/components/baiduTongjiId";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -100,6 +101,17 @@ export default async function RootLayout({
             __html: `try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`,
           }}
         />
+        {/* 百度统计 loader — Baidu's own snippet verbatim (see components/BaiduTongji.tsx). */}
+        {BAIDU_TONGJI_ID && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html:
+                `var _hmt = _hmt || [];(function(){var hm=document.createElement("script");` +
+                `hm.src="https://hm.baidu.com/hm.js?${BAIDU_TONGJI_ID}";` +
+                `var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();`,
+            }}
+          />
+        )}
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <script
