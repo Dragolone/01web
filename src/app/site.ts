@@ -16,6 +16,17 @@ export const SITE_PATHS = [
   "/privacy",
 ] as const;
 
+// Every name the company is searched by, for structured data (Organization /
+// WebSite alternateName). Helps search engines tie "零一唯创" to this site.
+export const LEGAL_NAME = "深圳零一唯创科技有限公司";
+export const BRAND_NAMES = [
+  "零一唯创",
+  "零一唯創",
+  "Zero-One Innovation",
+  LEGAL_NAME,
+  "Shenzhen Zero-One Innovation Technology Co., Ltd.",
+];
+
 // Per-page metadata. Next.js shallow-merges page metadata over the layout's, so a
 // page that sets `openGraph` replaces the layout's whole openGraph object (losing
 // og:image / url / siteName), and without `alternates` every page inherits the

@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { hasLocale, htmlLang, locales, getDictionary, type Locale } from "./dictionaries";
-import { SITE_URL, pageMeta, siteVerification } from "../site";
+import { SITE_URL, BRAND_NAMES, LEGAL_NAME, pageMeta, siteVerification } from "../site";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TechBackdrop } from "@/components/TechBackdrop";
@@ -65,7 +65,8 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     name: dict.brand.name,
-    alternateName: "Shenzhen Zero-One Innovation Technology Co., Ltd.",
+    legalName: LEGAL_NAME,
+    alternateName: BRAND_NAMES.filter((n) => n !== dict.brand.name),
     url: `${SITE_URL}/${lang}`,
     logo: `${SITE_URL}/icon.png`,
     email: "zhongqilong@01weichuang.com",

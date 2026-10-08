@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { forImmersiveHero, forHomeFeatures, forProductMatrix, forHomeSolutions, forHomeAbout, forHomeGalleryStrip, forTechCapabilities, forHomeCTA } from "./dictSlices";
 import { getDictionary, hasLocale, type Locale } from "./dictionaries";
+import { SITE_URL, BRAND_NAMES } from "../site";
 import { ImmersiveHero } from "@/components/immersive/ImmersiveHero";
 import { HomeFeatures } from "@/components/HomeFeatures";
 import { ProductMatrix } from "@/components/ProductMatrix";
@@ -25,8 +26,19 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
+  // Home page only: tells Google which name to show for the site (site names).
+  // Google keeps one site name per domain, so every locale declares the same one.
+  const siteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: BRAND_NAMES[0],
+    alternateName: BRAND_NAMES.slice(1),
+    url: `${SITE_URL}/`,
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
       <ImmersiveHero lang={lang as Locale} dict={forImmersiveHero(dict)} />
       {/* One continuous backdrop for every home section below the hero. Its edges
           are faded, not cut: dots + glows ease in under the hero's melt and ease
