@@ -10,6 +10,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // /_next/image responses: a week instead of Next 16's 4h default. Photos change
+  // rarely and overseas visitors pay ~35KB/s to the Guangzhou box; also what a CDN
+  // in front would honour.
+  images: { minimumCacheTTL: 60 * 60 * 24 * 7 },
   // Route cross-fades via React <ViewTransition> (see [lang]/template.tsx).
   experimental: { viewTransition: true },
   async headers() {

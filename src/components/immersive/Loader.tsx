@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { getHeroState, getServerHeroState, subscribeHeroState } from "@/components/heroReady";
+import { getHeroState, getServerHeroState, setCurtainLifting, subscribeHeroState } from "@/components/heroReady";
 
 // Curtain timing, measured from navigation start (performance.now()):
 //   MIN — stays up at least this long so the logo + line read as intentional.
@@ -28,11 +28,18 @@ export function Loader() {
   const done = Boolean(reduce) || finished;
 
   useEffect(() => {
-    if (reduce || finished) return;
+    if (reduce || finished) {
+      // No curtain (reduced motion) or already lifting: let the hero enter now.
+      setCurtainLifting();
+      return;
+    }
     const elapsed = performance.now();
     // "pending": hold for the hero, but never past CAP. "ready" / "none": lift at MIN.
     const at = hero === "pending" ? CAP : MIN;
-    const timer = setTimeout(() => setFinished(true), Math.max(0, at - elapsed));
+    const timer = setTimeout(() => {
+      setFinished(true);
+      setCurtainLifting();
+    }, Math.max(0, at - elapsed));
     return () => clearTimeout(timer);
   }, [reduce, finished, hero]);
 

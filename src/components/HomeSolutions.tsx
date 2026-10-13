@@ -75,6 +75,7 @@ export function HomeSolutions({ dict, lang }: Props) {
                       // First group's photo is within ~2 screens of the hero: load it with
                       // the page so it isn't decoded + uploaded mid-scroll.
                       loading={gi === 0 ? "eager" : undefined}
+                      fetchPriority={gi === 0 ? "low" : undefined}
                       sizes="(min-width: 1024px) 40vw, 100vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/useTheme";
-import { setHeroState } from "@/components/heroReady";
+import { getCurtainState, getServerCurtainState, setHeroState, subscribeHeroState } from "@/components/heroReady";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
 // fontClass: next/font variable class that defines --font-playfair (see [lang]/page.tsx).
@@ -28,6 +28,9 @@ const subscribeLite = (cb: () => void) => {
 
 // WebGL scene — client-only (no SSR).
 const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Hero3D), { ssr: false });
+// Kick the chunk download off at module evaluation (during hydration) instead of
+// after mount — on a slow overseas link that is a few hundred ms earlier.
+if (typeof window !== "undefined") void import("./Hero3D");
 
 const markHeroReady = () => setHeroState("ready");
 
@@ -40,6 +43,12 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
   // Touch / small screens get the lighter render tier (see Hero3D `lite`).
   const lite = useSyncExternalStore(subscribeLite, getLite, () => false);
   const theme = useTheme();
+  // Entrance choreography starts when the curtain begins to lift (or at once when
+  // there is no curtain: reduced motion, or a later client-side navigation). The
+  // delays below are measured from that moment; the curtain takes ~0.8s to clear
+  // the headline, so the rise is timed to play once it is actually uncovered.
+  const lifted = useSyncExternalStore(subscribeHeroState, getCurtainState, getServerCurtainState) === "lifting";
+  const enter = <T,>(shown: T, hidden: T): T => (lifted ? shown : hidden);
 
   // Tell the intro curtain there is a hero to wait for. Layout effect so it runs
   // before <Loader/>'s passive effect decides how long to stay up.
@@ -84,7 +93,7 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
       <div aria-hidden className="hero-base absolute inset-0 z-0" />
       {/* 3D scene */}
       <div className="absolute inset-0 z-0">
-        <Hero3D active={active} lite={lite} light={theme === "light"} onReady={markHeroReady} />
+        <Hero3D active={active} lite={lite} light={theme === "light"} onReady={markHeroReady} reveal={lifted} />
       </div>
       {/* cursor glow */}
       <div ref={glowWrapRef} aria-hidden className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300">
@@ -101,8 +110,8 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut, delay: 0.2 }}
+            animate={enter({ opacity: 1, y: 0 }, { opacity: 0, y: 16 })}
+            transition={{ duration: 0.7, ease: easeOut, delay: 0.45 }}
             className="font-playfair text-base italic text-foreground/70 sm:text-lg"
           >
             {dict.brand.nameEn}
@@ -112,8 +121,8 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
                 initial={{ y: "115%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1, ease: easeOut, delay: 0.3 }}
+                animate={enter({ y: 0 }, { y: "115%" })}
+                transition={{ duration: 1, ease: easeOut, delay: 0.55 }}
                 className="hero-title-1 inline-block"
               >
                 {h.title1}
@@ -122,8 +131,8 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
                 initial={{ y: "115%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1, ease: easeOut, delay: 0.44 }}
+                animate={enter({ y: 0 }, { y: "115%" })}
+                transition={{ duration: 1, ease: easeOut, delay: 0.69 }}
                 className="hero-title-2 inline-block"
               >
                 {h.title2}
@@ -133,8 +142,8 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
 
           <motion.p
             initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, ease: easeOut, delay: 0.62 }}
+            animate={enter({ opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: 18, filter: "blur(6px)" })}
+            transition={{ duration: 0.9, ease: easeOut, delay: 0.87 }}
             className="mt-7 max-w-xl text-base leading-[1.85] text-foreground/75 sm:text-lg"
           >
             {h.subtitle}
@@ -143,8 +152,8 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
           {/* capability tags — plain text with subtle dividers (no boxes) */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut, delay: 0.74 }}
+            animate={enter({ opacity: 1, y: 0 }, { opacity: 0, y: 14 })}
+            transition={{ duration: 0.7, ease: easeOut, delay: 0.99 }}
             className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-foreground/75"
           >
             {h.tags.map((t, i) => (
@@ -157,8 +166,8 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: easeOut, delay: 0.86 }}
+            animate={enter({ opacity: 1, y: 0 }, { opacity: 0, y: 18 })}
+            transition={{ duration: 0.8, ease: easeOut, delay: 1.11 }}
             className="mt-9 flex flex-wrap gap-3"
           >
             <Link

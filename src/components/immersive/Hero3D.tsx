@@ -3,7 +3,7 @@
 import * as THREE from "three";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Environment, Lightformer, Sparkles, OrbitControls } from "@react-three/drei";
+import { Float, Environment, Lightformer, Sparkles } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette, Noise, ChromaticAberration } from "@react-three/postprocessing";
 import { useReducedMotion } from "framer-motion";
 
@@ -173,7 +173,17 @@ function Precompile({ onReady }: { onReady: () => void }) {
  * the sparkles, no chromatic aberration / film noise passes. Desktop keeps the
  * full effect — do not lower desktop quality for performance (user decision).
  */
-export function Hero3D({ active = true, lite = false, light = false, onReady }: { active?: boolean; lite?: boolean; light?: boolean; /** Fired once the shaders are compiled (the intro curtain waits for this). */ onReady?: () => void }) {
+export function Hero3D({ active = true, lite = false, light = false, onReady, reveal = true }: {
+  active?: boolean;
+  lite?: boolean;
+  light?: boolean;
+  /** Fired once the shaders are compiled (the intro curtain waits for this). */
+  onReady?: () => void;
+  /** False while the intro curtain is still up: the loop already runs (warming up
+   *  behind the curtain) but the scene stays invisible, then fades + settles in
+   *  on the same beat as the headline. */
+  reveal?: boolean;
+}) {
   const reduce = useReducedMotion();
   const sparkle = (n: number) => (lite ? Math.round(n / 2) : n);
   // Shaders compiled → start the loop and fade the scene in (see <Precompile/>).
@@ -191,7 +201,13 @@ export function Hero3D({ active = true, lite = false, light = false, onReady }: 
       dpr={lite ? [1, 1.25] : [1, 1.8]}
       camera={{ position: [0, 0, 6], fov: 42 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      style={{ background: "transparent", opacity: ready ? 1 : 0, transition: "opacity 700ms ease" }}
+      style={{
+        background: "transparent",
+        opacity: ready && reveal ? 1 : 0,
+        transform: ready && reveal ? "scale(1)" : "scale(1.04)",
+        // Delayed so the fade plays once the curtain has cleared the scene, in step with the headline.
+        transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1) 450ms, transform 1300ms cubic-bezier(0.16, 1, 0.3, 1) 450ms",
+      }}
     >
       <fog attach="fog" args={[light ? "#eef3fd" : "#080619", 8, 22]} />
       <ambientLight intensity={light ? 0.6 : 0.25} />
@@ -244,8 +260,6 @@ export function Hero3D({ active = true, lite = false, light = false, onReady }: 
           <Turbine reduce={reduce} light={light} />
         </group>
       </Float>
-
-      <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
 
       <EffectComposer>
         {[

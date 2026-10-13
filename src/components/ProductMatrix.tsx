@@ -92,6 +92,7 @@ export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Pro
                     // First screen below the hero: fetch during page load instead of
                     // mid-scroll (lazy images arriving while scrolling dropped frames).
                     loading="eager"
+                    fetchPriority="low"
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />

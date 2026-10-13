@@ -23,3 +23,17 @@ export function subscribeHeroState(listener: () => void) {
     listeners.delete(listener);
   };
 }
+
+// Curtain phase. The hero's text entrance and the turbine's fade-in are both
+// keyed to the moment the curtain starts lifting, so they arrive together
+// instead of the text finishing behind the curtain and the turbine fading in
+// on its own afterwards.
+export type CurtainState = "up" | "lifting";
+let curtain: CurtainState = "up";
+export function setCurtainLifting() {
+  if (curtain === "lifting") return;
+  curtain = "lifting";
+  listeners.forEach((l) => l());
+}
+export const getCurtainState = () => curtain;
+export const getServerCurtainState = (): CurtainState => "up";
