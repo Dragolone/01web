@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { SolutionScenariosDict } from "@/app/[lang]/dictSlices";
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import { scenarioImages } from "@/components/scenarioImages";
 
 type Props = {
@@ -141,10 +142,10 @@ export function SolutionScenarios({ dict, indexNav }: Props) {
           </div>
         ) : (
                   <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: easeOut }}
+            initial={revealHidden}
+            whileInView={revealShown}
+            viewport={revealViewport}
+            transition={revealTransition()}
             className="max-w-2xl"
           >
             <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-brand mb-3">
@@ -167,10 +168,10 @@ export function SolutionScenarios({ dict, indexNav }: Props) {
               <motion.article
                 key={s.key}
                 id={s.key}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, ease: easeOut }}
+                initial={revealHidden}
+                whileInView={revealShown}
+                viewport={revealViewport}
+                transition={revealTransition()}
                 className={`scroll-mt-28 grid lg:grid-cols-12 gap-8 lg:gap-14 items-center ${reverse ? "lg:[&>:first-child]:order-2" : ""}`}
               >
                 {/* Visual block — real scene photo where available (from the product

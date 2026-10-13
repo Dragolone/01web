@@ -1,13 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import type { TechCapabilitiesDict } from "@/app/[lang]/dictSlices";
 import { CardFx } from "@/components/CardFx";
 import { CountUp } from "@/components/CountUp";
 
 type Props = { dict: TechCapabilitiesDict };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function TechCapabilities({ dict }: Props) {
   return (
@@ -34,10 +33,10 @@ export function TechCapabilities({ dict }: Props) {
         />
         <div className="relative mx-auto max-w-[96rem] px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: easeOut }}
+          initial={revealHidden}
+          whileInView={revealShown}
+          viewport={revealViewport}
+          transition={revealTransition()}
           className="max-w-2xl"
         >
           <p className="inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-accent mb-3">
@@ -54,11 +53,11 @@ export function TechCapabilities({ dict }: Props) {
           {dict.tech.items.map((item, idx) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.06 }}
-              className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-card p-6 transition-all hover:border-accent/40 hover:bg-card-hover hover:shadow-[0_0_40px_-12px_rgba(0,229,255,0.5)] light:bg-background/60 light:hover:shadow-[0_16px_40px_-20px_rgba(24,73,220,0.35)]"
+              initial={revealHidden}
+              whileInView={revealShown}
+              viewport={revealViewport}
+              transition={revealTransition(idx * 0.04)}
+              className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-card p-6 transition-[border-color,background-color,box-shadow] hover:border-accent/40 hover:bg-card-hover hover:shadow-[0_0_40px_-12px_rgba(0,229,255,0.5)] light:bg-background/60 light:hover:shadow-[0_16px_40px_-20px_rgba(24,73,220,0.35)]"
             >
               <p className="text-[11px] uppercase tracking-[0.18em] text-foreground/60">{item.label}</p>
               <p className="mt-5 bg-gradient-to-r from-foreground to-accent-soft bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl tabular-nums">

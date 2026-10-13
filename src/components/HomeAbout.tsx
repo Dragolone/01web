@@ -4,11 +4,10 @@ import Image from "next/image";
 import type { HomeAboutDict } from "@/app/[lang]/dictSlices";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: HomeAboutDict; lang: Locale };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Home "about" teaser — who the company is, in one paragraph, three facts and
@@ -24,10 +23,10 @@ export function HomeAbout({ dict, lang }: Props) {
       <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: easeOut }}
+            initial={revealHidden}
+            whileInView={revealShown}
+            viewport={revealViewport}
+            transition={revealTransition()}
             className="lg:col-span-6"
           >
             <p className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-accent">
@@ -60,10 +59,10 @@ export function HomeAbout({ dict, lang }: Props) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: easeOut, delay: 0.1 }}
+            initial={revealHidden}
+            whileInView={revealShown}
+            viewport={revealViewport}
+            transition={revealTransition(0.06)}
             className="lg:col-span-6"
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-foreground/10">

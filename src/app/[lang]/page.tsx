@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import localFont from "next/font/local";
 import { forImmersiveHero, forHomeFeatures, forProductMatrix, forHomeSolutions, forHomeAbout, forHomeGalleryStrip, forTechCapabilities, forHomeCTA } from "./dictSlices";
 import { getDictionary, hasLocale, type Locale } from "./dictionaries";
 import { SITE_URL, BRAND_NAMES } from "../site";
@@ -10,6 +11,19 @@ import { HomeAbout } from "@/components/HomeAbout";
 import { HomeGalleryStrip } from "@/components/HomeGalleryStrip";
 import { TechCapabilities } from "@/components/TechCapabilities";
 import { HomeCTA } from "@/components/HomeCTA";
+
+// Hero eyebrow typeface ("ZERO-ONE INNOVATION"). Self-hosted: the old
+// `@import url(fonts.googleapis.com…)` in globals.css was dropped by the Tailwind
+// v4 build, so the font never actually loaded (system serif fallback), and Google
+// Fonts is unreachable for mainland visitors anyway. Declared here rather than in
+// the layout so only the home page preloads it. Playfair Display is OFL-licensed.
+const playfair = localFont({
+  src: "../../fonts/PlayfairDisplay-Italic.woff2",
+  weight: "400",
+  style: "italic",
+  display: "swap",
+  variable: "--font-playfair",
+});
 
 // Fade lengths for the home backdrop's top (under the hero) and bottom (above the footer).
 const coverFade = {
@@ -39,7 +53,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
-      <ImmersiveHero lang={lang as Locale} dict={forImmersiveHero(dict)} />
+      <ImmersiveHero lang={lang as Locale} dict={forImmersiveHero(dict)} fontClass={playfair.variable} />
       {/* One continuous backdrop for every home section below the hero. Its edges
           are faded, not cut: dots + glows ease in under the hero's melt and ease
           out above the footer, where the page-colour cover also dissolves so the

@@ -3,11 +3,10 @@
 import Link from "next/link";
 import type { HomeCTADict } from "@/app/[lang]/dictSlices";
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
 type Props = { lang: Locale; dict: HomeCTADict; theme?: "dark" };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function HomeCTA({ lang, dict, theme }: Props) {
   const dark = theme === "dark";
@@ -15,10 +14,10 @@ export function HomeCTA({ lang, dict, theme }: Props) {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: easeOut }}
+          initial={revealHidden}
+          whileInView={revealShown}
+          viewport={revealViewport}
+          transition={revealTransition()}
           className={`relative overflow-hidden rounded-[2rem] px-8 py-20 text-center md:px-16 md:py-24 ${
             dark
               ? "border border-foreground/10 bg-elevated text-foreground light:shadow-[0_30px_80px_-50px_rgba(24,73,220,0.35)]"

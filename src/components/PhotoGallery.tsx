@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 import type { GalleryItem } from "./galleryImages";
 
@@ -22,11 +23,11 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const grid = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.07 } },
+  show: { transition: { staggerChildren: 0.05 } },
 };
 const tile = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+  hidden: revealHidden,
+  show: { ...revealShown, transition: revealTransition() },
 };
 
 /**
@@ -112,7 +113,7 @@ export function PhotoGallery({ items, captions, labels, featured = true, altPref
         variants={grid}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={revealViewport}
         className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 [grid-auto-flow:dense]"
       >
         {items.map((it, i) => {

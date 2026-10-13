@@ -3,12 +3,14 @@
 import Link from "next/link";
 import type { ImmersiveHeroDict } from "@/app/[lang]/dictSlices";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/useTheme";
+import { setHeroState } from "@/components/heroReady";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
-type Props = { lang: Locale; dict: ImmersiveHeroDict };
+// fontClass: next/font variable class that defines --font-playfair (see [lang]/page.tsx).
+type Props = { lang: Locale; dict: ImmersiveHeroDict; fontClass?: string };
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -27,14 +29,24 @@ const subscribeLite = (cb: () => void) => {
 // WebGL scene — client-only (no SSR).
 const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Hero3D), { ssr: false });
 
-export function ImmersiveHero({ lang, dict }: Props) {
+const markHeroReady = () => setHeroState("ready");
+
+export function ImmersiveHero({ lang, dict, fontClass }: Props) {
   const h = dict.heroImmersive;
   const sectionRef = useRef<HTMLElement>(null);
+  const glowWrapRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(true);
   // Touch / small screens get the lighter render tier (see Hero3D `lite`).
   const lite = useSyncExternalStore(subscribeLite, getLite, () => false);
   const theme = useTheme();
+
+  // Tell the intro curtain there is a hero to wait for. Layout effect so it runs
+  // before <Loader/>'s passive effect decides how long to stay up.
+  useLayoutEffect(() => {
+    setHeroState("pending");
+    return () => setHeroState("none");
+  }, []);
 
   // Only pause the 3D render loop once the hero is fully off-screen (not visible →
   // no point spending GPU). While any part of the hero is on screen it keeps animating.
@@ -46,15 +58,19 @@ export function ImmersiveHero({ lang, dict }: Props) {
     return () => io.disconnect();
   }, []);
 
+  // Cursor glow: one pre-painted 840px radial layer (.hero-glow) moved with
+  // transform — compositor-only — instead of re-rasterising a full-section
+  // gradient on every mousemove. The wrapper only fades in/out.
   const onMove = (e: React.MouseEvent<HTMLElement>) => {
-    const el = glowRef.current;
-    if (!el) return;
+    const wrap = glowWrapRef.current;
+    const glow = glowRef.current;
+    if (!wrap || !glow) return;
     const r = e.currentTarget.getBoundingClientRect();
-    el.style.background = `radial-gradient(420px circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(0,229,255,0.14), rgba(155,107,255,0.08) 42%, transparent 70%)`;
-    el.style.opacity = "1";
+    glow.style.transform = `translate3d(${e.clientX - r.left - 420}px, ${e.clientY - r.top - 420}px, 0)`;
+    if (wrap.style.opacity !== "1") wrap.style.opacity = "1";
   };
   const onLeave = () => {
-    if (glowRef.current) glowRef.current.style.opacity = "0";
+    if (glowWrapRef.current) glowWrapRef.current.style.opacity = "0";
   };
 
   return (
@@ -62,16 +78,18 @@ export function ImmersiveHero({ lang, dict }: Props) {
       ref={sectionRef}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className="relative isolate flex min-h-[100svh] items-center overflow-hidden text-foreground"
+      className={`relative isolate flex min-h-[100svh] items-center overflow-hidden text-foreground ${fontClass ?? ""}`}
     >
       {/* dark base */}
       <div aria-hidden className="hero-base absolute inset-0 z-0" />
       {/* 3D scene */}
       <div className="absolute inset-0 z-0">
-        <Hero3D active={active} lite={lite} light={theme === "light"} />
+        <Hero3D active={active} lite={lite} light={theme === "light"} onReady={markHeroReady} />
       </div>
       {/* cursor glow */}
-      <div ref={glowRef} aria-hidden className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300" />
+      <div ref={glowWrapRef} aria-hidden className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300">
+        <div ref={glowRef} className="hero-glow" />
+      </div>
       {/* legibility scrim — left/bottom heavy so the headline reads over the scene */}
       <div aria-hidden className="hero-scrim absolute inset-0 z-[5]" />
 

@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import type { HomeFeaturesDict } from "@/app/[lang]/dictSlices";
 
 type Props = { dict: HomeFeaturesDict };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const stroke = {
   fill: "none",
@@ -64,10 +63,10 @@ export function HomeFeatures({ dict }: Props) {
           {dict.hero.features.map((f, idx) => (
             <motion.div
               key={f.title}
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.1 }}
+              initial={revealHidden}
+              whileInView={revealShown}
+              viewport={revealViewport}
+              transition={revealTransition(idx * 0.06)}
               className="flex flex-col items-center text-center"
             >
               <span aria-hidden className="block h-8 w-8 text-foreground/75 md:h-9 md:w-9">

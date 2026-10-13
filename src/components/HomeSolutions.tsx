@@ -4,12 +4,11 @@ import Image from "next/image";
 import type { HomeSolutionsDict } from "@/app/[lang]/dictSlices";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import { scenarioImages } from "@/components/scenarioImages";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
 type Props = { dict: HomeSolutionsDict; lang: Locale };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Home "applications" — the 8 real scenarios from /solutions, grouped by
@@ -24,10 +23,10 @@ export function HomeSolutions({ dict, lang }: Props) {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: easeOut }}
+          initial={revealHidden}
+          whileInView={revealShown}
+          viewport={revealViewport}
+          transition={revealTransition()}
           className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
         >
           <div className="max-w-2xl">
@@ -57,10 +56,10 @@ export function HomeSolutions({ dict, lang }: Props) {
             return (
               <motion.div
                 key={g.key}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, ease: easeOut }}
+                initial={revealHidden}
+                whileInView={revealShown}
+                viewport={revealViewport}
+                transition={revealTransition()}
                 className={`grid gap-5 lg:grid-cols-12 lg:gap-6 ${mirror ? "lg:[&>:first-child]:order-2" : ""}`}
               >
                 {/* product-line hero photo */}
@@ -73,6 +72,9 @@ export function HomeSolutions({ dict, lang }: Props) {
                       src={heroImg}
                       alt={g.product}
                       fill
+                      // First group's photo is within ~2 screens of the hero: load it with
+                      // the page so it isn't decoded + uploaded mid-scroll.
+                      loading={gi === 0 ? "eager" : undefined}
                       sizes="(min-width: 1024px) 40vw, 100vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     />

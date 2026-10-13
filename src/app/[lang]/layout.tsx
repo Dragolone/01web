@@ -88,6 +88,11 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       // Light by default; the script below may flip it to dark before hydration.
       data-theme="light"
+      // globals.css gives anchor links `scroll-behavior: smooth`. Next 16 no longer
+      // overrides that during navigation, so without this flag the scroll-to-top of
+      // every route change animated underneath the page transition (new page slid
+      // up ~1500px while fading in). See next docs: upgrading/version-16.
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>

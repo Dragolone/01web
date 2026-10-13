@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap');
 @import "tailwindcss";
 
-.font-playfair { font-family: 'Playfair Display', serif; }
+/* Playfair Display is self-hosted via next/font/local in [lang]/page.tsx, which sets
+   --font-playfair on the home hero (the only place it is used). */
+.font-playfair { font-family: var(--font-playfair, "Playfair Display"), serif; }
 
 /* Immersive hero entrance animations */
 @keyframes heroReveal { 0%{opacity:0;transform:translateY(28px);filter:blur(12px)} 100%{opacity:1;transform:translateY(0);filter:blur(0)} }
@@ -140,6 +141,19 @@ html[data-theme="light"] body {
   background: radial-gradient(62% 60% at 28% 50%, rgba(245, 247, 251, 0.7) 0%, transparent 75%);
 }
 
+/* Home hero cursor glow (ImmersiveHero onMove): an 840px square painted once and
+   translated to the pointer — the old version re-rasterised a full-section
+   gradient with mix-blend-mode on every mousemove. */
+.hero-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 840px;
+  height: 840px;
+  background: radial-gradient(420px circle at center, rgba(0, 229, 255, 0.14), rgba(155, 107, 255, 0.08) 42%, transparent 70%);
+  will-change: transform;
+}
+
 /* Home hero headline. Dark: white + white→periwinkle (unchanged). Light: deep navy→brand
    blue on line 1, and a slowly flowing cyan→blue→violet sweep on line 2. */
 .hero-title-1 { color: #ffffff; }
@@ -198,15 +212,16 @@ html[data-theme="light"] body {
 }
 
 /* Card cursor-follow glow + hover gradient border — see <CardFx/>.
-   --fx-color defaults to cyan (dark cards); pass a prop to override. */
-@property --fx-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
+   Compositor-only on purpose (2026-10-14): the glow is one pre-painted radial
+   layer moved with transform (no gradient re-raster per pointermove), and the
+   border is a static 1px ring mask over a conic-gradient layer that rotates with
+   transform. Hover effects must only write transform/opacity — never gradient
+   positions, custom properties or `transition-all` (each of those repaints the
+   whole card every frame). --fx-color defaults to cyan (dark cards); pass a prop
+   to override. */
 @keyframes fxBorderSpin {
   to {
-    --fx-angle: 360deg;
+    transform: rotate(360deg);
   }
 }
 .card-fx {
@@ -216,18 +231,26 @@ html[data-theme="light"] body {
   overflow: hidden;
   pointer-events: none;
 }
+/* Square layer twice the glow radius, centred on the card's top-left corner;
+   <CardFx/> translates it to the pointer. Same gradient as before, painted once. */
 .card-fx__glow {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
+  top: calc(var(--fx-size, 340px) * -1);
+  left: calc(var(--fx-size, 340px) * -1);
+  width: calc(var(--fx-size, 340px) * 2);
+  height: calc(var(--fx-size, 340px) * 2);
   opacity: 0;
   transition: opacity 0.35s ease;
   mix-blend-mode: plus-lighter;
   background: radial-gradient(
-    var(--fx-size, 340px) circle at var(--fx-x, 50%) var(--fx-y, 50%),
+    var(--fx-size, 340px) circle at center,
     var(--fx-color, rgba(92, 240, 255, 0.14)),
     transparent 60%
   );
+}
+/* Promote only while hovered so idle cards hold no extra GPU textures. */
+.card-fx.on .card-fx__glow {
+  will-change: transform;
 }
 .card-fx__border {
   position: absolute;
@@ -235,21 +258,35 @@ html[data-theme="light"] body {
   border-radius: inherit;
   padding: 1px;
   opacity: 0;
+  overflow: hidden;
   transition: opacity 0.4s ease;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+/* The rotating conic layer: a square the size of the card's diagonal (--fx-diag,
+   set by <CardFx/> on hover) so the ring stays covered at every angle. */
+.card-fx__border::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--fx-diag, 150%);
+  height: var(--fx-diag, 150%);
+  margin: calc(var(--fx-diag, 150%) / -2) 0 0 calc(var(--fx-diag, 150%) / -2);
   background: conic-gradient(
-    from var(--fx-angle),
+    from 0deg,
     transparent 0deg,
     var(--fx-color, #5cf0ff) 70deg,
     #ffffff 110deg,
     transparent 180deg,
     transparent 360deg
   );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
 }
 .card-fx__border.on {
   opacity: 1;
+}
+.card-fx__border.on::before {
   animation: fxBorderSpin 5s linear infinite;
 }
 

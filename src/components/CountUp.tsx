@@ -12,7 +12,7 @@ type Props = { value: string; className?: string };
 
 export function CountUp({ value, className }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "0px 0px -5% 0px" }); // same trigger as components/reveal.ts
   // Memoized so the match array keeps a stable identity across renders — otherwise
   // it would be a new object each render and retrigger the effect, restarting the
   // animation forever (the number would never settle).

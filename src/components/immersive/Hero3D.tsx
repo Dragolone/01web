@@ -1,8 +1,8 @@
 "use client";
 
 import * as THREE from "three";
-import { useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Environment, Lightformer, Sparkles, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette, Noise, ChromaticAberration } from "@react-three/postprocessing";
 import { useReducedMotion } from "framer-motion";
@@ -134,22 +134,64 @@ function Turbine({ reduce, light }: { reduce: boolean | null; light: boolean }) 
 }
 
 /**
+ * Compiles every material before the first visible frame. three's compileAsync
+ * uses KHR_parallel_shader_compile, so the GPU links the shaders in the
+ * background instead of freezing the main thread: on a first visit (empty shader
+ * cache) the old synchronous first frame cost 3 long tasks / ~1.1s, landing
+ * exactly while the intro curtain lifted. One hidden advance() afterwards warms
+ * the post-processing passes too. A 4s cap guarantees the hero always appears.
+ */
+function Precompile({ onReady }: { onReady: () => void }) {
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+  const camera = useThree((s) => s.camera);
+  const advance = useThree((s) => s.advance);
+
+  useEffect(() => {
+    let finished = false;
+    const done = () => {
+      if (finished) return;
+      finished = true;
+      try {
+        advance(performance.now());
+      } catch {}
+      onReady();
+    };
+    gl.compileAsync(scene, camera).then(done, done);
+    const cap = setTimeout(done, 4000);
+    return () => {
+      finished = true;
+      clearTimeout(cap);
+    };
+  }, [gl, scene, camera, advance, onReady]);
+
+  return null;
+}
+
+/**
  * `lite` = touch/small-screen tier only (set by ImmersiveHero): lower dpr, half
  * the sparkles, no chromatic aberration / film noise passes. Desktop keeps the
  * full effect — do not lower desktop quality for performance (user decision).
  */
-export function Hero3D({ active = true, lite = false, light = false }: { active?: boolean; lite?: boolean; light?: boolean }) {
+export function Hero3D({ active = true, lite = false, light = false, onReady }: { active?: boolean; lite?: boolean; light?: boolean; /** Fired once the shaders are compiled (the intro curtain waits for this). */ onReady?: () => void }) {
   const reduce = useReducedMotion();
   const sparkle = (n: number) => (lite ? Math.round(n / 2) : n);
+  // Shaders compiled → start the loop and fade the scene in (see <Precompile/>).
+  const [ready, setReady] = useState(false);
+  const handleReady = useCallback(() => {
+    setReady(true);
+    onReady?.();
+  }, [onReady]);
 
   return (
     <Canvas
-      // Pause the render loop when the hero is scrolled out of view (perf).
-      frameloop={active ? "always" : "never"}
+      // Loop stays off until every shader is compiled (<Precompile/>), and pauses
+      // while the hero is scrolled out of view (perf).
+      frameloop={active && ready ? "always" : "never"}
       dpr={lite ? [1, 1.25] : [1, 1.8]}
       camera={{ position: [0, 0, 6], fov: 42 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      style={{ background: "transparent" }}
+      style={{ background: "transparent", opacity: ready ? 1 : 0, transition: "opacity 700ms ease" }}
     >
       <fog attach="fog" args={[light ? "#eef3fd" : "#080619", 8, 22]} />
       <ambientLight intensity={light ? 0.6 : 0.25} />
@@ -215,6 +257,7 @@ export function Hero3D({ active = true, lite = false, light = false }: { active?
           ...(lite || light ? [] : [<Noise key="noise" opacity={0.028} />]),
         ]}
       </EffectComposer>
+      <Precompile onReady={handleReady} />
     </Canvas>
   );
 }

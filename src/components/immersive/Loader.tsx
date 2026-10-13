@@ -1,8 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { getHeroState, getServerHeroState, subscribeHeroState } from "@/components/heroReady";
+
+// Curtain timing, measured from navigation start (performance.now()):
+//   MIN — stays up at least this long so the logo + line read as intentional.
+//   CAP — never later than this, whatever the hero is still doing.
+// Between the two it lifts as soon as the home hero's shaders are compiled
+// (components/heroReady.ts). It used to wait for window.load — every image plus
+// the 1.2MB three.js chunk — which kept it up 2s on 4G and 7s on 3G for nothing
+// the first screen needed; inner pages (no hero) now lift at MIN.
+const MIN = 500;
+const CAP = 1200;
 
 /**
  * Intro curtain — a brief branded overlay that lifts to reveal the page on the
@@ -13,24 +24,17 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 export function Loader() {
   const reduce = useReducedMotion();
   const [finished, setFinished] = useState(false);
+  const hero = useSyncExternalStore(subscribeHeroState, getHeroState, getServerHeroState);
   const done = Boolean(reduce) || finished;
 
   useEffect(() => {
-    if (reduce) return;
-    const MIN = 500; // keep the curtain up long enough to feel intentional
-    const t0 = performance.now();
-    let timer: ReturnType<typeof setTimeout>;
-    const finish = () => {
-      const wait = Math.max(0, MIN - (performance.now() - t0));
-      timer = setTimeout(() => setFinished(true), wait);
-    };
-    if (document.readyState === "complete") finish();
-    else window.addEventListener("load", finish, { once: true });
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("load", finish);
-    };
-  }, [reduce]);
+    if (reduce || finished) return;
+    const elapsed = performance.now();
+    // "pending": hold for the hero, but never past CAP. "ready" / "none": lift at MIN.
+    const at = hero === "pending" ? CAP : MIN;
+    const timer = setTimeout(() => setFinished(true), Math.max(0, at - elapsed));
+    return () => clearTimeout(timer);
+  }, [reduce, finished, hero]);
 
   return (
     <AnimatePresence>

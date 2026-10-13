@@ -94,18 +94,18 @@
 
 - **全站深色**：`globals.css` 主题 token 已翻深色（`--background:#070a18` / `--foreground` 浅 / `--surface` 半透明白玻璃 / `--border` 浅）。**所有用语义 token 的组件自动深色**。body 科技图标矩阵 tint 改成浅蓝（`rgba(150,176,255,...)`）。内页（产品/详情/方案/关于/联系/404）也全深色：开场是深色 hero，正文经 token 自动深色但仍可读。
 - **新依赖（已装，React 19 兼容）**：`three` ^0.184 / `@react-three/fiber` ^9 / `@react-three/drei` ^10 / `@react-three/postprocessing` ^3 / `@pmndrs/assets`（CC0 HDRI，本地打包离线用）。→ 「不引入重型 3D 库」这条**已被用户明确要求推翻**。
-- **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。配色青/品红/蓝/紫赛博霓虹。**性能旋钮 + 用户偏好（2026-06-19，重要）**：可调的有 `dpr`（当前 `[1,1.8]`）/ Sparkles 粒子数（当前 ~960 = 520+280+160）/ EffectComposer 后处理 pass（Bloom+色散+Vignette+Noise 全开）。但用户**明确要效果优先**，**已否过「滚动时暂停渲染」和「降画质/大幅减粒子」**——别再为性能去停涡轮或砍画质，最多按用户口令微调一档；离屏暂停只保留 `IntersectionObserver threshold:0`（完全看不见才 `never`，不要再加「滚动手势中暂停」那套）。
-- **immersive 组件目录** `components/immersive/`：`ImmersiveHero` / `Hero3D` / `Loader`（开场幕布，挂 layout）/ `ScrollProgress`（顶部霓虹进度条，挂 layout）。`[lang]/template.tsx` = 路由切换淡入转场。（历史上还做过 ParticleField/TerrainField/ShaderField/HoloDrone，均被否后删除——别找。）
+- **首页 3D Hero**：`components/immersive/Hero3D.tsx` = 工业**涡轮引擎**（金属环+旋转扇叶+发光核心+霓虹反射+Bloom/Vignette/色散），可拖拽、鼠标倾斜。`ImmersiveHero.tsx` 包裹它 + 文案/标签/CTA。**性能关键：Hero3D `frameloop` 由可见性门控（离屏 `never` 暂停），别删——这是滚动卡顿的修复**。**2026-10-14 又加了 `<Precompile/>`（Hero3D.tsx 内）**：`gl.compileAsync(scene, camera)` 走 KHR_parallel_shader_compile 在后台编译全部材质，再一次隐藏 `advance()` 预热后处理，就绪前 `frameloop="never"` 且画布 opacity 0，就绪后 700ms 淡入，4s 兜底必显示。实测全新浏览器（空着色器缓存）首访从 3 个长任务共 1.1s 降到 0 个。**别删，也别去掉 `ready` 门控**（R3F 在 `never` 下不会渲染首帧，这正是预热能成立的前提）。配色青/品红/蓝/紫赛博霓虹。**性能旋钮 + 用户偏好（2026-06-19，重要）**：可调的有 `dpr`（当前 `[1,1.8]`）/ Sparkles 粒子数（当前 ~960 = 520+280+160）/ EffectComposer 后处理 pass（Bloom+色散+Vignette+Noise 全开）。但用户**明确要效果优先**，**已否过「滚动时暂停渲染」和「降画质/大幅减粒子」**——别再为性能去停涡轮或砍画质，最多按用户口令微调一档；离屏暂停只保留 `IntersectionObserver threshold:0`（完全看不见才 `never`，不要再加「滚动手势中暂停」那套）。
+- **immersive 组件目录** `components/immersive/`：`ImmersiveHero` / `Hero3D` / `Loader`（开场幕布，挂 layout）/ `ScrollProgress`（顶部霓虹进度条，挂 layout）。`[lang]/template.tsx` = 路由切换淡入转场。**Loader 的掀开时机见 `components/heroReady.ts`（2026-10-14）：等 hero 着色器编译完，500ms ≤ 时长 ≤ 1200ms，别改回等 `window.load`。**（历史上还做过 ParticleField/TerrainField/ShaderField/HoloDrone，均被否后删除——别找。）
 - **首页叙事 section（顺序，2026-09-08 后）**：ImmersiveHero → HomeFeatures(4 张具体文案卡) → ProductMatrix → **HomeSolutions(实景图 + 8 场景列表)** → **HomeAbout(关于我们预览)** → **HomeGalleryStrip(实景胶片带)** → TechCapabilities(商业价值) → HomeCTA。~~HomeCapabilities~~ / ~~HomeTech~~ 已删。首页 Hero 以下的内容包在一个统一背景容器里（`[lang]/page.tsx`：底色层 + 点阵 + 光晕）。**2026-09-30 起容器边缘做渐隐**：点阵/光晕顶部 360px 渐入、底部 320px 渐出，底色层底部 320px 渐隐让页脚的全站纹理逐渐浮现——用户嫌 Hero↔内容、内容↔页脚两处「过渡不均匀」（原来光晕圆心贴边被裁出横线）。**别再给容器直接加 `bg-background` 或把光晕圆心放到 0%/100% 边上**。HomeFeatures（Hero 下 4 项卖点）同日改成图一式无卡片居中排版（线稿图标 + 标题 + 描述，`text-balance` + `md:break-keep`），用户嫌卡片 AI 化，别改回卡片。
 - **`theme="dark"` 变体**：`ProductMatrix`/`HomeCapabilities`/`HomeCTA` 有 `theme?:"dark"` prop；首页与产品页都传 `dark`（玻璃卡+霓虹）。它们的浅色分支基本已不用（全站深色）。
 - **新增字典 key（三语已同步）**：`heroImmersive`（title1/title2/subtitle/tags/ctaPrimary/ctaSecondary）、`homeSolutions`、`tech` 增 `metric/note/disclaimer`。**新增产品定位已拓宽**到「机器人 / 无人机 / AIoT / 智能硬件 / 自动化解决方案 / 智慧园区 / 远程运维平台」（用户亲自定的对外定位，非编造；与那个机器人小程序的真实 IoT/控制台能力一致）。
 - **导航栏**：始终白字白 logo（`brightness-0 invert`），滚动后变**深色玻璃**（不再白条）。
-- **字体**：新增 Playfair Display（仅英文点缀，如 hero 的 `ZERO-ONE INNOVATION`）；正文仍 Geist。
+- **字体**：新增 Playfair Display（仅英文点缀，如 hero 的 `ZERO-ONE INNOVATION`）；正文仍 Geist。2026-10-14 改为 `next/font/local` 自托管（`src/fonts/PlayfairDisplay-Italic.woff2`，latin 子集 italic 400，22KB，OFL），`.font-playfair` 读 `--font-playfair`，变量类由 `[lang]/page.tsx` 经 `ImmersiveHero` 的 `fontClass` prop 挂到 hero section 上。别再写 Google Fonts 的 `@import`（大陆不可达，且构建会丢）。
 - **背景纹理**：全站「直线网格」已统一换成**柔和点阵**（`radial-gradient` 圆点，用户嫌横竖线不自然）。
 - **作废的旧约定**（下方仍能看到，但**以本节为准**）：①「off-white #fafbfe 底色」→ 已深色；②「不要在白→黑加 fade overlay」→ 现到处用深↔浅渐变过渡且 OK；③「max-w-[88rem]」→ 已全站改 **96rem**；④「极简/不过度设计」视觉层面已不适用。
 - **品牌名**：首页文案统一用「零一唯创」，**别写「01唯创」**（用户 2026-06-18 纠正过）。英文 `Zero-One Innovation`（en.json `brand.name` 曾是 `ZERO-ONE`，9-24 改正；繁体 `零一唯創`）。
 - **2026-06-19 视觉/性能/PWA 轮（已 push main）**：
-  - **卡片光效** `components/CardFx.tsx`：鼠标跟随光斑 + 悬停流光渐变边框，作为 overlay drop-in 嵌进各卡片网格（ProductMatrix/TechCapabilities；HomeSolutions/HomeCapabilities/HomeTech 已删或改版不再用）。`pointer-events-none` 不挡 Link；边框动画只在 hover 跑（idle 零开销）。样式在 `globals.css .card-fx*`（含 `@property --fx-angle`）。深色卡用青、浅色分支传 brand 蓝。
+  - **卡片光效** `components/CardFx.tsx`：鼠标跟随光斑 + 悬停流光渐变边框，作为 overlay drop-in 嵌进各卡片网格（ProductMatrix/TechCapabilities；HomeSolutions/HomeCapabilities/HomeTech 已删或改版不再用）。`pointer-events-none` 不挡 Link；边框动画只在 hover 跑（idle 零开销）。样式在 `globals.css .card-fx*`。深色卡用青、浅色分支传 brand 蓝。**2026-10-14 改成纯合成层实现**（外观逐像素不变）：光斑是一张 2×半径的方形渐变层，`CardFx` 用 `transform: translate3d` 把它挪到指针处；流光边框是静态 1px 环形 mask 下的 `::before` conic 层做 `rotate` 动画，尺寸 = 卡片对角线（hover 时 JS 写 `--fx-diag`）；`.card-fx.on` 只在 hover 期间给光斑 `will-change`。首页 hero 的指针光斑同理（`ImmersiveHero` + `.hero-glow` 840px 层）。ProductMatrix / TechCapabilities 卡片的 `transition-all` 已改成显式属性列表。实测 150 次 mousemove 的 Paint 从 449 次降到个位数、GPU 从 ~200ms 降到 ~15ms。
   - **数字滚动计数** `components/CountUp.tsx`：滚到视口 0→目标值。**SSR 渲染真实值**（SEO/无 JS 安全），客户端 arm 到 0 再 count；范围/非数字（「百公里级」「8–16 月」「5,000→200」）原样不动。用在关于页市场表 + TechCapabilities metric。⚠️ **正则匹配必须 `useMemo` 缓存**——否则每帧 setState 重渲染产生新数组引用、effect 反复重启、数字永不停（踩过这个 bug）。
   - **film-grain 噪点**：`globals.css .film-grain` + layout 挂一层 fixed 噪点。**禁止用 `mix-blend-mode`**（fixed + blend = 每帧全屏重绘 = 滚动卡顿，踩过），改 `transform: translateZ(0)` 提成静态 GPU 合成层；触屏 `@media (hover:none)` 隐藏。
   - **PWA**：`app/manifest.ts`（深色启动屏 #070a18 / 用 `/icon.png` 512）。proxy matcher 已排除 `manifest.webmanifest`；layout `generateMetadata` 显式 `manifest`（动态根布局不自动注入，同 og:image 坑）。
@@ -138,7 +138,7 @@
 | 发信 | nodemailer | 仅 `api/contact` 用，SMTP 走 env |
 | 统计 | GA4（`next/script` 手写） | 仅生产 + `NEXT_PUBLIC_GA_ID`；见待办节 |
 | 3D / WebGL | three ^0.184 + @react-three/fiber ^9 + drei ^10 + postprocessing ^3 + @pmndrs/assets | 仅首页 Hero3D 用；client-only 动态加载(ssr:false)；见《沉浸式深色改版》 |
-| 字体 | + Playfair Display | 仅英文点缀；正文仍 Geist |
+| 字体 | + Playfair Display（`next/font/local` 自托管，文件在 `src/fonts/`，在 `[lang]/page.tsx` 声明、只在首页预加载） | 仅首页 hero 英文点缀；正文仍 Geist。**2026-10-14 之前它从未真正加载过**：globals.css 的 Google Fonts `@import` 被 Tailwind v4 构建丢掉，线上一直是系统衬线兜底 |
 | i18n | Next.js 16 原生 i18n routing | 不依赖 next-intl 等第三方库 |
 | 语言 | TypeScript | strict |
 | 字体 | Geist Sans / Mono + PingFang SC 备用 | |
@@ -259,7 +259,7 @@ Tailwind class 直接用：`bg-brand` / `text-brand` / `bg-brand-soft` / `text-m
 
 - **入场动画**：`initial={{ opacity: 0, y: 12-28 }}` → `animate={{ opacity: 1, y: 0 }}`
 - **缓动曲线**：`[0.16, 1, 0.3, 1]`（custom ease-out，所有组件统一）
-- **滚动揭示**：`whileInView` + `viewport={{ once: true, margin: "-100px" }}`
+- **滚动揭示**：统一走 `components/reveal.ts`（`revealHidden` / `revealShown` / `revealViewport` / `revealTransition(delay)`）：触发点 `margin: "0px 0px -5% 0px"`（元素顶边刚进视口 5% 就开始）、时长 0.5s、位移 16px、错峰 ≤0.06s/项。**2026-10-14 之前是 `-100px` + 0.7–0.9s + 28px，用户嫌内容「追着滚动跑」（按 800px/s 算元素过半屏才开始淡入），对照苹果改成早触发、短入场；别再手写 `viewport={{ margin: "-100px" }}`**
 - **悬停**：按钮 `hover:bg-brand-strong + shadow-lg shadow-brand/30`；卡片 `hover:-translate-y-1 + group-hover:scale-105` 图片放大
 - **浮动**：drone/robot 用 `animate={{ y: [0, -12, 0] }}` 6-7s 循环
 
@@ -371,6 +371,7 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
   - **首页大标题**：`.hero-title-1/.hero-title-2`（globals.css）。深色保持白 / 白→淡蓝；浅色是深蓝→品牌蓝 + 第二行青→蓝→紫缓慢流动渐变。
   - **解决方案页**：hero `compactBottom`，去掉与 hero 重复的「应用场景」标题，换成按产品线分组的 8 场景缩略图索引（`SolutionScenarios indexNav`，锚点跳到 `#key`，分组复用 `homeSolutions.groups`）。
   - **浅色主题**：导航栏 ☀/☾ 按钮切换，**默认浅色**（用户 9-24 定；SSR 直接输出 `html data-theme="light"`），存 `localStorage.theme`，layout `<head>` 内联脚本在首帧前按存储值改成 `dark`。PWA manifest 颜色也改成浅色 #f5f7fb。颜色全部走 token（globals.css：`--accent`/`--accent-soft`/`--card`/`--card-hover`/`--elevated`/`--btn`/`--btn-fg` 新增）；**新组件别再写死 `text-white`/`#5cf0ff`/`#9db8ff`/`bg-white text-[#0a1024]`**，用 `text-foreground`/`text-accent`/`text-accent-soft`/`bg-btn text-btn-fg`。**照片上的文字保留 `text-white`**（两种主题都在暗图上）。**首页也跟主题走**（用户 9-24 否掉了「浅色下 3D 首屏保持深色」，嫌深浅对比难看）：`Hero3D` 收 `light` prop（中灰钢材质、Environment 内 `<color attach="background">` 浅天空底让金属反射不发黑、蓝紫粒子、Bloom 阈值 0.85、去色散/暗角/噪点），`ImmersiveHero` 背景/遮罩走 `.hero-base/.hero-scrim/.hero-halo`（globals.css 有 light 覆盖）；TechCapabilities / HomeCTA 深色卡在浅色下变白卡。主题读取统一用 `components/useTheme.ts`（`useTheme()` / `setTheme()`）。`data-theme="dark"` 孤岛机制仍在（token 会在其内重置为深色），目前没有组件用。浅色下导航栏顶部也带半透明玻璃底（盖在涡轮上时要可读）。`light:` 自定义 variant 只用于 token 表达不了的（logo `light:invert-0`）。内页 hero 背景用 `.page-hero-bg`。根 `not-found.tsx` 也接了同样的主题脚本。
+- ✅ **转场 / 流畅度审视 + 修复轮（2026-10-14，未 commit）**：用户拿自己用 REA 分析苹果官网的文档（`~/Desktop/rea/apple-website-transition-analysis.md`）要求对照优化。方法：无头 Chrome + 自写 CDP 探针（rAF 帧间隔 / longtask / MutationObserver 数 style 写入 / `Performance.getMetrics` / devtools.timeline 聚合 Paint·Raster·GPU / 注入 CSS 做 A/B / 全新 `--user-data-dir` 模拟首次访客），同机测 apple.com、linear.app、stripe.com 对照。**结论：热缓存下首页滚动本来就满帧（CPU 降速 4 倍仍是），差距在首访冷启动、Loader、hover 机制、转场回顶、入场时机**。已改（外观不变）：① Hero3D `<Precompile/>`（见上）② `<html data-scroll-behavior="smooth">`（Next 16 不再在导航时覆盖 `scroll-behavior:smooth`，之前路由切换时回顶是 220ms 平滑滚动、在 View Transition 里肉眼可见）③ ProductMatrix 两张图 + HomeSolutions 首组图 `loading="eager"`（冷网络首次滚动丢帧 101→9）④ Playfair 自托管（见字体）⑤ hover 效果改纯合成层（见 CardFx）。**A/B 测过无差异、别为此改的**：`background-attachment:fixed`、浅色标题流光动画、ScrollProgress spring、film-grain、TechBackdrop、转场里的 blur。⑥ 滚动揭示统一走 `components/reveal.ts`（早触发、0.5s、16px，见「动效约定」；实测卡片顶边进视口 76px 时 0.8s 内已完全显示，旧配置此时还是 opacity 0；进 20px 时仍隐藏）。⑦ Loader 改等「hero 就绪」：`components/heroReady.ts` 极小信号（none / pending / ready），`ImmersiveHero` 在 layout effect 里标 pending、Hero3D `Precompile` 完成后标 ready；Loader 从导航开始计时，最短 500ms、上限 1200ms，内页（无 hero）按最短时间掀开，**不再等 `window.load`**。实测幕布消失：本地缓存 1.43→1.37s（掀开时涡轮已 100%）、4G 2.06→2.06s（触到上限，与旧版 load 时刻巧合相同）、fast 3G 6.92→4.74s——剩下的是水合本身（3G 下 ~600KB JS 要 3.9s；幕布是 SSR 出来的，要等 React 跑起来才能掀，而 hero 文案又是 framer `initial` 隐藏的，所以不能用纯 CSS 提前掀）。
 - ⏸ Cloudflare CDN：可选
 - 💡 部署环境也建议显式设 `NEXT_PUBLIC_SITE_URL=https://www.01weichuang.com`（与默认值双保险）
 - ⏸ 真客户/数字/资质 → 出现后再做信任凭证区，**不要造假**（见「公司当前阶段（事实）」表格）
@@ -453,6 +454,9 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 | **ProductMatrix 揭示别改回嵌套 whileInView** | 会漏触发导致第一张卡图片空白；用 variants 传播 |
 | **不写「已交付 / 量产 / 客户数」** | 用户 2026-08-25 确认没有实体和实测数据 |
 | **新增根级 metadata 路由记得加进 `proxy.ts` matcher** | manifest.webmanifest 已加；新增 manifest/ads.txt 等都要排除，否则被重定向到 /zh/... fetch 失败 |
+| **别删 `<html data-scroll-behavior="smooth">`** | globals.css 的 `scroll-behavior:smooth` 是给锚点用的；没有这个属性，Next 16 路由切换的回顶会在转场动画里平滑滚 1500px（实测 13 帧），新页面一边淡入一边往上窜 |
+| **Hero3D 的 `<Precompile/>` 和 `ready` 门控别动** | 首访空着色器缓存时同步编译会冻主线程 1.1s，正撞 Loader 上滑；预编译后为 0。别为了「早一点看到涡轮」把 opacity/frameloop 门控拿掉 |
+| **hover / 指针跟随效果只写 transform、opacity** | 旧版 CardFx 和 hero 光斑每次 mousemove 重写 background 渐变位置（CSS 变量），等于每帧重绘整张卡 / 整屏（实测 150 次移动 834 次 Paint）；卡片 `transition-all` 会把 box-shadow、颜色等全部拖进逐帧重绘。现在都是预先画好的图层做 translate / rotate，别改回去 |
 
 ## 本地开发
 

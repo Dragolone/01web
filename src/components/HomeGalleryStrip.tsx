@@ -4,12 +4,11 @@ import Image from "next/image";
 import type { HomeGalleryStripDict } from "@/app/[lang]/dictSlices";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport } from "@/components/reveal";
 import type { Locale } from "@/app/[lang]/dictionaries";
 import { homeStrip } from "./galleryImages";
 
 type Props = { dict: HomeGalleryStripDict; lang: Locale };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Full-bleed film strip of real photos (campus + partner factory) that drifts
@@ -24,10 +23,10 @@ export function HomeGalleryStrip({ dict, lang }: Props) {
   return (
     <section id="site-gallery" className="scroll-mt-20 py-20 md:py-28">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, ease: easeOut }}
+        initial={revealHidden}
+        whileInView={revealShown}
+        viewport={revealViewport}
+        transition={revealTransition()}
         className="mx-auto flex max-w-[96rem] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between lg:px-10"
       >
         <div className="max-w-2xl">

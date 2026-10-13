@@ -5,6 +5,7 @@ import type { ProductMatrixDict } from "@/app/[lang]/dictSlices";
 import Link from "next/link";
 import { ViewTransition } from "react";
 import { motion } from "framer-motion";
+import { revealHidden, revealShown, revealTransition, revealViewport, revealEase } from "@/components/reveal";
 import { CardFx } from "@/components/CardFx";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
@@ -13,8 +14,6 @@ import type { Locale } from "@/app/[lang]/dictionaries";
 type Props = { dict: ProductMatrixDict; lang: Locale; compactTop?: boolean; theme?: "dark"   /** Skip the eyebrow/title block (the products page hero already says it). */
   hideHeader?: boolean;
 };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 // Visual mapping — image file names are legacy and don't reflect contents:
 //   Real photos from the company production base (2026-09-19; the earlier
@@ -31,10 +30,10 @@ export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Pro
       <div className="mx-auto max-w-[96rem] px-6 lg:px-10">
         {!hideHeader && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: easeOut }}
+          initial={revealHidden}
+          whileInView={revealShown}
+          viewport={revealViewport}
+          transition={revealTransition()}
           className="max-w-2xl"
         >
           <p className={`inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase mb-3 ${dark ? "text-accent" : "text-brand"}`}>
@@ -60,12 +59,12 @@ export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Pro
                 key={item.key}
                 // Variants propagate to the image reveal below, so card + image
                 // always animate together (a nested whileInView could miss).
-                variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0 } }}
+                variants={{ hidden: revealHidden, show: revealShown }}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, ease: easeOut, delay: idx * 0.08 }}
-                className={`group relative rounded-3xl overflow-hidden border transition-all hover:-translate-y-1 active:translate-y-0 active:scale-[0.985] ${
+                viewport={revealViewport}
+                transition={revealTransition(idx * 0.05)}
+                className={`group relative rounded-3xl overflow-hidden border transition-[transform,border-color,box-shadow] hover:-translate-y-1 active:translate-y-0 active:scale-[0.985] ${
                   dark
                     ? "bg-card border-foreground/10 hover:border-accent/40 hover:shadow-xl hover:shadow-[#00e5ff]/10"
                     : "bg-surface border-transparent hover:border-border hover:shadow-xl hover:shadow-black/5"
@@ -81,7 +80,7 @@ export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Pro
                 <motion.div
                   variants={{
                     hidden: { clipPath: "inset(0 0 100% 0)" },
-                    show: { clipPath: "inset(0 0 0% 0)", transition: { duration: 0.9, ease: easeOut, delay: idx * 0.08 + 0.1 } },
+                    show: { clipPath: "inset(0 0 0% 0)", transition: { duration: 0.6, ease: revealEase, delay: idx * 0.05 + 0.05 } },
                   }}
                   className="aspect-[16/10] overflow-hidden"
                 >
@@ -90,6 +89,9 @@ export function ProductMatrix({ dict, lang, compactTop, theme, hideHeader }: Pro
                     alt={item.name}
                     width={800}
                     height={500}
+                    // First screen below the hero: fetch during page load instead of
+                    // mid-scroll (lazy images arriving while scrolling dropped frames).
+                    loading="eager"
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
