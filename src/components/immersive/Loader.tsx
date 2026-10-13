@@ -2,82 +2,86 @@
 
 import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { getHeroState, getServerHeroState, setCurtainLifting, subscribeHeroState } from "@/components/heroReady";
 
 // Curtain timing, measured from navigation start (performance.now()):
 //   MIN — stays up at least this long so the logo + line read as intentional.
-//   CAP — never later than this, whatever the hero is still doing.
-// Between the two it lifts as soon as the home hero's shaders are compiled
-// (components/heroReady.ts). It used to wait for window.load — every image plus
-// the 1.2MB three.js chunk — which kept it up 2s on 4G and 7s on 3G for nothing
-// the first screen needed; inner pages (no hero) now lift at MIN.
+//   GAP — breathing room after the hero reports ready, so its first real frames
+//         (render-target allocation, texture uploads) have settled before the
+//         curtain moves.
+//   CAP — safety net: lift even if the hero never reports ready (chunk never
+//         arrives). Generous on purpose: headline and turbine must enter
+//         together, so the curtain waits for the 3D scene — on fast 3G that chunk
+//         lands at ~6s. (A failed WebGL compile still reports ready within 4s.)
+// It used to wait for window.load — every image plus the 1.2MB three.js chunk.
+// Inner pages (no hero) lift at MIN.
 const MIN = 500;
-const CAP = 1200;
+const GAP = 150;
+const CAP = 8000;
+
+type Phase = "up" | "lifting" | "gone";
 
 /**
- * Intro curtain — a brief branded overlay that lifts to reveal the page on the
- * first full load. It only mounts once (it lives in the root layout, which
- * persists across client-side navigations) and is skipped entirely when the
- * user prefers reduced motion.
+ * Intro curtain — a branded overlay that lifts to reveal the page on the first
+ * full load. The lift is a CSS transition on transform (globals.css
+ * .loader-curtain--lift), so it runs on the compositor and keeps gliding even
+ * when the main thread is busy booting the WebGL hero. Mounts once (root
+ * layout), skipped entirely under prefers-reduced-motion.
  */
 export function Loader() {
   const reduce = useReducedMotion();
-  const [finished, setFinished] = useState(false);
   const hero = useSyncExternalStore(subscribeHeroState, getHeroState, getServerHeroState);
-  const done = Boolean(reduce) || finished;
+  const [phase, setPhase] = useState<Phase>("up");
 
+  // Decide when to lift.
   useEffect(() => {
-    if (reduce || finished) {
-      // No curtain (reduced motion) or already lifting: let the hero enter now.
+    if (reduce) {
+      // No curtain at all: let the hero enter straight away.
       setCurtainLifting();
       return;
     }
+    if (phase !== "up") return;
     const elapsed = performance.now();
-    // "pending": hold for the hero, but never past CAP. "ready" / "none": lift at MIN.
-    const at = hero === "pending" ? CAP : MIN;
+    const at = hero === "pending" ? CAP : hero === "ready" ? Math.max(MIN, elapsed + GAP) : MIN;
     const timer = setTimeout(() => {
-      setFinished(true);
+      setPhase("lifting");
       setCurtainLifting();
     }, Math.max(0, at - elapsed));
     return () => clearTimeout(timer);
-  }, [reduce, finished, hero]);
+  }, [reduce, phase, hero]);
+
+  // Remove the node once the transition is over (fallback timer in case the tab
+  // is hidden and transitionend never fires).
+  useEffect(() => {
+    if (phase !== "lifting") return;
+    const timer = setTimeout(() => setPhase("gone"), 1200);
+    return () => clearTimeout(timer);
+  }, [phase]);
+
+  if (reduce || phase === "gone") return null;
 
   return (
-    <AnimatePresence>
-      {!done && (
-        <motion.div
-          key="loader"
-          initial={{ opacity: 1 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center gap-6"
-          >
-            <Image
-              src="/brand/logo-512.png"
-              alt="零一唯创 Zero-One Innovation"
-              width={180}
-              height={46}
-              priority
-              className="h-9 w-auto brightness-0 invert light:invert-0"
-            />
-            <div className="h-px w-40 overflow-hidden bg-foreground/15">
-              <motion.div
-                className="h-full bg-foreground/70"
-                initial={{ x: "-100%" }}
-                animate={{ x: "0%" }}
-                transition={{ duration: 0.9, ease: "easeInOut" }}
-              />
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div
+      aria-hidden
+      onTransitionEnd={(e) => {
+        if (e.target === e.currentTarget && e.propertyName === "transform") setPhase("gone");
+      }}
+      className={`loader-curtain fixed inset-0 z-[100] flex items-center justify-center bg-background${phase === "lifting" ? " loader-curtain--lift" : ""}`}
+    >
+      <div className="loader-curtain__content flex flex-col items-center gap-6">
+        <Image
+          src="/brand/logo-512.png"
+          alt="零一唯创 Zero-One Innovation"
+          width={180}
+          height={46}
+          priority
+          className="h-9 w-auto brightness-0 invert light:invert-0"
+        />
+        <div className="h-px w-40 overflow-hidden bg-foreground/15">
+          <div className="loader-curtain__line h-full bg-foreground/70" />
+        </div>
+      </div>
+    </div>
   );
 }

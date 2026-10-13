@@ -149,19 +149,25 @@ function Precompile({ onReady }: { onReady: () => void }) {
 
   useEffect(() => {
     let finished = false;
+    let raf = 0;
     const done = () => {
       if (finished) return;
       finished = true;
       try {
         advance(performance.now());
       } catch {}
-      onReady();
+      // Two frames later: the warm-up frame's GPU work (render targets, uploads)
+      // has drained, so the curtain lift that follows starts on a quiet GPU.
+      raf = requestAnimationFrame(() => {
+        raf = requestAnimationFrame(onReady);
+      });
     };
     gl.compileAsync(scene, camera).then(done, done);
     const cap = setTimeout(done, 4000);
     return () => {
       finished = true;
       clearTimeout(cap);
+      cancelAnimationFrame(raf);
     };
   }, [gl, scene, camera, advance, onReady]);
 

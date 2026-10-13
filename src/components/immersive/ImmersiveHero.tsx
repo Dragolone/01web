@@ -3,16 +3,17 @@
 import Link from "next/link";
 import type { ImmersiveHeroDict } from "@/app/[lang]/dictSlices";
 import dynamic from "next/dynamic";
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
-import { motion } from "framer-motion";
+import { Component, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+
+// If the curtain has lifted but the 3D scene still is not ready after this long
+// (chunk never arrived), show the copy on its own rather than never.
+const ENTER_FALLBACK_MS = 3000;
 import { useTheme } from "@/components/useTheme";
-import { getCurtainState, getServerCurtainState, setHeroState, subscribeHeroState } from "@/components/heroReady";
+import { getCurtainState, getHeroState, getServerCurtainState, getServerHeroState, setHeroState, subscribeHeroState } from "@/components/heroReady";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
 // fontClass: next/font variable class that defines --font-playfair (see [lang]/page.tsx).
 type Props = { lang: Locale; dict: ImmersiveHeroDict; fontClass?: string };
-
-const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const LITE_QUERY = "(hover: none) and (pointer: coarse)";
 const getLite = () => window.matchMedia(LITE_QUERY).matches || window.innerWidth < 768;
@@ -34,6 +35,23 @@ if (typeof window !== "undefined") void import("./Hero3D");
 
 const markHeroReady = () => setHeroState("ready");
 
+// The 3D scene is decoration: if its chunk fails to load (flaky overseas link)
+// or it throws, drop the scene instead of letting the error reach the route
+// boundary (which replaced the whole page with the error screen), and report
+// "ready" so the copy still enters.
+class SceneBoundary extends Component<{ children: React.ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    markHeroReady();
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
 export function ImmersiveHero({ lang, dict, fontClass }: Props) {
   const h = dict.heroImmersive;
   const sectionRef = useRef<HTMLElement>(null);
@@ -43,12 +61,19 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
   // Touch / small screens get the lighter render tier (see Hero3D `lite`).
   const lite = useSyncExternalStore(subscribeLite, getLite, () => false);
   const theme = useTheme();
-  // Entrance choreography starts when the curtain begins to lift (or at once when
-  // there is no curtain: reduced motion, or a later client-side navigation). The
-  // delays below are measured from that moment; the curtain takes ~0.8s to clear
-  // the headline, so the rise is timed to play once it is actually uncovered.
+  // Entrance: headline and turbine must arrive together, so both key off the same
+  // moment — the curtain has started lifting AND the 3D scene is compiled. That is
+  // one React commit: `.hero-enter` goes on the section (CSS entrance, globals.css)
+  // and `reveal` goes to Hero3D (canvas fade + settle) at the same time.
   const lifted = useSyncExternalStore(subscribeHeroState, getCurtainState, getServerCurtainState) === "lifting";
-  const enter = <T,>(shown: T, hidden: T): T => (lifted ? shown : hidden);
+  const heroReady = useSyncExternalStore(subscribeHeroState, getHeroState, getServerHeroState) === "ready";
+  const [forced, setForced] = useState(false);
+  useEffect(() => {
+    if (!lifted || heroReady) return;
+    const t = setTimeout(() => setForced(true), ENTER_FALLBACK_MS);
+    return () => clearTimeout(t);
+  }, [lifted, heroReady]);
+  const enterNow = lifted && (heroReady || forced);
 
   // Tell the intro curtain there is a hero to wait for. Layout effect so it runs
   // before <Loader/>'s passive effect decides how long to stay up.
@@ -87,13 +112,15 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
       ref={sectionRef}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className={`relative isolate flex min-h-[100svh] items-center overflow-hidden text-foreground ${fontClass ?? ""}`}
+      className={`relative isolate flex min-h-[100svh] items-center overflow-hidden text-foreground ${fontClass ?? ""}${enterNow ? " hero-enter" : ""}`}
     >
       {/* dark base */}
       <div aria-hidden className="hero-base absolute inset-0 z-0" />
       {/* 3D scene */}
       <div className="absolute inset-0 z-0">
-        <Hero3D active={active} lite={lite} light={theme === "light"} onReady={markHeroReady} reveal={lifted} />
+        <SceneBoundary>
+          <Hero3D active={active} lite={lite} light={theme === "light"} onReady={markHeroReady} reveal={enterNow} />
+        </SceneBoundary>
       </div>
       {/* cursor glow */}
       <div ref={glowWrapRef} aria-hidden className="pointer-events-none absolute inset-0 z-[4] opacity-0 mix-blend-screen transition-opacity duration-300">
@@ -102,59 +129,50 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
       {/* legibility scrim — left/bottom heavy so the headline reads over the scene */}
       <div aria-hidden className="hero-scrim absolute inset-0 z-[5]" />
 
-      {/* copy */}
+      {/* copy — entrance is CSS (globals.css .hero-in*), started by `.hero-enter` on the
+          section in the same commit that reveals the turbine. --d/--dur/--y per element. */}
       <div className="relative z-10 mx-auto w-full max-w-[96rem] px-6 lg:px-10">
         <div className="relative max-w-2xl">
           {/* borderless soft dark halo for legibility (no panel/edge) */}
           <div aria-hidden className="hero-halo absolute -inset-x-10 -inset-y-12 -z-10" />
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={enter({ opacity: 1, y: 0 }, { opacity: 0, y: 16 })}
-            transition={{ duration: 0.7, ease: easeOut, delay: 0.45 }}
-            className="font-playfair text-base italic text-foreground/70 sm:text-lg"
+          <p
+            style={{ "--d": "0.45s", "--dur": "0.7s", "--y": "16px" } as React.CSSProperties}
+            className="hero-in font-playfair text-base italic text-foreground/70 sm:text-lg"
           >
             {dict.brand.nameEn}
-          </motion.p>
+          </p>
 
           <h1 className="mt-4 text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
             <span className="block overflow-hidden pb-[0.08em]">
-              <motion.span
-                initial={{ y: "115%" }}
-                animate={enter({ y: 0 }, { y: "115%" })}
-                transition={{ duration: 1, ease: easeOut, delay: 0.55 }}
-                className="hero-title-1 inline-block"
+              <span
+                style={{ "--d": "0.55s", "--dur": "1s" } as React.CSSProperties}
+                className="hero-in hero-in--rise hero-title-1 inline-block"
               >
                 {h.title1}
-              </motion.span>
+              </span>
             </span>
             <span className="block overflow-hidden pb-[0.08em]">
-              <motion.span
-                initial={{ y: "115%" }}
-                animate={enter({ y: 0 }, { y: "115%" })}
-                transition={{ duration: 1, ease: easeOut, delay: 0.69 }}
-                className="hero-title-2 inline-block"
+              <span
+                style={{ "--d": "0.69s", "--dur": "1s" } as React.CSSProperties}
+                className="hero-in hero-in--rise hero-title-2 inline-block"
               >
                 {h.title2}
-              </motion.span>
+              </span>
             </span>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
-            animate={enter({ opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: 18, filter: "blur(6px)" })}
-            transition={{ duration: 0.9, ease: easeOut, delay: 0.87 }}
-            className="mt-7 max-w-xl text-base leading-[1.85] text-foreground/75 sm:text-lg"
+          <p
+            style={{ "--d": "0.87s", "--dur": "0.9s", "--y": "18px" } as React.CSSProperties}
+            className="hero-in hero-in--blur mt-7 max-w-xl text-base leading-[1.85] text-foreground/75 sm:text-lg"
           >
             {h.subtitle}
-          </motion.p>
+          </p>
 
           {/* capability tags — plain text with subtle dividers (no boxes) */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={enter({ opacity: 1, y: 0 }, { opacity: 0, y: 14 })}
-            transition={{ duration: 0.7, ease: easeOut, delay: 0.99 }}
-            className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-foreground/75"
+          <div
+            style={{ "--d": "0.99s", "--dur": "0.7s", "--y": "14px" } as React.CSSProperties}
+            className="hero-in mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-foreground/75"
           >
             {h.tags.map((t, i) => (
               <span key={t} className="inline-flex items-center gap-4">
@@ -162,13 +180,11 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
                 {t}
               </span>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={enter({ opacity: 1, y: 0 }, { opacity: 0, y: 18 })}
-            transition={{ duration: 0.8, ease: easeOut, delay: 1.11 }}
-            className="mt-9 flex flex-wrap gap-3"
+          <div
+            style={{ "--d": "1.11s", "--dur": "0.8s", "--y": "18px" } as React.CSSProperties}
+            className="hero-in mt-9 flex flex-wrap gap-3"
           >
             <Link
               href={`/${lang}/solutions`}
@@ -185,7 +201,7 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
             >
               {h.ctaSecondary}
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
 
