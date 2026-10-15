@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageMeta, SITE_URL } from "@/app/site";
+import { pageMeta } from "@/app/site";
 import Image from "next/image";
 import Link from "next/link";
 import { ViewTransition } from "react";
@@ -57,23 +57,11 @@ export default async function ProductDetailPage({
   const visual = productImages[key];
   const detail = dict.productDetail.items[key];
 
-  const productJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: item.name,
-    description: item.desc,
-    category: item.tag,
-    image: `${SITE_URL}${visual.img}`,
-    brand: { "@type": "Brand", name: dict.brand.name },
-    manufacturer: { "@type": "Organization", name: dict.brand.name },
-  };
-
+  // No Product JSON-LD on purpose: Google treats a Product without offers /
+  // review / aggregateRating as an invalid product snippet, and we have no
+  // public price or reviews to give it (don't invent them).
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
       {/* Hero — dark cyber opening, dissolving into light content */}
       <section
         className="page-hero-bg relative isolate overflow-hidden pt-32 pb-24 md:pt-40 md:pb-28 text-foreground"

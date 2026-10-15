@@ -168,7 +168,7 @@ src/
 │   │   ├── dictionaries.ts        ← i18n 字典加载器 + locale 常量
 │   │   │                            （⚠️ 这层**不要**建 not-found.tsx —— 动态根布局下不组合，404 走根 app/not-found.tsx）
 │   │   ├── products/page.tsx
-│   │   ├── products/[key]/page.tsx ← 产品详情（key: **charge|vtol**；非法 key → `redirect('/products')` 不是 notFound，见 404 架构）。含 features+specs 表+value 对比+Product JSON-LD+制造实拍画廊（productGallery）
+│   │   ├── products/[key]/page.tsx ← 产品详情（key: **charge|vtol**；非法 key → `redirect('/products')` 不是 notFound，见 404 架构）。含 features+specs 表+value 对比+制造实拍画廊（productGallery）。**不注 Product JSON-LD**（见反模式表）
 │   │   ├── solutions/page.tsx     ← 解决方案页（旧 /technology 改名，dict 仍用 pages.technology）。SolutionScenarios + TechCapabilities
 │   │   ├── about/page.tsx         ← 公司简介 + 双产品图 + 公司实景画廊 + 自有生产基地画廊 + 研发/专利 + 市场规模表
 │   │   ├── contact/page.tsx       ← ContactForm + 商务/技术两卡 + 地址卡
@@ -329,7 +329,7 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 
 - **焦点环**：`globals.css` 有 `:where(a,button,input,select,textarea,[tabindex]):focus-visible { outline: 2px solid var(--brand); outline-offset:2px }`。别删。
 - **动效降级**：`globals.css` 的 `@media (prefers-reduced-motion: reduce)` 把动画/过渡压到瞬时；framer-motion 由 `MotionProvider`（`reducedMotion="user"`）统一降级。新动画不用额外处理，已被这两层覆盖。
-- **JSON-LD**：`[lang]/layout.tsx` 注 Organization（公司真实信息，**无假地址**）；产品详情页注 Product。改公司信息时同步。
+- **JSON-LD**：`[lang]/layout.tsx` 注 Organization（公司真实信息，**无假地址**）；首页注 WebSite。产品详情页**不注 Product**（2026-10-15 已删，见反模式表）。改公司信息时同步。
 - **图片**：所有 `<Image>` 带 `sizes`（响应式省流量）。新图照做。
 
 ### 内容来源
@@ -389,7 +389,7 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
   - **SEO 大坑已修：`src/app/site.ts` 的 `pageMeta()`**。Next 对 metadata 是**浅合并**：页面写了 `openGraph` 就整个覆盖 layout 的（子页曾丢 og:image/og:url/site_name）；页面不写 `alternates` 就继承 layout 的 canonical = 语言首页（所有子页 canonical 曾都指向 `/zh`）。现在**每个页面的 `generateMetadata` 都 `return pageMeta({lang, path, title, description, siteName})`**（layout 传 `path:""` 再 spread 覆盖 title template 等）。**新增页面必须走 pageMeta，别手写 openGraph**。
   - `[lang]/template.tsx` 首屏**不做淡入**（`initial=false`，模块级 client 标记 `navigated`，只有客户端导航才动画）：之前 SSR HTML 带 `opacity:0`，水合前整页不可见，关于页移动 LCP 5.4s → 2.7s。**别改回无条件 `initial={{opacity:0}}`**。
   - 产品列表页 `ProductMatrix` 加 `hideHeader`（hero 已有标题，去重）+ `PageHero` 加 `compactBottom`（产品页 hero 底部 pb-16/20）。
-  - 产品详情 hero 小标走 `productDetail.eyebrow`（原硬编码 `Product`）；Product JSON-LD 加 `image`。
+  - 产品详情 hero 小标走 `productDetail.eyebrow`（原硬编码 `Product`）；Product JSON-LD 加 `image`（2026-10-15 整段已删）。
   - 无障碍：layout 加「跳到主内容」skip link（`a11y.skipToContent`，`<main id="main">`）；画廊 tile 的 `<Image alt="">`（button 的 aria-label 承担描述，caption 可见，避免读屏读两遍）。
   - 微信分享隐藏图换成 `public/brand/share-300.png`（300px，47KB；原来 512 icon 81KB 且被 Lighthouse 记 offscreen）。
   - `pages.technology.lead` 去掉「可量化的部署数据」（没有部署），改「产品手册测算数据」。
@@ -404,7 +404,7 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 - ✅ **站长平台 + Bing 反馈修复轮（2026-09-19）**：Google Search Console（HTML tag，码在服务器 `.env.local` 的 `GOOGLE_SITE_VERIFICATION`）+ Bing（从 GSC 导入）已验证，sitemap 已提交；Bing 当天就收录了 /zh /en。GSC 显示 9-16 那次抓取把 www 判为「Alternative page with proper canonical tag」（当时 canonical 指向无 www），已修，等 Google 重抓。百度站长平台待做（`BAIDU_SITE_VERIFICATION`）。
   - **进度（2026-09-19 收尾）**：Bing 重点子页已逐个 Request indexing（旧状态是 8-17 抓取时的「alternate version of canonical」，线上已修）。**GSC 的 TEST LIVE URL / REQUEST INDEXING 连续两天报「Something went wrong」**，网站侧已排除（Googlebot UA 访问 200、GSC 显示 9-16 抓取成功、sitemap 9-18 Success 24 页），判定为新资源的 GSC 侧限制，先不管，**~9-22 再试**；仍不行就改加「网域」资源（腾讯云 DNS 加 TXT，同时覆盖 www 与无 www，还能看到 Google 选的 canonical）。**百度卡在百度账号实名认证**（用户说已实名但平台不认——可能是别的平台实名/只绑手机/登录态未刷新/不同账号），用户改天再弄；百度首页 `/` 会 307 到 `/zh`，**HTML 标签验证确实失败（「未知原因:307」）**，已改用文件验证并于 2026-09-19 **验证成功**（第一次点报「无法连接服务器」，网站侧检查全正常，隔几分钟重试即过）：`public/baidu_verify_codeva-uEi1n8t6g6.html`（**别删**，删了百度会掉验证；proxy matcher 排除带点路径所以不会被语言跳转）。**2026-10-01 又加了一个 `baidu_verify_codeva-TPiRW49k57.html`**：9-19 那次验证用的是另一个百度账号（未实名），实名做在了 135 手机号的账号上，于是在实名账号下重新添加站点并文件验证；两个文件都留着。新账号验证后 `BAIDU_PUSH_TOKEN` 已换成新账号的 token（10-01，值只在服务器 `.env.local`，**仓库是公开的，token 别写进来**，备份 `.env.local.bak-20261001`；推送实测成功）。**新站配额极低**（API 推 2 条就 remain 0，sitemap 上限 0 条）——百度要求「站点关联主体」才给额度：10-01 已用公司信用代码在「注册新主体」提交（盖章营业执照 + 运营者手持身份证，材料在 `~/Desktop/01/01_公司资质/身份证与实名认证/`），**审核 2–5 个工作日**（10-08 在「站点管理 → 管理站点 → 关联主体 → 注册新主体」查仍是「提交成功，2-5 个工作日内完成审核」；赶上国庆，按节后工作日算，~10-15 还没结果就走右侧「反馈」问进度，**别重复提交**；10-03 实测百度 `site:` 仍 0 收录，Google ~25 / Bing ~13 / 360 仅首页；10-08 Google `site:` ~49、两个产品详情页都已收录，搜公司全称第 1–3、「零一唯创 移动充电机器人」第 1–2，**但裸搜「零一唯创」前 30 仍无官网**——Google 把它拆成「零一」「唯创」，被唯创知音/零一创投等老站压住，加引号才全是官网，靠外链/品牌提及慢慢解决，页面本身不用改）；⏳ 通过后去「普通收录 → sitemap」提交 `https://www.01weichuang.com/sitemap.xml`。站点属性（「搜索展现 → 站点属性」）10-08 查：站点类型**已是「自适应站」**（不用再改），领域显示「信息技术 生产制造」（30 天内只能改一次），关联主体「未关联」——页面写明「站点关联主体后即可提交资源」，sitemap 配额（今日上限/存量上限）都是 0，**必须等主体审核**；站点 Logo / 品牌展现「无权限」，新站正常。
   - 服务器连 GitHub 时好时坏（9-19 曾 132s 超时，后自行恢复）。应急可在本地 `git bundle create x.bundle <服务器当前提交>..main` 经 OrcaTerm 文件管理上传后 `git pull x.bundle main`；长期方案是配本机 SSH 直推（未做）。
-  - **meta description 必须 25–160 字符**（Bing 按字符数报 Error；英文最容易超）。页面可见正文和搜索摘要已分离：`brand.seoDescription` / `pages.{products,technology,about,contact,privacy}.seoDescription` / `productDetail.items.{charge,vtol}.seoDescription`，`generateMetadata` 一律用这些（Product JSON-LD 仍用 `item.desc`）。**改文案后别把 description 指回 lead/desc**。
+  - **meta description 必须 25–160 字符**（Bing 按字符数报 Error；英文最容易超）。页面可见正文和搜索摘要已分离：`brand.seoDescription` / `pages.{products,technology,about,contact,privacy}.seoDescription` / `productDetail.items.{charge,vtol}.seoDescription`，`generateMetadata` 一律用这些。**改文案后别把 description 指回 lead/desc**。
   - **图片不留空 alt**（Bing 报「Alt attribute missing」，真实实景图也就进不了图片搜索）。实景图 alt = `品牌名 · caption`（`PhotoGallery` 的 `altPrefix` prop、HomeGalleryStrip 同理）——**故意不等于可见 caption**，否则 Lighthouse `image-redundant-alt` 会报（axe 在 li/p/button/a 父级里比较可见文字）。场景缩略图 alt = 场景名；Loader logo / 微信分享隐藏图 alt = 品牌名。
   - **链接文字别用「Learn more / 了解更多」**（Lighthouse SEO `link-text` 扣分）：`hero.cta` → 「了解零一唯创 / About Zero-One Innovation」，`homeGallery.more` → 「查看全部实景 / See all photos」。
   - 白字按钮用 `bg-brand-strong`（#1849dc）、hover `bg-brand`：`--brand` #2f6bff 配白字对比度 4.49 < 4.5（产品详情「查看技术规格」+ 根 404 按钮已改）。**别动全局 `--brand`**，text-brand 在深底上靠它的亮度。
@@ -458,6 +458,7 @@ proxy 行为：非 `zh/tw/en` 前缀的路径 → 加 `/zh` 前缀重定向 → 
 | **别删 `<html data-scroll-behavior="smooth">`** | globals.css 的 `scroll-behavior:smooth` 是给锚点用的；没有这个属性，Next 16 路由切换的回顶会在转场动画里平滑滚 1500px（实测 13 帧），新页面一边淡入一边往上窜 |
 | **Hero3D 的 `<Precompile/>` 和 `ready` 门控别动** | 首访空着色器缓存时同步编译会冻主线程 1.1s，正撞 Loader 上滑；预编译后为 0。别为了「早一点看到涡轮」把 opacity/frameloop 门控拿掉 |
 | **hover / 指针跟随效果只写 transform、opacity** | 旧版 CardFx 和 hero 光斑每次 mousemove 重写 background 渐变位置（CSS 变量），等于每帧重绘整张卡 / 整屏（实测 150 次移动 834 次 Paint）；卡片 `transition-all` 会把 box-shadow、颜色等全部拖进逐帧重绘。现在都是预先画好的图层做 translate / rotate，别改回去 |
+| **产品详情页别加回 Product JSON-LD** | Google 规定 Product 必须带 `offers`（含价格）/ `review` / `aggregateRating` 之一，否则 GSC「Product snippets」报 critical「Either 'offers', 'review' or 'aggregateRating' should be specified」（2026-10-14 收到）。公司没有公开价格、没有评价，编了就是造假；去掉对排名零影响（本来也拿不到商品富媒体结果）。真有公开报价后再加，`offers` 要带 `price` + `priceCurrency` |
 
 ## 本地开发
 
