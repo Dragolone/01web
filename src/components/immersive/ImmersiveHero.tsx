@@ -155,9 +155,11 @@ export function ImmersiveHero({ lang, dict, fontClass }: Props) {
             <span className="block overflow-hidden pb-[0.08em]">
               <span
                 style={{ "--d": "0.69s", "--dur": "1s" } as React.CSSProperties}
-                className="hero-in hero-in--rise hero-title-2 inline-block"
+                className="hero-in hero-in--rise inline-block"
               >
-                {h.title2}
+                {/* gradient on its own node: the light theme's flow animation would
+                    otherwise replace heroRise and leave the line clipped */}
+                <span className="hero-title-2 block">{h.title2}</span>
               </span>
             </span>
           </h1>
